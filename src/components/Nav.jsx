@@ -3,7 +3,7 @@ import { scrollToId } from '../lib/scroll';
 export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="noise mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-5xl items-center justify-between rounded-full border border-white/10 bg-panel/60 py-2.5 pl-5 pr-2.5 backdrop-blur-xl">
+      <div className="glass noise mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-5xl items-center justify-between rounded-full py-2.5 pl-5 pr-2.5">
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -24,7 +24,7 @@ export default function Nav() {
         <button
           type="button"
           onClick={() => scrollToId('cta')}
-          className="rounded-full bg-accent px-5 py-2 text-xs font-bold text-[#0A0D12] transition-transform hover:scale-[1.05] active:scale-[0.97]"
+          className="btn-liquid rounded-full px-5 py-2 text-xs font-bold transition-transform hover:scale-[1.05] active:scale-[0.97]"
         >
           Book a call
         </button>

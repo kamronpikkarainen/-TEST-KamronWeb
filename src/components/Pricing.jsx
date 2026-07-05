@@ -4,9 +4,10 @@ import { usePerf } from '../lib/perf';
 import { scrollToId } from '../lib/scroll';
 
 /**
- * Chapter 6 — pricing. Two frosted-glass tiers (Pro emphasized), add-ons
- * as a supporting strip rather than a competing box, and the exclusivity
- * reminder where it stings: right next to the money.
+ * Chapter 6 — pricing on frosted glass. Two tiers (Pro carries the
+ * iridescent edge and the liquid gradient), add-ons as a supporting
+ * strip rather than a competing box, and the exclusivity reminder
+ * where it stings: right next to the money.
  */
 
 const TIERS = [
@@ -91,16 +92,6 @@ export default function Pricing() {
 
   return (
     <section ref={root} id="pricing" className="relative px-6 py-28 sm:py-40">
-      {/* Key-light glow behind the glass so the blur has something to catch */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 55% 45% at 30% 35%, rgba(255,217,168,0.06), transparent 65%), radial-gradient(ellipse 40% 40% at 75% 60%, rgba(168,240,75,0.05), transparent 70%)',
-        }}
-      />
-
       <div className="relative mx-auto max-w-5xl">
         <div className="pr-head">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
@@ -118,14 +109,14 @@ export default function Pricing() {
           {TIERS.map((tier) => (
             <div
               key={tier.name}
-              className={`pr-card noise key-sheen relative rounded-2xl border p-8 backdrop-blur-xl sm:p-10 ${
+              className={`pr-card glass noise relative rounded-3xl p-8 sm:p-10 ${
                 tier.recommended
-                  ? 'border-accent/50 bg-white/[0.09] shadow-[0_0_60px_-15px_rgba(168,240,75,0.25)] md:-translate-y-3'
-                  : 'border-white/10 bg-white/[0.05]'
+                  ? 'glass-iridescent shadow-[0_36px_90px_-30px_rgba(62,111,240,0.5)] md:-translate-y-3'
+                  : ''
               }`}
             >
               {tier.recommended && (
-                <span className="absolute -top-3 left-8 rounded-full bg-accent px-3 py-1 text-[10px] font-black uppercase tracking-wider text-[#0A0D12]">
+                <span className="btn-liquid absolute -top-3 left-8 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider">
                   Recommended
                 </span>
               )}
@@ -142,7 +133,7 @@ export default function Pricing() {
                   <li key={f} className="flex items-start gap-3 text-sm text-ink/90">
                     <span
                       className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${
-                        tier.recommended ? 'bg-accent' : 'bg-key'
+                        tier.recommended ? 'bg-accent' : 'bg-amber2'
                       }`}
                     />
                     {f}
@@ -154,8 +145,8 @@ export default function Pricing() {
                 onClick={() => scrollToId('cta')}
                 className={`mt-9 w-full rounded-full py-3.5 text-sm font-bold transition-transform hover:scale-[1.02] active:scale-[0.98] ${
                   tier.recommended
-                    ? 'bg-accent text-[#0A0D12]'
-                    : 'border border-white/20 text-ink hover:border-white/40'
+                    ? 'btn-liquid'
+                    : 'border border-ink/20 text-ink hover:border-ink/40'
                 }`}
               >
                 {tier.cta}
@@ -169,15 +160,16 @@ export default function Pricing() {
           {ADDONS.map((addon) => (
             <div
               key={addon.name}
-              className="pr-card noise flex items-start justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl"
+              className="pr-card glass noise flex items-start justify-between gap-4 rounded-2xl p-5"
             >
               <div>
                 <div className="text-sm font-bold text-ink">
-                  {addon.name} <span className="ml-1 font-semibold text-accent">{addon.price}</span>
+                  {addon.name}{' '}
+                  <span className="text-liquid ml-1 font-extrabold">{addon.price}</span>
                 </div>
                 <p className="mt-1 text-xs leading-relaxed text-mute">{addon.blurb}</p>
               </div>
-              <span className="mt-0.5 shrink-0 rounded-full border border-white/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-mute">
+              <span className="mt-0.5 shrink-0 rounded-full border border-ink/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-mute">
                 Add-on
               </span>
             </div>
@@ -185,7 +177,7 @@ export default function Pricing() {
         </div>
 
         {/* Exclusivity reminder, next to the money */}
-        <div className="pr-callout mt-10 flex items-center gap-4 rounded-xl border border-accent/25 bg-accent/[0.06] p-5">
+        <div className="pr-callout glass glass-iridescent relative mt-10 flex items-center gap-4 rounded-2xl p-5">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="shrink-0 text-accent">
             <rect x="4" y="10" width="16" height="11" rx="2.5" fill="currentColor" />
             <path d="M7.5 10V7.5a4.5 4.5 0 0 1 9 0V10" stroke="currentColor" strokeWidth="2.6" fill="none" />

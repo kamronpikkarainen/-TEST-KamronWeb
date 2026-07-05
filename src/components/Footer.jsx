@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] px-6 py-10">
+    <footer className="border-t border-ink/10 px-6 py-10">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-xs text-mute sm:flex-row">
         <div className="flex items-baseline gap-1 font-extrabold tracking-tight text-ink">
           Kamron Web
@@ -12,7 +12,7 @@ export default function Footer() {
             (919) 453-3252
           </a>
           {/* [PLACEHOLDER — real Instagram handle] */}
-          <span className="text-mute/60">[PLACEHOLDER — Instagram]</span>
+          <span className="text-mute/70">[PLACEHOLDER — Instagram]</span>
         </div>
         <span>© {new Date().getFullYear()} Kamron Web</span>
       </div>

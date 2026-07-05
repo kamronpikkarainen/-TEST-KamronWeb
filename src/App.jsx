@@ -3,6 +3,7 @@ import { PerfProvider } from './lib/perf';
 import useSmoothScroll from './lib/useSmoothScroll';
 import { ScrollTrigger } from './lib/gsap';
 
+import Backdrop from './components/Backdrop';
 import Nav from './components/Nav';
 import Hero from './components/hero/Hero';
 import Problem from './components/Problem';
@@ -25,6 +26,7 @@ function Page() {
 
   return (
     <>
+      <Backdrop />
       <Nav />
       <main>
         <Hero />

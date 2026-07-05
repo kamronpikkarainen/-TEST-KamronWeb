@@ -23,9 +23,14 @@ npm run preview  # serve the production build
 
 ## Architecture notes
 
+- **Liquid-glass visual language.** Light silver ground with a blueprint
+  grid and prismatic blobs (`src/components/Backdrop.jsx`), frosted
+  panels and iridescent edges (`.glass`, `.glass-iridescent` in
+  `src/index.css`), and a refractive crystal-and-ring hero sculpture
+  (`MeshTransmissionMaterial`).
 - **One lighting rig for the whole page.** `src/lib/lighting.js` defines the
-  warm upper-left key light, cool fill, and rim used by the 3D scene; every
-  2D sheen/glare/shadow on the page follows the same direction
+  white upper-left key light and cool fill used by the 3D scene; every
+  2D gloss/shadow on the page follows the same direction
   (`.key-sheen` in `src/index.css`).
 - **Genuine fallbacks.** `src/lib/perf.jsx` detects `prefers-reduced-motion`,
   low-power devices, and missing WebGL. Reduced-motion gets a fully static

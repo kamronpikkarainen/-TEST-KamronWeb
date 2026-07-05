@@ -4,14 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: '#0A0D12',
-        panel: '#0F141B',
-        ink: '#F2F5F7',
-        mute: '#93A0AD',
-        accent: '#A8F04B',
-        'accent-dim': '#6FA332',
-        // Warm key-light color — matches the 3D key light in src/lib/lighting.js
-        key: '#FFD9A8',
+        // Liquid-glass light theme — silver ground, ink type, prismatic accents
+        base: '#DFE1E5',
+        panel: '#FFFFFF',
+        ink: '#182030',
+        mute: '#5B6674',
+        accent: '#3E6FF0', // azure — primary accent
+        cyan2: '#35C8E8',
+        viol: '#8B7CF7',
+        blush: '#F0A8C8',
+        amber2: '#E8B06A',
+        key: '#FFFFFF',
       },
       fontFamily: {
         sans: ['"Inter Variable"', 'Inter', 'system-ui', 'sans-serif'],

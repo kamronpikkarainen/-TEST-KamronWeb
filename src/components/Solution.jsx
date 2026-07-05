@@ -20,6 +20,8 @@ const TRACKS = [
     name: 'Starter',
     days: 14,
     price: '$3,000',
+    fill: 'linear-gradient(90deg, #E8B06A, #F0A8C8)',
+    flagClass: 'bg-amber2',
     milestones: [
       { day: 1, label: 'Kickoff call' },
       { day: 4, label: 'Design approved' },
@@ -32,6 +34,8 @@ const TRACKS = [
     days: 10,
     price: '$5,500',
     recommended: true,
+    fill: 'linear-gradient(90deg, #3E6FF0, #35C8E8)',
+    flagClass: 'bg-accent',
     milestones: [
       { day: 1, label: 'Kickoff call' },
       { day: 3, label: 'Design approved' },
@@ -135,13 +139,13 @@ export default function Solution() {
           The build
         </p>
         <h2 className="sol-head max-w-2xl text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
-          Flat rate. Fixed deadline. <span className="text-accent">No surprises.</span>
+          Flat rate. Fixed deadline. <span className="text-liquid">No surprises.</span>
         </h2>
         <p className="sol-head mt-5 max-w-md text-mute">
           You pick a track. I build. You launch on the date we set.
         </p>
 
-        <div className="sol-race mt-16 space-y-14 sm:mt-20">
+        <div className="sol-race glass noise mt-16 space-y-14 rounded-3xl p-8 sm:mt-20 sm:p-12">
           {TRACKS.map((track, ti) => (
             <div key={track.name}>
               <div className="mb-8 flex items-baseline gap-3">
@@ -150,7 +154,7 @@ export default function Solution() {
                   {track.days}-day delivery · {track.price}
                 </span>
                 {track.recommended && (
-                  <span className="rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent">
+                  <span className="btn-liquid rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
                     Priority
                   </span>
                 )}
@@ -158,13 +162,14 @@ export default function Solution() {
 
               <div className="relative">
                 {/* Track bed */}
-                <div className="h-1.5 w-full rounded-full bg-white/[0.07]" />
+                <div className="h-1.5 w-full rounded-full bg-ink/[0.08]" />
                 {/* Fill — default (reduced-motion) state is the final width */}
                 <div
-                  className={`sol-fill-${ti} absolute left-0 top-0 h-1.5 w-full origin-left rounded-full ${
-                    track.recommended ? 'bg-accent' : 'bg-key/80'
-                  }`}
-                  style={{ transform: `scaleX(${track.days / TOTAL_DAYS})` }}
+                  className={`sol-fill-${ti} absolute left-0 top-0 h-1.5 w-full origin-left rounded-full`}
+                  style={{
+                    transform: `scaleX(${track.days / TOTAL_DAYS})`,
+                    background: track.fill,
+                  }}
                 />
                 {/* Launch flag */}
                 <div
@@ -172,9 +177,7 @@ export default function Solution() {
                   style={{ left: `${(track.days / TOTAL_DAYS) * 100}%` }}
                 >
                   <span
-                    className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-black ${
-                      track.recommended ? 'bg-accent text-[#0A0D12]' : 'bg-key text-[#0A0D12]'
-                    }`}
+                    className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-black text-white shadow-lg ${track.flagClass}`}
                   >
                     ✓
                   </span>
@@ -187,7 +190,7 @@ export default function Solution() {
                     className={`sol-ms-${ti}-${m.day} absolute top-4 flex -translate-x-1/2 flex-col items-center text-center`}
                     style={{ left: `${(m.day / TOTAL_DAYS) * 100}%` }}
                   >
-                    <span className="mb-1.5 h-2.5 w-px bg-white/25" />
+                    <span className="mb-1.5 h-2.5 w-px bg-ink/25" />
                     <span className="whitespace-nowrap text-[10px] font-bold uppercase tracking-wide text-ink/90 sm:text-[11px]">
                       Day {m.day}
                     </span>
@@ -202,7 +205,8 @@ export default function Solution() {
           ))}
 
           <p className="sol-gap-note text-lg font-semibold text-ink">
-            Pro launches four days sooner. <span className="text-mute">Same flat rate either way — the meter never runs.</span>
+            Pro launches four days sooner.{' '}
+            <span className="text-mute">Same flat rate either way — the meter never runs.</span>
           </p>
         </div>
       </div>

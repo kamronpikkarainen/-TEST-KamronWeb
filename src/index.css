@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 html {
-  background: #0a0d12;
-  scrollbar-color: #2a323d #0a0d12;
+  background: #dfe1e5;
+  scrollbar-color: #aeb4bd #dfe1e5;
 }
 
 body {
@@ -13,12 +13,12 @@ body {
 }
 
 ::selection {
-  background: rgba(168, 240, 75, 0.25);
-  color: #f2f5f7;
+  background: rgba(62, 111, 240, 0.22);
+  color: #182030;
 }
 
 :focus-visible {
-  outline: 2px solid #a8f04b;
+  outline: 2px solid #3e6ff0;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -32,8 +32,89 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-/* Frosted-glass panel + film-grain noise, used on pricing and nav.
-   The noise is an inline SVG feTurbulence tile — no network request. */
+/* ---------------------------------------------------------------------
+   Liquid-glass design system (matches the reference boards):
+   silver blueprint grid, frosted panels, iridescent edges, soft
+   prismatic blobs glowing through the glass.
+   -------------------------------------------------------------------- */
+
+/* Blueprint grid tile: hairline cross through the center with a small
+   square node at each intersection — inline SVG, no network request. */
+.grid-lines {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cpath d='M70 0V140M0 70H140' stroke='%23A2A9B5' stroke-width='1'/%3E%3Crect x='63.5' y='63.5' width='13' height='13' fill='none' stroke='%23939BA9' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* Frosted glass panel */
+.glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.42));
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 24px 60px -24px rgba(50, 70, 110, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* Iridescent hairline ring around a glass panel — the thin prismatic
+   edge the reference glass slices carry. Apply with a border-radius. */
+.glass-iridescent::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 210deg,
+    rgba(232, 176, 106, 0.9),
+    rgba(53, 200, 232, 0.9),
+    rgba(62, 111, 240, 0.9),
+    rgba(139, 124, 247, 0.9),
+    rgba(240, 168, 200, 0.9),
+    rgba(232, 176, 106, 0.9)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* Prismatic gradient text */
+.text-liquid {
+  background-image: linear-gradient(100deg, #3e6ff0 10%, #35c8e8 45%, #8b7cf7 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Primary liquid button */
+.btn-liquid {
+  background-image: linear-gradient(120deg, #3e6ff0, #35c8e8 85%);
+  color: #ffffff;
+  box-shadow:
+    0 14px 34px -12px rgba(62, 111, 240, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* CSS lighting convention for the light theme: a white gloss entering
+   from the upper-left (same direction as the 3D key light), soft
+   slate-blue shadows falling lower-right. */
+.key-sheen {
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.25) 30%,
+    transparent 55%
+  );
+}
+
+/* Film-grain noise, kept very quiet on the light theme. */
 .noise {
   position: relative;
 }
@@ -43,19 +124,8 @@ html.lenis body {
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  opacity: 0.045;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* CSS lighting convention: every sheen/highlight comes from the upper-left,
-   matching the warm 3D key light (see src/lib/lighting.js). */
-.key-sheen {
-  background-image: linear-gradient(
-    135deg,
-    rgba(255, 217, 168, 0.1) 0%,
-    rgba(255, 217, 168, 0.03) 28%,
-    transparent 55%
-  );
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -5,12 +5,14 @@ import { usePerf } from '../lib/perf';
 /**
  * Chapter 4 — scarcity you can watch happen.
  *
- * The market is drawn as a literal board: every niche × city combination
- * in the Triangle is one slot. The section pins and runs a scripted
- * sequence: a targeting ring hunts to an open slot, the slot slams
- * LOCKED, and the rest of the board dims — because that's exactly what
- * signing does to your competitors. One slot (Lawn care × Raleigh) is
- * already marked Taken by GreenEdge, the real client.
+ * The market is drawn as a board of frosted glass capsules — one pill
+ * per niche × city combination, straight off the liquid-glass reference
+ * board. The section pins and runs a scripted sequence: a targeting
+ * ring hunts to an open capsule, the capsule floods with the prismatic
+ * gradient and locks, and the rest of the board frosts over — because
+ * that's exactly what signing does to your competitors. One capsule
+ * (Lawn care × Raleigh) is already marked Taken by GreenEdge, the real
+ * client.
  *
  * [PLACEHOLDER — confirm GreenEdge's locked city]: the Taken slot is
  * shown under Raleigh; move `taken` below if GreenEdge's exclusivity is
@@ -80,8 +82,8 @@ export default function Exclusivity() {
       );
       tl.to('.x-ring', { opacity: 0, duration: 0.6 }, 7);
 
-      // 4 — everyone else goes dark.
-      tl.to(others, { opacity: 0.22, duration: 1.6, stagger: { each: 0.03, from: 'random' } }, 7.6);
+      // 4 — everyone else frosts over.
+      tl.to(others, { opacity: 0.3, duration: 1.6, stagger: { each: 0.03, from: 'random' } }, 7.6);
       tl.to('.x-cap-b', { opacity: 0, duration: 0.8 }, 7.8);
       tl.fromTo('.x-cap-c', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.4 }, 8.4);
 
@@ -113,14 +115,14 @@ export default function Exclusivity() {
       {/* Faint Triangle constellation — Raleigh/Durham/Chapel Hill nodes */}
       <svg
         aria-hidden="true"
-        className="x-map pointer-events-none absolute left-1/2 top-1/2 h-[130%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.05]"
+        className="x-map pointer-events-none absolute left-1/2 top-1/2 h-[130%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.07]"
         viewBox="0 0 600 520"
         fill="none"
       >
-        <path d="M300 80 L120 400 L480 400 Z" stroke="#A8F04B" strokeWidth="1.5" />
-        <circle cx="300" cy="80" r="6" fill="#A8F04B" />
-        <circle cx="120" cy="400" r="6" fill="#A8F04B" />
-        <circle cx="480" cy="400" r="6" fill="#A8F04B" />
+        <path d="M300 80 L120 400 L480 400 Z" stroke="#3E6FF0" strokeWidth="1.5" />
+        <circle cx="300" cy="80" r="6" fill="#3E6FF0" />
+        <circle cx="120" cy="400" r="6" fill="#3E6FF0" />
+        <circle cx="480" cy="400" r="6" fill="#3E6FF0" />
       </svg>
 
       <div className="relative mx-auto w-full max-w-5xl">
@@ -129,7 +131,7 @@ export default function Exclusivity() {
             The rule
           </p>
           <h2 className="text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
-            One client. Per niche. <span className="text-accent">Per city.</span>
+            One client. Per niche. <span className="text-liquid">Per city.</span>
           </h2>
           <p className="mt-5 max-w-md text-mute">
             When you sign, your slot locks for 12 months. Every competitor who calls after
@@ -140,7 +142,7 @@ export default function Exclusivity() {
         {/* The board */}
         <div className="mt-12 overflow-x-auto pb-2">
           <div className="min-w-[640px]">
-            <div className="grid grid-cols-[110px_repeat(5,1fr)] gap-2 sm:grid-cols-[140px_repeat(5,1fr)]">
+            <div className="grid grid-cols-[110px_repeat(5,1fr)] gap-2.5 sm:grid-cols-[140px_repeat(5,1fr)]">
               <div />
               {CITIES.map((city) => (
                 <div
@@ -166,7 +168,7 @@ export default function Exclusivity() {
             </p>
             <p className="text-lg font-semibold text-ink">
               And every other Raleigh HVAC company that calls for 12 months?{' '}
-              <span className="text-accent">They hear no.</span>
+              <span className="text-liquid font-bold">They hear no.</span>
             </p>
           </div>
         ) : (
@@ -179,7 +181,7 @@ export default function Exclusivity() {
             </p>
             <p className="x-cap-c absolute inset-0 text-lg font-semibold text-ink opacity-0">
               And every other Raleigh HVAC company that calls me for 12 months?{' '}
-              <span className="text-accent">They hear no.</span>
+              <span className="text-liquid font-bold">They hear no.</span>
             </p>
           </div>
         )}
@@ -198,12 +200,8 @@ function FragmentRow({ niche }) {
         return (
           <div
             key={city}
-            className={`x-cell relative flex h-16 flex-col items-center justify-center rounded-lg border text-center sm:h-20 ${
-              isTaken
-                ? 'x-taken border-white/5 bg-white/[0.03]'
-                : isDemo
-                  ? 'x-demo border-white/10 bg-white/[0.05]'
-                  : 'border-white/10 bg-white/[0.05]'
+            className={`x-cell glass relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20 ${
+              isTaken ? 'x-taken !bg-ink/[0.05]' : isDemo ? 'x-demo' : ''
             }`}
           >
             {isTaken ? (
@@ -221,9 +219,9 @@ function FragmentRow({ niche }) {
                   Open
                 </span>
                 {/* Targeting ring (animated in) */}
-                <span className="x-ring pointer-events-none absolute -inset-1.5 rounded-xl border-2 border-accent opacity-0" />
+                <span className="x-ring pointer-events-none absolute -inset-1.5 rounded-full border-2 border-accent opacity-0" />
                 {/* Locked overlay — visible by default so reduced-motion shows the end state */}
-                <span className="x-lock absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-accent text-[#0A0D12]">
+                <span className="x-lock btn-liquid absolute inset-0 flex flex-col items-center justify-center rounded-full">
                   <LockIcon />
                   <span className="mt-1 text-[9px] font-black uppercase tracking-widest">
                     Locked · 12 mo

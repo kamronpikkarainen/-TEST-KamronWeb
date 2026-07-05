@@ -4,9 +4,9 @@ import { usePerf } from '../lib/perf';
 
 /**
  * Chapter 2 — the cost of an invisible website.
- * Pure typography under tension: the section pins and each word burns in
- * from near-black as you scroll, ending on the punchline. Under
- * reduced-motion it renders as plain, fully-visible text (no pin).
+ * Pure typography under tension: the section pins and each word inks in
+ * from pale silver as you scroll, ending on the prismatic punchline.
+ * Under reduced-motion it renders as plain, fully-visible text (no pin).
  */
 const LINES = [
   'Right now, someone nearby needs exactly what you do.',
@@ -34,7 +34,7 @@ export default function Problem() {
       });
       tl.fromTo(
         words,
-        { opacity: 0.1 },
+        { opacity: 0.14 },
         { opacity: 1, ease: 'none', stagger: 0.35, duration: 2 },
         0
       );
@@ -74,7 +74,7 @@ export default function Problem() {
             </p>
           ))}
         </div>
-        <p className="problem-punch mt-16 text-5xl font-extrabold tracking-tightest text-accent sm:text-7xl">
+        <p className="problem-punch text-liquid mt-16 text-5xl font-extrabold tracking-tightest sm:text-7xl">
           Invisible is expensive.
         </p>
       </div>

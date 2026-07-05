@@ -1,41 +1,37 @@
 /**
  * The single source of truth for lighting across the whole page.
  *
- * One photographed scene: a warm studio KEY from the upper-left, a cool
- * FILL from the lower-right, a white RIM from behind-right. Every 3D
- * element uses this exact rig, and every 2D "lit" surface (card sheens,
- * glares, shadows) mimics the same direction — highlights upper-left,
- * shadows lower-right (see .key-sheen in index.css).
+ * Liquid-glass light theme: one bright white studio scene. The KEY is a
+ * cool-white light from the upper-left; the FILL is a faint blue bounce
+ * from the lower-right. Every 3D element uses this rig, and every 2D
+ * "lit" surface mimics the same direction — white gloss enters from the
+ * upper-left (.key-sheen in index.css), soft slate shadows fall
+ * lower-right.
  */
 
-// Warm key — ~3800K, upper-left. A real spotlight (not a directional):
-// its inverse-square falloff paints a natural pool of light on the
-// floor, and every specular highlight in the scene comes from here.
+// White key from the upper-left — drives the sparkle on the glass.
 export const KEY_LIGHT = {
-  position: [-4.5, 5.5, 6],
-  intensity: 520,
-  color: '#FFD9A8',
-  angle: 0.68,
-  penumbra: 1,
-  decay: 2,
-};
-
-// Cool fill from the lower-right so the shadow side keeps visible detail
-// — depth comes from the key/fill contrast, never from opacity tricks.
-export const FILL_LIGHT = {
-  position: [4, -2, 4],
-  intensity: 0.65,
-  color: '#BCD3FF',
-};
-
-// White rim from behind-right to separate objects from the dark backdrop.
-export const RIM_LIGHT = {
-  position: [2.5, 5, -4.5],
-  intensity: 2.2,
+  position: [-4.5, 6, 6],
+  intensity: 1.9,
   color: '#FFFFFF',
 };
 
-export const AMBIENT = { intensity: 0.25, color: '#9DB0C8' };
+// Cool blue bounce fill so glass shadow sides stay airy, never grey.
+export const FILL_LIGHT = {
+  position: [4, -2, 4],
+  intensity: 0.55,
+  color: '#BFD6FF',
+};
 
-// The CSS equivalent of the key light direction, for 2D glares.
+// Low warm kicker from behind-right — the faint amber edge the
+// reference glass slices carry.
+export const RIM_LIGHT = {
+  position: [3, 4, -5],
+  intensity: 0.7,
+  color: '#FFE2BC',
+};
+
+export const AMBIENT = { intensity: 0.85, color: '#FFFFFF' };
+
+// The CSS equivalent of the key light direction, for 2D glosses.
 export const CSS_KEY_ORIGIN = { x: '25%', y: '15%' };
