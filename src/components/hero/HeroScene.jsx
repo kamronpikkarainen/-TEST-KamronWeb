@@ -1,18 +1,32 @@
 import { Suspense, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { ContactShadows, Float, RoundedBox } from '@react-three/drei';
+import { ContactShadows, Float, MeshReflectorMaterial, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { AMBIENT, FILL_LIGHT, KEY_LIGHT, RIM_LIGHT } from '../../lib/lighting';
 import { drawGreenEdgeScreen } from './screenTexture';
 
 /**
  * The hero's 3D stage: a floating low-poly browser window running the
- * GreenEdge Lawn Co. site, lit by the page's single shared lighting rig.
+ * GreenEdge Lawn Co. site, sitting in one coherently lit scene.
+ *
+ * The lighting story (single source of truth: src/lib/lighting.js):
+ * - one warm KEY from the upper-left — it puts the specular streak on
+ *   the browser's clearcoat chrome and defines every highlight
+ * - a cool FILL from the lower-right so the shadow side keeps detail
+ *   instead of going black
+ * - a white RIM from behind-right to cut the silhouette off the dark
+ * The ground is a real reflective floor (blurred, mostly-rough) plus a
+ * depth-based ContactShadows pass — actual falloff, not a CSS blur.
+ * Scene fog matches the page background so the floor dissolves into
+ * the page with no horizon line.
  *
  * `motion` is a mutable ref-object ({ mouse: {x,y}, scroll }) written by
  * the Hero component — no React re-renders on pointer/scroll, everything
  * is consumed inside useFrame.
  */
+
+const PAGE_BG = '#0A0D12';
+const FLOOR_Y = -1.62;
 
 function Lights() {
   return (
@@ -22,8 +36,6 @@ function Lights() {
         position={KEY_LIGHT.position}
         intensity={KEY_LIGHT.intensity}
         color={KEY_LIGHT.color}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
       />
       <directionalLight
         position={FILL_LIGHT.position}
@@ -70,22 +82,38 @@ function BrowserMockup({ motion }) {
 
   return (
     <group ref={group} position={[0, -0.25, 0]}>
-      {/* Device body — low-poly rounded slab */}
-      <RoundedBox args={[3.44, 2.32, 0.14]} radius={0.055} smoothness={3} castShadow>
-        <meshStandardMaterial color="#1a212b" metalness={0.55} roughness={0.38} />
+      {/* Device body. Clearcoat over brushed metal: the rounded top bevel
+          catches the warm key light as a soft specular streak. */}
+      <RoundedBox args={[3.44, 2.32, 0.14]} radius={0.06} smoothness={4}>
+        <meshPhysicalMaterial
+          color="#1b232e"
+          metalness={0.7}
+          roughness={0.32}
+          clearcoat={1}
+          clearcoatRoughness={0.22}
+        />
       </RoundedBox>
-      {/* Screen */}
+      {/* Screen — self-illuminated like a real display, so the lit page
+          reads even on the shadow side of the pose. */}
       <mesh position={[0, 0, 0.075]}>
         <planeGeometry args={[3.2, 2.08]} />
-        <meshStandardMaterial map={screenTexture} roughness={0.9} metalness={0} />
+        <meshStandardMaterial
+          map={screenTexture}
+          emissiveMap={screenTexture}
+          emissive="#ffffff"
+          emissiveIntensity={0.32}
+          roughness={0.85}
+          metalness={0}
+        />
       </mesh>
-      {/* Thin accent light-strip along the bottom edge */}
+      {/* Thin accent light-strip along the bottom edge — it also shows up
+          in the floor reflection, which sells the contact. */}
       <mesh position={[0, -1.19, 0]}>
         <boxGeometry args={[3.3, 0.015, 0.1]} />
         <meshStandardMaterial
           color="#A8F04B"
           emissive="#A8F04B"
-          emissiveIntensity={0.6}
+          emissiveIntensity={0.8}
           roughness={0.4}
         />
       </mesh>
@@ -93,55 +121,76 @@ function BrowserMockup({ motion }) {
   );
 }
 
-/** Dim glass panes and accents floating behind the browser for depth. */
-function BackdropShapes() {
+/**
+ * Two dark glass slabs floating behind the browser. Fully committed 3D:
+ * opaque physical material with real thickness, lit by the same rig —
+ * the key light grazes their top bevels exactly like the mockup's.
+ */
+function BackdropSlabs() {
   return (
     <>
-      <Float speed={1.1} rotationIntensity={0.15} floatIntensity={0.4}>
-        <mesh position={[-2.2, 0.9, -1.6]} rotation={[0.05, 0.5, 0]}>
-          <planeGeometry args={[1.9, 1.25]} />
-          <meshStandardMaterial
-            color="#141c26"
-            metalness={0.6}
-            roughness={0.3}
-            transparent
-            opacity={0.55}
-            side={THREE.DoubleSide}
+      <Float speed={1.1} rotationIntensity={0.12} floatIntensity={0.35}>
+        <RoundedBox
+          args={[1.9, 1.25, 0.07]}
+          radius={0.035}
+          smoothness={3}
+          position={[-2.25, 0.85, -1.7]}
+          rotation={[0.04, 0.42, -0.02]}
+        >
+          <meshPhysicalMaterial
+            color="#121924"
+            metalness={0.65}
+            roughness={0.38}
+            clearcoat={0.7}
+            clearcoatRoughness={0.3}
           />
-        </mesh>
+        </RoundedBox>
       </Float>
-      <Float speed={0.9} rotationIntensity={0.2} floatIntensity={0.5}>
-        <mesh position={[2.4, -0.7, -2]} rotation={[-0.08, -0.55, 0]}>
-          <planeGeometry args={[2.1, 1.4]} />
-          <meshStandardMaterial
-            color="#101720"
-            metalness={0.6}
-            roughness={0.3}
-            transparent
-            opacity={0.5}
-            side={THREE.DoubleSide}
+      <Float speed={0.9} rotationIntensity={0.15} floatIntensity={0.45}>
+        <RoundedBox
+          args={[2.1, 1.4, 0.07]}
+          radius={0.035}
+          smoothness={3}
+          position={[2.55, -0.2, -2.1]}
+          rotation={[-0.03, 0.18, 0.02]}
+        >
+          <meshPhysicalMaterial
+            color="#0f151e"
+            metalness={0.65}
+            roughness={0.4}
+            clearcoat={0.7}
+            clearcoatRoughness={0.3}
           />
-        </mesh>
-      </Float>
-      <Float speed={1.4} rotationIntensity={0.6} floatIntensity={0.8}>
-        <mesh position={[2.35, 1.25, -0.9]}>
-          <torusGeometry args={[0.26, 0.075, 12, 36]} />
-          <meshStandardMaterial color="#2a3543" metalness={0.75} roughness={0.25} />
-        </mesh>
-      </Float>
-      <Float speed={1.6} rotationIntensity={0.4} floatIntensity={0.9}>
-        <mesh position={[-2.55, -1.05, -0.6]}>
-          <icosahedronGeometry args={[0.16, 0]} />
-          <meshStandardMaterial
-            color="#A8F04B"
-            emissive="#A8F04B"
-            emissiveIntensity={0.35}
-            metalness={0.2}
-            roughness={0.35}
-          />
-        </mesh>
+        </RoundedBox>
       </Float>
     </>
+  );
+}
+
+/**
+ * The floor: a mostly-rough reflector that carries a blurred, distance-
+ * faded reflection of the mockup. Fog (matched to the page background)
+ * dissolves its far edge, so there's no horizon line — the scene just
+ * fades into the page.
+ */
+function Ground() {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, FLOOR_Y, -3]}>
+      <planeGeometry args={[34, 26]} />
+      <MeshReflectorMaterial
+        resolution={512}
+        blur={[300, 80]}
+        mixBlur={0.9}
+        mixStrength={0.8}
+        mirror={0.45}
+        depthScale={1}
+        minDepthThreshold={0.4}
+        maxDepthThreshold={1.2}
+        color="#0b0f16"
+        metalness={0}
+        roughness={1}
+      />
+    </mesh>
   );
 }
 
@@ -149,21 +198,29 @@ export default function HeroScene({ motion }) {
   return (
     <Canvas
       dpr={[1, 1.75]}
-      shadows
-      camera={{ position: [0, 0.15, 6.2], fov: 35 }}
+      // Camera rides low, near floor level — a product-shot angle that
+      // keeps the contact shadow + reflection in frame and gives the
+      // floor reflection a strong grazing angle.
+      camera={{ position: [0, -0.55, 6.8], fov: 35 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ pointerEvents: 'none' }}
     >
+      {/* Fog matched to the page bg — the floor's far reaches render as
+          exactly the page color, so the scene has no visible edges. */}
+      <fog attach="fog" args={[PAGE_BG, 8.5, 17]} />
       <Suspense fallback={null}>
         <Lights />
         <BrowserMockup motion={motion} />
-        <BackdropShapes />
+        <BackdropSlabs />
+        <Ground />
+        {/* Depth-based contact shadow — soft core under the mockup with
+            real falloff, layered just above the reflective floor. */}
         <ContactShadows
-          position={[0, -1.75, 0]}
-          opacity={0.6}
-          scale={10}
-          blur={2.8}
-          far={3.2}
+          position={[0, FLOOR_Y + 0.01, 0]}
+          opacity={0.62}
+          scale={9}
+          blur={2.4}
+          far={3.4}
           color="#000000"
         />
       </Suspense>

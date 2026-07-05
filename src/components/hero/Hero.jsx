@@ -118,6 +118,11 @@ export default function Hero() {
         ) : (
           <HeroFallback />
         )}
+        {/* Blend the 3D floor into the page at the stage's bottom edge */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-base to-transparent"
+        />
         <p className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] tracking-wide text-mute/70">
           GreenEdge Lawn Co. — a real Kamron Web build
         </p>
