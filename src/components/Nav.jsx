@@ -24,7 +24,7 @@ export default function Nav() {
         <button
           type="button"
           onClick={() => scrollToId('cta')}
-          className="btn-liquid rounded-full px-5 py-2 text-xs font-bold transition-transform hover:scale-[1.05] active:scale-[0.97]"
+          className="btn-liquid btn-sheen rounded-full px-5 py-2 text-xs font-bold transition-transform hover:scale-[1.05] active:scale-[0.97]"
         >
           Book a call
         </button>

@@ -9,12 +9,56 @@
       content="Kamron Web builds premium websites for Triangle-area service businesses. One client per niche, per city. Flat rate, fixed deadline."
     />
     <title>Kamron Web — Premium sites for Triangle service businesses</title>
+
+    <!-- Social cards. [PLACEHOLDER — og:image] add a real 1200x630 card
+         and og:url once the domain is live. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kamron Web — Premium sites for Triangle service businesses" />
+    <meta
+      property="og:description"
+      content="One client per niche, per city, locked for 12 months. Flat rate, fixed deadline."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Kamron Web — Premium sites for Triangle service businesses" />
+    <meta
+      name="twitter:description"
+      content="One client per niche, per city, locked for 12 months. Flat rate, fixed deadline."
+    />
+
+    <!-- Local business schema. [PLACEHOLDER — url] add the live domain. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Kamron Web",
+        "description": "Premium websites for local service businesses in the Triangle. One client per niche, per city, locked for 12 months.",
+        "telephone": "+1-919-453-3252",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Raleigh",
+          "addressRegion": "NC",
+          "addressCountry": "US"
+        },
+        "areaServed": ["Raleigh NC", "Durham NC", "Cary NC", "Apex NC", "Wake Forest NC"],
+        "priceRange": "$3,000 - $5,500"
+      }
+    </script>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233E6FF0'/%3E%3Cstop offset='1' stop-color='%2335C8E8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='%23EDF0F4'/%3E%3Cpath d='M9 8v16M9 16l9-8M9 16l9 8' stroke='url(%23g)' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E"
     />
   </head>
   <body>
+    <noscript>
+      <div style="font-family: system-ui, sans-serif; padding: 3rem 1.5rem; text-align: center; color: #0f1520; background: #dfe1e5; min-height: 100vh">
+        <h1 style="font-size: 1.5rem; margin-bottom: 0.75rem">Kamron Web</h1>
+        <p style="max-width: 32rem; margin: 0 auto; color: #4c5866">
+          Premium websites for Triangle service businesses. One client per niche, per city.
+          This site needs JavaScript — or just call
+          <a href="tel:+19194533252" style="color: #2e5fe8; font-weight: 700">(919) 453-3252</a>.
+        </p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

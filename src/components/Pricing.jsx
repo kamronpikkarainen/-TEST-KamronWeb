@@ -91,7 +91,7 @@ export default function Pricing() {
   }, [reducedMotion]);
 
   return (
-    <section ref={root} id="pricing" className="relative px-6 py-28 sm:py-40">
+    <section ref={root} id="pricing" className="relative scroll-mt-24 px-6 py-28 sm:py-40">
       <div className="relative mx-auto max-w-5xl">
         <div className="pr-head">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
@@ -130,12 +130,17 @@ export default function Pricing() {
               <p className="mt-2 text-sm text-mute">{tier.blurb}</p>
               <ul className="mt-7 space-y-3">
                 {tier.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm text-ink/90">
+                  <li key={f} className="flex items-start gap-3 text-sm font-medium text-ink/90">
                     <span
-                      className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${
-                        tier.recommended ? 'bg-accent' : 'bg-amber2'
-                      }`}
-                    />
+                      className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black text-white"
+                      style={{
+                        background: tier.recommended
+                          ? 'linear-gradient(120deg, #2E5FE8, #29B8E8)'
+                          : 'linear-gradient(120deg, #E8B06A, #F0A8C8)',
+                      }}
+                    >
+                      ✓
+                    </span>
                     {f}
                   </li>
                 ))}
@@ -143,10 +148,10 @@ export default function Pricing() {
               <button
                 type="button"
                 onClick={() => scrollToId('cta')}
-                className={`mt-9 w-full rounded-full py-3.5 text-sm font-bold transition-transform hover:scale-[1.02] active:scale-[0.98] ${
+                className={`mt-9 w-full rounded-full py-3.5 text-sm font-extrabold transition-transform hover:scale-[1.02] active:scale-[0.98] ${
                   tier.recommended
-                    ? 'btn-liquid'
-                    : 'border border-ink/20 text-ink hover:border-ink/40'
+                    ? 'btn-liquid btn-sheen'
+                    : 'border-2 border-ink/25 text-ink hover:border-ink/50'
                 }`}
               >
                 {tier.cta}

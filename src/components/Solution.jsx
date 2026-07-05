@@ -161,8 +161,16 @@ export default function Solution() {
               </div>
 
               <div className="relative">
-                {/* Track bed */}
+                {/* Track bed with a tick for every day */}
                 <div className="h-1.5 w-full rounded-full bg-ink/[0.08]" />
+                {Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1).map((day) => (
+                  <span
+                    key={day}
+                    aria-hidden="true"
+                    className="absolute -top-1 h-1 w-px bg-ink/15"
+                    style={{ left: `${(day / TOTAL_DAYS) * 100}%` }}
+                  />
+                ))}
                 {/* Fill — default (reduced-motion) state is the final width */}
                 <div
                   className={`sol-fill-${ti} absolute left-0 top-0 h-1.5 w-full origin-left rounded-full`}

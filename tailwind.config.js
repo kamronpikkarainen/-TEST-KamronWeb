@@ -7,9 +7,9 @@ export default {
         // Liquid-glass light theme — silver ground, ink type, prismatic accents
         base: '#DFE1E5',
         panel: '#FFFFFF',
-        ink: '#182030',
-        mute: '#5B6674',
-        accent: '#3E6FF0', // azure — primary accent
+        ink: '#0F1520',
+        mute: '#4C5866',
+        accent: '#2E5FE8', // azure — primary accent
         cyan2: '#35C8E8',
         viol: '#8B7CF7',
         blush: '#F0A8C8',

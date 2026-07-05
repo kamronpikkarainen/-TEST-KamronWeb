@@ -200,7 +200,7 @@ function FragmentRow({ niche }) {
         return (
           <div
             key={city}
-            className={`x-cell glass relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20 ${
+            className={`x-cell glass-lite relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20 ${
               isTaken ? 'x-taken !bg-ink/[0.05]' : isDemo ? 'x-demo' : ''
             }`}
           >

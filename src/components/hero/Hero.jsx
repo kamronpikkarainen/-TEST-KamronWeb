@@ -85,7 +85,7 @@ export default function Hero() {
           <button
             type="button"
             onClick={() => scrollToId('cta')}
-            className="btn-liquid rounded-full px-7 py-3.5 text-sm font-bold transition-transform hover:scale-[1.04] active:scale-[0.98]"
+            className="btn-liquid btn-sheen rounded-full px-8 py-4 text-sm font-extrabold transition-transform hover:scale-[1.04] active:scale-[0.98]"
           >
             Book a call
           </button>

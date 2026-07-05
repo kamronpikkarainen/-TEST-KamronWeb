@@ -35,7 +35,7 @@ export default function CTA() {
     <section
       ref={root}
       id="cta"
-      className="relative flex min-h-[90svh] flex-col items-center justify-center overflow-hidden px-6 text-center"
+      className="relative flex min-h-[90svh] scroll-mt-24 flex-col items-center justify-center overflow-hidden px-6 text-center"
     >
       {/* Prismatic glow pooling behind the final ask */}
       <div
@@ -44,6 +44,20 @@ export default function CTA() {
         style={{
           background:
             'radial-gradient(ellipse 55% 45% at 50% 72%, rgba(53,200,232,0.22), transparent 65%), radial-gradient(ellipse 45% 40% at 38% 30%, rgba(139,124,247,0.16), transparent 60%), radial-gradient(ellipse 40% 35% at 65% 40%, rgba(240,168,200,0.14), transparent 60%)',
+        }}
+      />
+
+      {/* Glass-ring callback to the hero sculpture */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[38rem] w-[38rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30"
+        style={{
+          background:
+            'conic-gradient(from 210deg, rgba(232,176,106,0.8), rgba(41,184,232,0.8), rgba(46,95,232,0.8), rgba(139,124,247,0.8), rgba(240,168,200,0.8), rgba(232,176,106,0.8))',
+          WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 13px))',
+          mask: 'radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 13px))',
+          filter: 'blur(5px)',
+          transform: 'translate(-50%, -50%) rotate(-8deg) scaleY(0.72)',
         }}
       />
 
@@ -60,7 +74,7 @@ export default function CTA() {
         <div className="cta-el mt-10">
           <a
             href="tel:+19194533252"
-            className="btn-liquid inline-block rounded-full px-10 py-5 text-base font-extrabold transition-transform hover:scale-[1.05] active:scale-[0.98]"
+            className="btn-liquid btn-sheen inline-block rounded-full px-11 py-5 text-base font-black transition-transform hover:scale-[1.05] active:scale-[0.98] sm:text-lg"
           >
             Book a call — (919) 453-3252
           </a>

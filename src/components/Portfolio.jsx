@@ -134,7 +134,7 @@ export default function Portfolio() {
   const [featured, ...rest] = PROJECTS;
 
   return (
-    <section ref={root} id="work" className="relative px-6 py-28 sm:py-40">
+    <section ref={root} id="work" className="relative scroll-mt-24 px-6 py-28 sm:py-40">
       <div className="mx-auto max-w-5xl">
         <div className="pf-head">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">

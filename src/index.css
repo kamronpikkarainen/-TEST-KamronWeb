@@ -85,9 +85,20 @@ html.lenis body {
   opacity: 0.55;
 }
 
+/* Lighter frosted panel without backdrop-filter — for dense grids of
+   small glass elements (the exclusivity board) where 20 live blurs
+   would cost real GPU time for near-invisible gain. */
+.glass-lite {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 12px 28px -16px rgba(50, 70, 110, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
 /* Prismatic gradient text */
 .text-liquid {
-  background-image: linear-gradient(100deg, #3e6ff0 10%, #35c8e8 45%, #8b7cf7 80%);
+  background-image: linear-gradient(100deg, #2e5fe8 10%, #29b8e8 45%, #7c6bf0 80%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -95,11 +106,35 @@ html.lenis body {
 
 /* Primary liquid button */
 .btn-liquid {
-  background-image: linear-gradient(120deg, #3e6ff0, #35c8e8 85%);
+  background-image: linear-gradient(120deg, #2e5fe8, #29b8e8 88%);
   color: #ffffff;
   box-shadow:
-    0 14px 34px -12px rgba(62, 111, 240, 0.55),
+    0 16px 38px -12px rgba(46, 95, 232, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Gloss sweep on hover — add alongside .btn-liquid on real buttons only
+   (not badges): it needs its own positioning context. */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.4) 46%,
+    transparent 60%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.55s ease;
+  pointer-events: none;
+}
+.btn-sheen:hover::after {
+  transform: translateX(130%);
 }
 
 /* CSS lighting convention for the light theme: a white gloss entering

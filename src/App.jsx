@@ -26,9 +26,15 @@ function Page() {
 
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only z-[60] rounded-full focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white"
+      >
+        Skip to content
+      </a>
       <Backdrop />
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <Problem />
         <Solution />
