@@ -1,16 +1,11 @@
-import { useLayoutEffect, useRef } from 'react';
-import { gsap } from '../lib/gsap';
-import { usePerf } from '../lib/perf';
+import { useRef } from 'react';
+import useReveal from '../lib/useReveal';
 
 /**
- * Chapter 3 — the flat-rate build model, drawn as a race.
- * Two delivery tracks (Starter 14 days, Pro 10 days) fill left-to-right
- * as you scroll, at the same days-per-scroll rate — so Pro visibly hits
- * its launch flag while Starter is still running. Milestones pop in as
- * each track passes them.
- *
- * Reduced-motion: the DOM's default state IS the finished race (fills at
- * final width, milestones visible), so it degrades to a static diagram.
+ * Chapter 3 — the flat-rate build model. The two delivery tracks are
+ * drawn in their finished state (Pro's fill visibly stops four days
+ * short of Starter's), on a calm glass panel that fades in. No scroll
+ * scrubbing — the comparison reads at a glance.
  */
 
 const TOTAL_DAYS = 14;
@@ -21,7 +16,7 @@ const TRACKS = [
     days: 14,
     price: '$3,000',
     fill: 'linear-gradient(90deg, #E8B06A, #F0A8C8)',
-    flagClass: 'bg-amber2',
+    flag: '#E8B06A',
     milestones: [
       { day: 1, label: 'Kickoff call' },
       { day: 4, label: 'Design approved' },
@@ -35,7 +30,7 @@ const TRACKS = [
     price: '$5,500',
     recommended: true,
     fill: 'linear-gradient(90deg, #3E6FF0, #35C8E8)',
-    flagClass: 'bg-accent',
+    flag: '#2E5FE8',
     milestones: [
       { day: 1, label: 'Kickoff call' },
       { day: 3, label: 'Design approved' },
@@ -47,106 +42,23 @@ const TRACKS = [
 
 export default function Solution() {
   const root = useRef(null);
-  const { reducedMotion } = usePerf();
-
-  useLayoutEffect(() => {
-    if (reducedMotion) return undefined;
-
-    const mm = gsap.matchMedia(root);
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.sol-head',
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          stagger: 0.1,
-          scrollTrigger: { trigger: root.current, start: 'top 70%' },
-        }
-      );
-    }, root);
-
-    // One scrubbed timeline measured in "days": both fills advance at the
-    // same rate, so the 4-day gap between tracks is literal on screen.
-    // Desktop pins the section so the whole race stays on stage while it
-    // draws; short mobile viewports scrub in place instead of pinning.
-    const buildRace = (pin) => {
-      const tl = gsap.timeline({
-        scrollTrigger: pin
-          ? {
-              trigger: root.current,
-              start: 'top top',
-              end: '+=150%',
-              pin: true,
-              scrub: 0.5,
-            }
-          : {
-              trigger: '.sol-race',
-              start: 'top 70%',
-              end: '+=110%',
-              scrub: 0.5,
-            },
-      });
-
-      TRACKS.forEach((track, ti) => {
-        tl.fromTo(
-          `.sol-fill-${ti}`,
-          { scaleX: 0 },
-          { scaleX: track.days / TOTAL_DAYS, duration: track.days, ease: 'none' },
-          0
-        );
-        track.milestones.forEach((m) => {
-          tl.fromTo(
-            `.sol-ms-${ti}-${m.day}`,
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
-            Math.max(m.day - 0.7, 0)
-          );
-        });
-        tl.fromTo(
-          `.sol-flag-${ti}`,
-          { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.9, ease: 'back.out(2.5)' },
-          track.days - 0.7
-        );
-      });
-
-      tl.fromTo(
-        '.sol-gap-note',
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' },
-        10.4
-      );
-      tl.to({}, { duration: 1.5 }); // hold the finished race before unpinning
-    };
-
-    mm.add('(min-width: 768px)', () => buildRace(true));
-    mm.add('(max-width: 767px)', () => buildRace(false));
-
-    return () => {
-      mm.revert();
-      ctx.revert();
-    };
-  }, [reducedMotion]);
+  useReveal(root);
 
   return (
-    <section ref={root} className="relative px-6 py-28 sm:py-40">
-      <div className="mx-auto max-w-5xl">
-        <p className="sol-head mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
+    <section ref={root} className="relative px-6 py-28 sm:py-36">
+      <div className="mx-auto max-w-5xl text-center">
+        <p className="reveal mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
           The build
         </p>
-        <h2 className="sol-head max-w-2xl text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
+        <h2 className="reveal mx-auto max-w-2xl text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
           Flat rate. Fixed deadline. <span className="text-liquid">No surprises.</span>
         </h2>
-        <p className="sol-head mt-5 max-w-md text-mute">
+        <p className="reveal mx-auto mt-5 max-w-md text-mute">
           You pick a track. I build. You launch on the date we set.
         </p>
 
-        <div className="sol-race glass noise mt-16 space-y-14 rounded-3xl p-8 sm:mt-20 sm:p-12">
-          {TRACKS.map((track, ti) => (
+        <div className="reveal glass mt-14 space-y-14 rounded-3xl p-8 text-left sm:mt-16 sm:p-12">
+          {TRACKS.map((track) => (
             <div key={track.name}>
               <div className="mb-8 flex items-baseline gap-3">
                 <span className="text-lg font-extrabold text-ink">{track.name}</span>
@@ -161,7 +73,6 @@ export default function Solution() {
               </div>
 
               <div className="relative">
-                {/* Track bed with a tick for every day */}
                 <div className="h-1.5 w-full rounded-full bg-ink/[0.08]" />
                 {Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1).map((day) => (
                   <span
@@ -171,31 +82,26 @@ export default function Solution() {
                     style={{ left: `${(day / TOTAL_DAYS) * 100}%` }}
                   />
                 ))}
-                {/* Fill — default (reduced-motion) state is the final width */}
+                {/* Final fill width — Pro stops four days short of Starter */}
                 <div
-                  className={`sol-fill-${ti} absolute left-0 top-0 h-1.5 w-full origin-left rounded-full`}
-                  style={{
-                    transform: `scaleX(${track.days / TOTAL_DAYS})`,
-                    background: track.fill,
-                  }}
+                  className="absolute left-0 top-0 h-1.5 rounded-full"
+                  style={{ width: `${(track.days / TOTAL_DAYS) * 100}%`, background: track.fill }}
                 />
-                {/* Launch flag */}
                 <div
-                  className={`sol-flag-${ti} absolute -top-2 z-10 flex -translate-x-1/2 flex-col items-center`}
+                  className="absolute -top-2 z-10 flex -translate-x-1/2 flex-col items-center"
                   style={{ left: `${(track.days / TOTAL_DAYS) * 100}%` }}
                 >
                   <span
-                    className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-black text-white shadow-lg ${track.flagClass}`}
+                    className="flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-black text-white shadow-lg"
+                    style={{ background: track.flag }}
                   >
                     ✓
                   </span>
                 </div>
-
-                {/* Milestones */}
                 {track.milestones.map((m) => (
                   <div
                     key={m.day}
-                    className={`sol-ms-${ti}-${m.day} absolute top-4 flex -translate-x-1/2 flex-col items-center text-center`}
+                    className="absolute top-4 flex -translate-x-1/2 flex-col items-center text-center"
                     style={{ left: `${(m.day / TOTAL_DAYS) * 100}%` }}
                   >
                     <span className="mb-1.5 h-2.5 w-px bg-ink/25" />
@@ -212,7 +118,7 @@ export default function Solution() {
             </div>
           ))}
 
-          <p className="sol-gap-note text-lg font-semibold text-ink">
+          <p className="text-lg font-semibold text-ink">
             Pro launches four days sooner.{' '}
             <span className="text-mute">Same flat rate either way — the meter never runs.</span>
           </p>

@@ -45,25 +45,17 @@ html.lenis body {
   background-size: 140px 140px;
 }
 
-/* Frosted glass panel — with faint diagonal facet streaks baked into
-   the surface and a chromatic aura at opposing corners, so every panel
-   reads as cut crystal rather than flat frosting. */
+/* Frosted glass panel — clean and calm: a soft white frosting with a
+   single quiet shadow, matching the airy CTA aesthetic (no facet
+   streaks, no chromatic corner auras). */
 .glass {
-  background:
-    linear-gradient(115deg, transparent 36%, rgba(255, 255, 255, 0.5) 40%, transparent 47%),
-    linear-gradient(115deg, transparent 62%, rgba(255, 255, 255, 0.28) 66%, transparent 72%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.44));
-  /* 14px reads as frosted as 22px here but the blur cost scales with
-     radius, and dropping saturate() removes a second backdrop pass —
-     this is what every glass panel recomposites on each scroll frame. */
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.5));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   box-shadow:
-    0 24px 60px -24px rgba(50, 70, 110, 0.3),
-    -10px -10px 30px -22px rgba(53, 200, 232, 0.65),
-    10px 10px 30px -22px rgba(139, 124, 247, 0.65),
-    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+    0 22px 55px -26px rgba(60, 72, 104, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* Iridescent hairline ring around a glass panel — the thin prismatic
@@ -92,7 +84,7 @@ html.lenis body {
     linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.4;
 }
 
 /* Lighter frosted panel without backdrop-filter — for dense grids of

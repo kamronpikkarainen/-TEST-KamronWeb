@@ -93,14 +93,14 @@ export default function Pricing() {
   return (
     <section ref={root} id="pricing" className="relative scroll-mt-24 px-6 py-28 sm:py-40">
       <div className="relative mx-auto max-w-5xl">
-        <div className="pr-head">
+        <div className="pr-head text-center">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
             Pricing
           </p>
           <h2 className="text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
             Two ways in. <span className="text-mute">Both flat.</span>
           </h2>
-          <p className="mt-5 max-w-md text-mute">
+          <p className="mx-auto mt-5 max-w-md text-mute">
             No hourly billing, no scope creep, no invoice surprises. The price is the price.
           </p>
         </div>
