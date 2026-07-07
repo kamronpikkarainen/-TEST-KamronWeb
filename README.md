@@ -8,9 +8,10 @@ service businesses. One client per niche, per city, locked for 12 months.
 
 ```bash
 npm install
-npm run dev      # local dev server
-npm run build    # production build → dist/
-npm run preview  # serve the production build
+npm run dev           # local dev server
+npm run build         # production build → dist/
+npm run preview       # serve the production build
+npm run build:single  # everything inlined into one file → dist-single/index.html
 ```
 
 ## Stack
