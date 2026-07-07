@@ -1,6 +1,8 @@
 import { Suspense, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import {
+  AdaptiveDpr,
+  AdaptiveEvents,
   ContactShadows,
   Environment,
   Float,
@@ -155,22 +157,31 @@ function Blobs() {
   );
 }
 
-/** Shared transmission look for the crystal pieces. */
+// One shared transmission background color object — avoids allocating a
+// new THREE.Color on every render of every crystal material.
+const TRANSMISSION_BG = new THREE.Color(PAGE_BG);
+
+/**
+ * Shared transmission look for the crystal pieces. Tuned for cost:
+ * a 256px refraction buffer with 4 samples reads identically to 512/6
+ * at this on-screen size, and temporalDistortion is dropped (it forced
+ * a per-frame noise-buffer update for a barely-visible shimmer).
+ */
 function CrystalMaterial({ tint = '#EAF2F8', aberration = 0.5, ...props }) {
   return (
     <MeshTransmissionMaterial
-      background={new THREE.Color(PAGE_BG)}
+      background={TRANSMISSION_BG}
       transmission={1}
-      samples={6}
-      resolution={512}
+      samples={4}
+      resolution={256}
       thickness={1.9}
       ior={1.52}
-      roughness={0.02}
+      roughness={0.04}
       chromaticAberration={aberration}
-      anisotropicBlur={0.04}
-      distortion={0.12}
-      distortionScale={0.4}
-      temporalDistortion={0.08}
+      anisotropicBlur={0.06}
+      distortion={0.1}
+      distortionScale={0.35}
+      temporalDistortion={0}
       clearcoat={1}
       iridescence={0.3}
       iridescenceIOR={1.3}
@@ -326,10 +337,16 @@ function FrostedPills() {
   );
 }
 
-export default function HeroScene({ motion }) {
+export default function HeroScene({ motion, active = true }) {
   return (
     <Canvas
-      dpr={[1, 1.75]}
+      // frameloop stops entirely when the hero scrolls out of view, so the
+      // two transmission passes cost nothing while the rest of the page is
+      // read. AdaptiveDpr drops resolution under load and restores it when
+      // idle, so a slow GPU degrades gracefully instead of stuttering.
+      frameloop={active ? 'always' : 'never'}
+      dpr={[1, 1.5]}
+      performance={{ min: 0.5 }}
       camera={{ position: [0, 0.25, 7.2], fov: 35 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ pointerEvents: 'none' }}
@@ -342,7 +359,7 @@ export default function HeroScene({ motion }) {
         <FrostedPills />
         {/* Airborne glints drifting through the scene */}
         <Sparkles
-          count={46}
+          count={24}
           scale={[7.5, 4.2, 4]}
           position={[0, -0.1, -1]}
           size={4}
@@ -360,6 +377,8 @@ export default function HeroScene({ motion }) {
           far={3.2}
           color="#2A3A5C"
         />
+        <AdaptiveDpr pixelated={false} />
+        <AdaptiveEvents />
       </Suspense>
     </Canvas>
   );

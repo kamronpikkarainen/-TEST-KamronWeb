@@ -36,6 +36,11 @@ const LINES = [
     cls: 'text-2xl font-extrabold text-ink sm:text-4xl',
     dim: false, // the anchor — holds at full opacity
   },
+  {
+    text: 'And you’re not getting seen.',
+    cls: 'text-2xl font-extrabold text-ink sm:text-4xl',
+    dim: false, // second half of the anchor block — also holds
+  },
 ];
 
 export default function Problem() {
@@ -53,7 +58,7 @@ export default function Problem() {
         scrollTrigger: {
           trigger: root.current,
           start: 'top top',
-          end: '+=75%', // short pin — fast punch
+          end: '+=90%', // short pin — fast punch (six beats now)
           pin: true,
           scrub: 0.4,
         },

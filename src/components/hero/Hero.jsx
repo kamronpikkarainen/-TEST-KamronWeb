@@ -1,4 +1,4 @@
-import { Suspense, lazy, useLayoutEffect, useRef } from 'react';
+import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from '../../lib/gsap';
 import { usePerf } from '../../lib/perf';
 import { scrollToId } from '../../lib/scroll';
@@ -10,19 +10,41 @@ const HeroScene = lazy(() => import('./HeroScene'));
 
 export default function Hero() {
   const root = useRef(null);
+  const stage = useRef(null);
   const { reducedMotion, full } = usePerf();
+
+  // Whether the 3D stage is on screen. When it scrolls away the canvas
+  // frameloop halts, so the (expensive) transmission passes stop entirely
+  // while the visitor reads the rest of the page.
+  const [sceneActive, setSceneActive] = useState(true);
 
   // Mutable channel into the 3D scene: pointer + scroll, no re-renders.
   const motion = useRef({ mouse: { x: 0, y: 0 }, scroll: 0 });
 
-  useLayoutEffect(() => {
-    if (reducedMotion) return undefined;
+  useEffect(() => {
+    if (!full || !stage.current) return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => setSceneActive(entry.isIntersecting),
+      { rootMargin: '200px 0px' } // resume just before it scrolls back in
+    );
+    io.observe(stage.current);
+    return () => io.disconnect();
+  }, [full]);
 
+  // Pointer parallax only matters while the scene is on screen — skip the
+  // per-move work entirely once it's paused.
+  useEffect(() => {
+    if (reducedMotion || !sceneActive) return undefined;
     const onPointer = (e) => {
       motion.current.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       motion.current.mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
     };
-    window.addEventListener('pointermove', onPointer);
+    window.addEventListener('pointermove', onPointer, { passive: true });
+    return () => window.removeEventListener('pointermove', onPointer);
+  }, [reducedMotion, sceneActive]);
+
+  useLayoutEffect(() => {
+    if (reducedMotion) return undefined;
 
     const ctx = gsap.context(() => {
       // Entrance: staggered rise for copy, canvas fades up after.
@@ -59,10 +81,7 @@ export default function Hero() {
       });
     }, root);
 
-    return () => {
-      window.removeEventListener('pointermove', onPointer);
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, [reducedMotion]);
 
   return (
@@ -100,10 +119,10 @@ export default function Hero() {
       </div>
 
       {/* 3D stage */}
-      <div className="hero-stage relative z-0 mx-auto h-[46svh] w-full max-w-6xl sm:h-[52svh]">
+      <div ref={stage} className="hero-stage relative z-0 mx-auto h-[46svh] w-full max-w-6xl sm:h-[52svh]">
         {full ? (
           <Suspense fallback={<HeroFallback />}>
-            <HeroScene motion={motion} />
+            <HeroScene motion={motion} active={sceneActive} />
           </Suspense>
         ) : (
           <HeroFallback />
