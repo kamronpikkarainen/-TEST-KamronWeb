@@ -8,6 +8,28 @@ export default function Backdrop() {
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
       <div className="absolute inset-0 bg-base" />
       <div className="grid-lines absolute inset-0 opacity-80" />
+      {/* Fine sub-grid, like the denser plot regions of the reference board */}
+      <div
+        className="grid-lines absolute inset-0 opacity-[0.16]"
+        style={{ backgroundSize: '46.667px 46.667px' }}
+      />
+      {/* Caustic light shafts falling through the scene */}
+      <div
+        className="absolute -top-[20%] left-[18%] h-[150%] w-[22rem] -rotate-[24deg] opacity-25"
+        style={{
+          background:
+            'linear-gradient(90deg, transparent, rgba(255,255,255,0.7) 50%, transparent)',
+          filter: 'blur(28px)',
+        }}
+      />
+      <div
+        className="absolute -top-[25%] right-[10%] h-[150%] w-[14rem] -rotate-[24deg] opacity-[0.18]"
+        style={{
+          background:
+            'linear-gradient(90deg, transparent, rgba(255,255,255,0.65) 50%, transparent)',
+          filter: 'blur(24px)',
+        }}
+      />
       {/* Prismatic blobs — cyan / azure / violet / blush / amber */}
       <div
         className="absolute left-[48%] top-[22%] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full opacity-45"

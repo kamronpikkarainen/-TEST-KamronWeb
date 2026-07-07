@@ -68,7 +68,7 @@ export default function Hero() {
   return (
     <section ref={root} className="relative flex min-h-[100svh] flex-col overflow-hidden">
       <div className="hero-copy relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 pt-32 text-center sm:pt-36">
-        <p className="hero-line glass mb-5 rounded-full px-4 py-1.5 text-xs font-medium tracking-wide text-mute">
+        <p className="hero-line glass glass-iridescent relative mb-5 rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide text-mute">
           Raleigh, NC · Websites for local service businesses
         </p>
         <h1 className="font-sans text-4xl font-extrabold leading-[1.05] tracking-tightest text-ink sm:text-6xl lg:text-7xl">

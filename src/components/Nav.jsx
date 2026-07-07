@@ -3,7 +3,7 @@ import { scrollToId } from '../lib/scroll';
 export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="glass noise mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-5xl items-center justify-between rounded-full py-2.5 pl-5 pr-2.5">
+      <div className="glass glass-iridescent noise relative mx-auto mt-4 flex w-[calc(100%-2rem)] max-w-5xl items-center justify-between rounded-full py-2.5 pl-5 pr-2.5">
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

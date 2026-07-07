@@ -7,6 +7,7 @@ import {
   Lightformer,
   MeshTransmissionMaterial,
   RoundedBox,
+  Sparkles,
 } from '@react-three/drei';
 import * as THREE from 'three';
 import { AMBIENT, FILL_LIGHT, KEY_LIGHT, RIM_LIGHT } from '../../lib/lighting';
@@ -78,6 +79,24 @@ function Lights() {
           position={[2, 6, -6]}
           scale={5}
         />
+        {/* Two thin grazing strips — these are what the crystal facets
+            catch as sharp glints. */}
+        <Lightformer
+          form="rect"
+          intensity={6}
+          color="#FFFFFF"
+          position={[-3, 2, 6]}
+          rotation={[0, 0.4, -0.5]}
+          scale={[7, 0.3, 1]}
+        />
+        <Lightformer
+          form="rect"
+          intensity={3}
+          color="#DFF3FF"
+          position={[4, 4, -2]}
+          rotation={[0, -0.6, 0.4]}
+          scale={[5, 0.25, 1]}
+        />
       </Environment>
     </>
   );
@@ -143,12 +162,12 @@ function CrystalMaterial({ tint = '#EAF2F8', aberration = 0.5, ...props }) {
       background={new THREE.Color(PAGE_BG)}
       transmission={1}
       samples={6}
-      resolution={384}
+      resolution={512}
       thickness={1.9}
       ior={1.52}
-      roughness={0.03}
+      roughness={0.02}
       chromaticAberration={aberration}
-      anisotropicBlur={0.1}
+      anisotropicBlur={0.04}
       distortion={0.12}
       distortionScale={0.4}
       temporalDistortion={0.08}
@@ -195,25 +214,68 @@ function GlassSculpture({ motion }) {
 
   return (
     <group ref={group} position={[0, -0.75, -1.2]} rotation={[0.18, -0.8, 0]}>
-      {/* Crystal tower */}
-      <mesh>
-        <boxGeometry args={[1.3, 2.7, 1.3]} />
-        <CrystalMaterial tint="#DCEBF8" aberration={0.65} />
-      </mesh>
+      {/* Crystal tower — beveled edges so the grazing env strips read
+          as sharp facet glints running down the monolith */}
+      <RoundedBox args={[1.3, 2.7, 1.3]} radius={0.07} smoothness={4}>
+        <CrystalMaterial tint="#DCEBF8" aberration={0.9} />
+      </RoundedBox>
       {/* Tilted glass ring, orbiting the tower like the reference */}
       <group ref={ring} rotation={[1.32, 0.12, 0.35]}>
         <mesh>
           <torusGeometry args={[1.95, 0.24, 20, 96]} />
           <CrystalMaterial
             tint="#F2ECF8"
-            aberration={0.8}
+            aberration={1}
             thickness={0.9}
-            iridescence={0.7}
-            iridescenceIOR={1.3}
+            iridescence={0.9}
+            iridescenceIOR={1.35}
           />
         </mesh>
       </group>
     </group>
+  );
+}
+
+/** Small crystal shards orbiting the sculpture — polished solid gems.
+ *  (Deliberately NOT transmissive: the renderer's shared transmission
+ *  pass samples the transparent canvas background and rims transparent
+ *  meshes with dark edges. Env-driven gloss + full iridescence reads
+ *  crystalline without the artifact.) */
+const SHARDS = [
+  { position: [-1.95, 1.35, -0.6], size: 0.19, speed: 1.6 },
+  { position: [2.15, 1.05, -1.0], size: 0.23, speed: 1.2 },
+  { position: [-2.45, -1.05, -0.3], size: 0.16, speed: 1.9 },
+  { position: [1.75, -1.35, 0.2], size: 0.14, speed: 2.2 },
+  { position: [0.45, 1.8, -1.4], size: 0.12, speed: 1.4 },
+];
+
+function CrystalShards() {
+  return (
+    <>
+      {SHARDS.map((s) => (
+        <Float
+          key={s.position.join(',')}
+          speed={s.speed}
+          rotationIntensity={2.2}
+          floatIntensity={1.2}
+        >
+          <mesh position={s.position}>
+            <octahedronGeometry args={[s.size, 0]} />
+            <meshPhysicalMaterial
+              color="#C9DEF6"
+              metalness={0.15}
+              roughness={0.06}
+              iridescence={1}
+              iridescenceIOR={1.45}
+              clearcoat={1}
+              clearcoatRoughness={0.06}
+              envMapIntensity={2}
+              specularIntensity={1.2}
+            />
+          </mesh>
+        </Float>
+      ))}
+    </>
   );
 }
 
@@ -232,10 +294,9 @@ function FrostedPills() {
         >
           <meshPhysicalMaterial
             color="#F6FAFD"
-            transmission={0.92}
-            thickness={0.6}
-            ior={1.4}
-            roughness={0.5}
+            transparent
+            opacity={0.55}
+            roughness={0.35}
             clearcoat={1}
             clearcoatRoughness={0.2}
             envMapIntensity={1.1}
@@ -252,10 +313,9 @@ function FrostedPills() {
         >
           <meshPhysicalMaterial
             color="#F2F8FC"
-            transmission={0.92}
-            thickness={0.55}
-            ior={1.4}
-            roughness={0.55}
+            transparent
+            opacity={0.5}
+            roughness={0.4}
             clearcoat={1}
             clearcoatRoughness={0.25}
             envMapIntensity={1}
@@ -278,7 +338,18 @@ export default function HeroScene({ motion }) {
         <Lights />
         <Blobs />
         <GlassSculpture motion={motion} />
+        <CrystalShards />
         <FrostedPills />
+        {/* Airborne glints drifting through the scene */}
+        <Sparkles
+          count={46}
+          scale={[7.5, 4.2, 4]}
+          position={[0, -0.1, -1]}
+          size={4}
+          speed={0.32}
+          opacity={0.75}
+          color="#3E6FF0"
+        />
         {/* Soft slate ground shadow with real falloff, floating the
             sculpture just above the page like the reference render. */}
         <ContactShadows
