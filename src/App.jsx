@@ -35,9 +35,8 @@ function Page() {
       <Backdrop />
       <Nav />
       <main id="main">
-        <Hero>
-          <Problem />
-        </Hero>
+        <Hero />
+        <Problem />
         <Solution />
         <Exclusivity />
         <Portfolio />
