@@ -67,8 +67,11 @@ export default function Hero() {
         }}
       />
 
-      {/* Ink swirl + massive "Kamron Web" wordmark, intertwined */}
-      <div className="hero-el relative z-10 mx-auto h-40 w-full max-w-[1300px] sm:h-56 md:h-72 lg:h-80">
+      {/* Ink swirl + massive "Kamron Web" wordmark, intertwined.
+          Full-bleed: breaks out of the section's padding to span the
+          true viewport width, so the ink runs past the screen's edges
+          rather than sitting in a bounded, centered box. */}
+      <div className="hero-el relative left-1/2 z-10 h-44 w-screen -translate-x-1/2 sm:h-60 md:h-80 lg:h-[22rem]">
         <InkSwirlBack className="absolute inset-0 h-full w-full" />
         <h2
           className="absolute inset-0 flex items-center justify-center text-center font-extrabold uppercase tracking-tightest text-white"
