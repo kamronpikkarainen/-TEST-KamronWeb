@@ -127,6 +127,39 @@ html.lenis body {
   }
 }
 
+/* Brushed-chrome text: a metallic gradient with a bright highlight band
+   that sweeps across, reading as light bouncing off a polished, smooth
+   surface. Used on the "Kamron Web" wordmark. */
+.text-chrome {
+  background-image: linear-gradient(
+    100deg,
+    #6b7688 0%,
+    #aab4c0 18%,
+    #f4f7fa 32%,
+    #ffffff 38%,
+    #f4f7fa 44%,
+    #aab4c0 58%,
+    #78859a 72%,
+    #c3cbd4 86%,
+    #6b7688 100%
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: chrome-shine 5s ease-in-out infinite;
+}
+
+@keyframes chrome-shine {
+  0%,
+  100% {
+    background-position: 0% 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+}
+
 /* Primary liquid button — glassy bevel: bright top edge, dark bottom
    inner edge, colored throw shadow. */
 .btn-liquid {

@@ -18,6 +18,8 @@ export default {
       },
       fontFamily: {
         sans: ['"Inter Variable"', 'Inter', 'system-ui', 'sans-serif'],
+        // Bold poster-style display face for the "Kamron Web" wordmark.
+        display: ['Anton', 'Impact', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.04em',

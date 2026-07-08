@@ -1,18 +1,34 @@
 /**
- * The laptop as it was originally: peeking up over the bottom edge of
- * the hero, showing only its top bezel and browser chrome bar
- * (traffic lights, "Kamron Web" tab, address bar reading
- * www.kamronweb.com) before it's cropped off by the section's bottom
- * edge. It sits in front of the headline, so its top edge occludes the
- * headline's last line.
+ * The laptop as a screen you scroll inside of. A dark bezel frames a
+ * browser chrome bar (traffic lights + "Kamron Web" tab + address bar
+ * reading www.kamronweb.com), and everything passed as children renders
+ * on the "screen" beneath it — here, that's the Problem section. The
+ * bezel's rounded sides and bottom grow to fit whatever height the
+ * children need.
+ *
+ * This component sits directly after the hero's text block in normal
+ * document flow (see Hero.jsx) — its top edge is what "peeks" into the
+ * bottom of the first viewport on load, and scrolling further reveals
+ * the rest of it (and the Problem section inside).
  *
  * [PLACEHOLDER — point the address bar at the real domain once it's live.]
  */
-export default function LaptopPeek({ className = '' }) {
+export default function LaptopFrame({ children, className = '' }) {
   return (
-    <div className={className}>
-      <div className="rounded-[1.75rem] bg-gradient-to-b from-[#171A1F] to-[#0C0F13] p-2.5 shadow-[0_-30px_80px_-30px_rgba(30,40,70,0.4)] sm:rounded-[2.25rem] sm:p-3.5">
+    <div className={`relative mx-auto w-[94%] max-w-[1360px] sm:w-[90%] ${className}`}>
+      {/* Webcam notch, sitting on the bezel above the screen's top edge */}
+      <div
+        aria-hidden="true"
+        className="absolute left-1/2 top-2 z-10 h-2 w-2 -translate-x-1/2 rounded-full bg-[#2A2F36] sm:top-2.5"
+      >
+        <span className="absolute inset-0 m-auto h-[3px] w-[3px] rounded-full bg-accent/60" />
+      </div>
+
+      {/* Bezel */}
+      <div className="rounded-[1.75rem] bg-gradient-to-b from-[#171A1F] to-[#0C0F13] p-2.5 shadow-[0_50px_120px_-40px_rgba(30,40,70,0.45)] sm:rounded-[2.25rem] sm:p-3.5">
+        {/* Screen */}
         <div className="overflow-hidden rounded-[1.35rem] bg-gradient-to-b from-[#EFF1F4] to-[#DFE1E5] sm:rounded-[1.75rem]">
+          {/* Browser chrome bar */}
           <div className="flex items-center gap-4 border-b border-ink/[0.06] bg-white/70 px-5 py-3.5 sm:gap-6 sm:px-8 sm:py-4">
             <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57] sm:h-3 sm:w-3" />
@@ -33,8 +49,9 @@ export default function LaptopPeek({ className = '' }) {
               </span>
             </div>
           </div>
-          {/* A sliver of screen body, just enough to read as a laptop before it crops off */}
-          <div className="h-24 sm:h-40" />
+
+          {/* The "screen" — the Problem section renders here */}
+          <div className="relative">{children}</div>
         </div>
       </div>
     </div>
