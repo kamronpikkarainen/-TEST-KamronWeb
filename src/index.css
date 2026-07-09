@@ -231,3 +231,295 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------------------------------------------------------------------
+   IntroLoader — a one-time blueprint/technical-drawing splash of the
+   "Kamron Web" wordmark, shown full-screen on load then dismissed
+   (see components/IntroLoader.jsx). Deliberately its own dark,
+   drafting-table look — a distinct brand beat, not a themed variant of
+   the light glass site underneath. Entrance/exit timing is driven by
+   inline animation-delay below; the blanket reduced-motion rule above
+   already collapses every animation/transition here to ~instant.
+   -------------------------------------------------------------------- */
+.loader-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+  background: #0b2a4a;
+  color: rgb(207, 227, 245);
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  opacity: 1;
+  transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
+}
+.loader-sheet--out {
+  opacity: 0;
+  filter: blur(6px);
+  transform: scale(1.02);
+  pointer-events: none;
+}
+
+.loader-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(234, 244, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 244, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(rgba(234, 244, 255, 0.65) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 244, 255, 0.65) 1px, transparent 1px);
+  background-size: 28px 28px, 28px 28px, 140px 140px, 140px 140px;
+  opacity: 0;
+  animation: loader-fade-in 1s ease-out 0.1s forwards;
+}
+
+.loader-reg {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  opacity: 0;
+  animation: loader-fade-in 0.6s ease-out 0.5s forwards;
+}
+.loader-reg::before,
+.loader-reg::after {
+  content: '';
+  position: absolute;
+  background: rgba(207, 227, 245, 0.9);
+}
+.loader-reg::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+.loader-reg::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+.loader-reg-tl {
+  top: 28px;
+  left: 28px;
+}
+.loader-reg-tr {
+  top: 28px;
+  right: 28px;
+}
+.loader-reg-bl {
+  bottom: 28px;
+  left: 28px;
+}
+.loader-reg-br {
+  bottom: 28px;
+  right: 28px;
+}
+
+.loader-dim {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 1px;
+  transform: translateY(96px);
+}
+.loader-dim-line {
+  position: absolute;
+  inset: -0.5px 0;
+  background: rgba(207, 227, 245, 0.9);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: loader-draw-line 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.75s forwards;
+}
+.loader-dim::before,
+.loader-dim::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  width: 1px;
+  height: 11px;
+  background: rgba(207, 227, 245, 0.9);
+  opacity: 0;
+  animation: loader-fade-in 0.3s ease-out 1.75s forwards;
+}
+.loader-dim::before {
+  left: 0;
+}
+.loader-dim::after {
+  right: 0;
+}
+.loader-dim-label {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(207, 227, 245, 0.92);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  animation: loader-fade-in 0.5s ease-out 1.9s forwards;
+}
+
+.loader-mark-wrap {
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px) scale(0.985);
+  animation: loader-settle 0.7s cubic-bezier(0.2, 0.9, 0.25, 1) 1.05s forwards;
+}
+.loader-mark {
+  position: relative;
+  margin: 0;
+  font-family: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 12vw, 8.5rem);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #f5faff;
+  -webkit-text-stroke: 1.5px rgba(207, 227, 245, 0.7);
+}
+/* Drafted double-stroke echo, offset like a redrawn blueprint line */
+.loader-mark::after {
+  content: 'KAMRON WEB';
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(207, 227, 245, 0.4);
+  transform: translate(4px, 3px);
+  z-index: -1;
+}
+.loader-tagline {
+  margin-top: 18px;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: rgba(207, 227, 245, 0.88);
+  opacity: 0;
+  animation: loader-fade-in 0.6s ease-out 1.55s forwards;
+}
+.loader-tagline b {
+  color: #f5faff;
+  font-weight: 600;
+}
+
+.loader-stamp {
+  position: absolute;
+  right: 9%;
+  bottom: 13%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  border: 2px solid #e8b06a;
+  color: #e8b06a;
+  transform: rotate(-11deg) scale(0);
+  opacity: 0;
+  animation: loader-stamp-down 0.5s cubic-bezier(0.3, 1.6, 0.4, 1) 2.05s forwards;
+}
+.loader-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid #e8b06a;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+.loader-stamp span {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-align: center;
+  padding: 0 10px;
+}
+.loader-stamp b {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+
+.loader-anno {
+  position: absolute;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: rgba(207, 227, 245, 0.85);
+  font-weight: 600;
+  opacity: 0;
+  animation: loader-fade-in 0.5s ease-out 1.5s forwards;
+}
+.loader-anno-tl {
+  top: 44px;
+  left: 44px;
+}
+.loader-anno-br {
+  bottom: 44px;
+  right: 44px;
+  text-align: right;
+}
+.loader-anno-tr {
+  top: 44px;
+  right: 44px;
+  text-align: right;
+}
+
+@keyframes loader-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes loader-settle {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes loader-draw-line {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes loader-stamp-down {
+  to {
+    opacity: 1;
+    transform: rotate(-11deg) scale(1);
+  }
+}
+
+/* The blanket reduced-motion rule above only clamps animation-DURATION —
+   animation-DELAY still applies, so without this every delayed element
+   (annotations, stamp, tagline...) would sit invisible until its delay
+   elapsed, and IntroLoader's much shorter reduced-motion hold would
+   unmount the whole thing before that ever happened. Force every piece
+   straight to its finished state instead. */
+@media (prefers-reduced-motion: reduce) {
+  .loader-grid,
+  .loader-reg,
+  .loader-dim-line,
+  .loader-dim::before,
+  .loader-dim::after,
+  .loader-dim-label,
+  .loader-mark-wrap,
+  .loader-tagline,
+  .loader-anno {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .loader-dim-line {
+    transform: scaleX(1) !important;
+  }
+  .loader-stamp {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: rotate(-11deg) !important;
+  }
+}

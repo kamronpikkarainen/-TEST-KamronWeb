@@ -4,6 +4,7 @@ import useSmoothScroll from './lib/useSmoothScroll';
 import { ScrollTrigger } from './lib/gsap';
 
 import Backdrop from './components/Backdrop';
+import IntroLoader from './components/IntroLoader';
 import Nav from './components/Nav';
 import Hero from './components/hero/Hero';
 import Problem from './components/Problem';
@@ -32,6 +33,7 @@ function Page() {
       >
         Skip to content
       </a>
+      <IntroLoader />
       <Backdrop />
       <Nav />
       <main id="main">
