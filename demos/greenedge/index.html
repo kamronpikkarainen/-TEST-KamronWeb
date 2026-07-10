@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>GreenEdge Lawn Co. — North Carolina's #1 Lawn Care & Landscaping</title>
+<meta name="description" content="GreenEdge Lawn Co. is North Carolina's premier lawn care and landscaping company. Lawn mowing, edging, bush trimming, seasonal cleanups, and garden repair. Free quotes. 200+ happy customers."/>
+<meta name="keywords" content="lawn care North Carolina, landscaping NC, lawn mowing Raleigh, lawn service Charlotte, Durham lawn care, grass cutting NC, spring cleanup, fall cleanup, garden bed mulching"/>
+<meta property="og:title" content="GreenEdge Lawn Co. — North Carolina's #1 Lawn Care"/>
+<meta property="og:description" content="Precision lawn care, edging, trimming, and seasonal cleanups across North Carolina. Get your free quote today."/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="https://greenedgelawn.com"/>
+
+<!-- Local Business Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"GreenEdge Lawn Co.",
+  "description":"North Carolina's premier lawn care and landscaping service",
+  "telephone":"(555) 123-4567",
+  "email":"hello@greenedgelawn.com",
+  "address":{"@type":"PostalAddress","addressRegion":"NC","addressCountry":"US"},
+  "areaServed":"North Carolina",
+  "openingHours":"Mo-Sa 10:00-18:00",
+  "aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"200"},
+  "priceRange":"$$"
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#3D8C4F;--gl:#5CB870;--gd:#1E4D2B;--glx:#7ADB8A;
+  --c:#0D1210;--c2:#141C15;--c3:#1A231B;--c4:#0A0F0A;
+  --bone:#F2EEE6;--dim:#9A9890;--dim2:#C8C5BC;
+  --gold:#C49A28;--goldb:#DDB84E;
+  --r:3px;--r2:6px;
+  --shadow-g:0 8px 32px rgba(61,140,79,.3);
+}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--c);color:var(--bone);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ─── STICKY CALL BAR ─── */
+.call-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:600;
+  background:var(--g);
+  display:flex;align-items:center;justify-content:center;gap:.75rem;
+  padding:.85rem 1.5rem;
+  box-shadow:0 -4px 24px rgba(0,0,0,.4);
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);
+}
+.call-bar.visible{transform:none}
+.call-bar a{
+  font-weight:700;font-size:.95rem;letter-spacing:.06em;color:var(--c);
+  text-decoration:none;display:flex;align-items:center;gap:.5rem;
+}
+.call-bar a svg{width:18px;height:18px;fill:var(--c)}
+.call-bar-close{
+  position:absolute;right:1rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--c);opacity:.6;font-size:1.2rem;padding:.25rem;
+}
+@media(min-width:768px){.call-bar{display:none}}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;inset:0 0 auto;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.5rem;
+  transition:background .4s,backdrop-filter .4s,padding .3s;
+}
+nav.s{background:rgba(13,18,16,.95);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:.75rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;color:var(--bone);text-decoration:none;line-height:1;display:flex;align-items:center;gap:.5rem}
+.logo-mark{width:28px;height:28px;background:var(--g);border-radius:4px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:16px;height:16px;fill:var(--c)}
+.logo b{color:var(--gl)}
+.nav-r{display:flex;align-items:center;gap:.8rem}
+.nav-phone{font-size:.72rem;font-weight:600;letter-spacing:.1em;color:var(--dim2);text-decoration:none;display:none}
+.nav-phone:hover{color:var(--gl)}
+.nav-quote{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c);background:var(--g);padding:.55rem 1.1rem;border-radius:var(--r);text-decoration:none;transition:background .2s,transform .15s}
+.nav-quote:hover{background:var(--gl)}
+.nav-quote:active{transform:scale(.97)}
+.burger{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.burger span{display:block;width:22px;height:2px;background:var(--bone);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-menu{
+  position:fixed;inset:0;z-index:490;
+  background:rgba(10,15,10,.98);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s;
+}
+.mob-menu.open{opacity:1;pointer-events:all}
+.mob-menu a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.06em;color:var(--bone);text-decoration:none;transition:color .2s}
+.mob-menu a:hover{color:var(--gl)}
+.mob-menu-phone{font-size:1.1rem!important;font-family:'DM Sans',sans-serif!important;letter-spacing:.08em!important;color:var(--gl)!important;border:1px solid rgba(92,184,112,.3);padding:.6rem 1.5rem;border-radius:var(--r)}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100svh;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 1.5rem 5rem;
+}
+.hero-bg{position:absolute;inset:0;background:#0a1409}
+.hero-bg img{
+  width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  display:block;opacity:0;transition:opacity 1.4s ease;
+}
+.hero-bg img.on{opacity:1}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,15,8,1) 0%,rgba(8,15,8,.62) 45%,rgba(8,15,8,.15) 100%);
+}
+.hero-content{position:relative;z-index:2}
+
+.grass{
+  position:absolute;bottom:0;left:0;right:0;z-index:1;
+  height:80px;overflow:hidden;pointer-events:none;
+}
+.grass svg{width:100%;height:100%;display:block}
+.blade-anim{transform-origin:bottom center;animation:sway 3s ease-in-out infinite}
+.blade-anim:nth-child(odd){animation-duration:2.7s;animation-delay:-.5s}
+.blade-anim:nth-child(3n){animation-duration:3.3s;animation-delay:-1.1s}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gl);margin-bottom:1rem;
+  opacity:0;animation:up .6s .4s forwards;
+}
+.hero-tag::before{content:'';width:18px;height:1px;background:var(--gl)}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.8rem,16vw,7rem);
+  line-height:.88;letter-spacing:.01em;
+  margin-bottom:1.2rem;
+  opacity:0;animation:up .7s .55s forwards;
+}
+.hero h1 .line2{color:var(--gl);display:block}
+.hero-sub{
+  font-size:.95rem;font-weight:300;color:var(--dim);
+  line-height:1.75;max-width:420px;margin-bottom:2rem;
+  opacity:0;animation:up .6s .7s forwards;
+}
+.hero-btns{
+  display:flex;gap:.75rem;flex-wrap:wrap;
+  opacity:0;animation:up .6s .85s forwards;
+}
+.btn-p{
+  font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--c);background:var(--g);
+  padding:.95rem 1.9rem;border-radius:var(--r);text-decoration:none;
+  transition:background .3s cubic-bezier(.16,1,.3,1), transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s;
+  box-shadow:var(--shadow-g);
+  animation:pulse-glow 3s 2s infinite;
+}
+.btn-p:hover{background:var(--gl);transform:translateY(-3px);box-shadow:0 12px 40px rgba(61,140,79,.45)}
+.btn-p:active{transform:scale(.96)}
+.btn-g{
+  font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--bone);border:1px solid rgba(255,255,255,.2);
+  padding:.95rem 1.6rem;border-radius:var(--r);text-decoration:none;
+  transition:border-color .3s cubic-bezier(.16,1,.3,1), color .3s cubic-bezier(.16,1,.3,1), background .3s;
+}
+.btn-g:hover{border-color:var(--gl);color:var(--gl);background:rgba(92,184,112,.06)}
+.btn-g:active{opacity:.7}
+.btn-outline{
+  font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gl);border:1px solid rgba(92,184,112,.4);
+  padding:.85rem 1.6rem;border-radius:var(--r);text-decoration:none;display:inline-block;
+  transition:background .2s,color .2s;
+}
+.btn-outline:hover{background:rgba(92,184,112,.12)}
+
+.scroll-cue{
+  position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  opacity:0;animation:up .5s 1.3s forwards;
+}
+.scroll-cue span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.scroll-track{width:1px;height:40px;background:linear-gradient(var(--gl),transparent);animation:drip 2s 1.5s infinite}
+@keyframes drip{0%{opacity:0;transform:scaleY(0);transform-origin:top}40%{opacity:1;transform:scaleY(1);transform-origin:top}80%{opacity:0;transform:scaleY(1);transform-origin:bottom}100%{opacity:0}}
+
+.hero-nums{
+  display:flex;gap:2.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08);
+  opacity:0;animation:up .6s .95s forwards;
+  flex-wrap:wrap;
+}
+.hero-num-val{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--gl);line-height:1}
+.hero-num-lbl{font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.1rem}
+
+/* ─── TRUST BADGES ─── */
+.trust-bar{
+  background:var(--c4);border-top:1px solid rgba(255,255,255,.05);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  padding:1rem 1.5rem;
+  display:flex;justify-content:center;align-items:center;gap:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.trust-bar::-webkit-scrollbar{display:none}
+.trust-item{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);white-space:nowrap;padding:0 1.2rem;
+  border-right:1px solid rgba(255,255,255,.07);flex-shrink:0;
+}
+.trust-item:last-child{border-right:none}
+.trust-item svg{width:16px;height:16px;color:var(--gl);flex-shrink:0}
+.trust-item span.highlight{color:var(--gl)}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{background:var(--g);overflow:hidden;padding:.75rem 0}
+.marquee-inner{
+  display:flex;gap:2rem;width:max-content;
+  animation:scroll-x 28s linear infinite;
+}
+.marquee-inner span{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.1em;color:var(--c);white-space:nowrap;opacity:.85}
+.marquee-inner span.dot{opacity:.5;font-size:.5rem;align-self:center}
+@keyframes scroll-x{to{transform:translateX(-50%)}}
+
+/* ─── SHARED ─── */
+.lbl{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gl);display:block;margin-bottom:.6rem}
+.ttl{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,8vw,3.8rem);line-height:.95;letter-spacing:.03em;color:var(--bone);margin-bottom:.9rem}
+.dsc{font-size:.9rem;font-weight:300;color:var(--dim);line-height:1.85;max-width:480px}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.18s}.d3{transition-delay:.26s}.d4{transition-delay:.34s}.d5{transition-delay:.42s}
+
+/* ─── SERVICES ─── */
+#services{background:var(--c);padding:5rem 0 0}
+.sec-hd{padding:0 1.5rem 2.5rem}
+.svc-grid{display:grid;grid-template-columns:1fr;gap:3px;background:#000}
+.svc-card{position:relative;overflow:hidden;min-height:320px;transition:transform .35s cubic-bezier(.16,1,.3,1);}
+.svc-photo{position:absolute;inset:0;background:var(--gd)}
+.svc-photo img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;opacity:0;
+  transition:opacity .9s ease, transform 8s ease;
+  transform:scale(1.05);
+}
+.svc-photo img.on{opacity:1;transform:scale(1)}
+.svc-mask{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(6,12,7,.97) 0%,rgba(6,12,7,.75) 35%,rgba(6,12,7,.2) 72%,transparent 100%);
+}
+.svc-body{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  height:100%;padding:1.8rem;min-height:inherit;
+}
+.svc-accent{width:24px;height:2px;background:var(--gl);margin-bottom:.9rem;transform:scaleX(0);transform-origin:left;transition:transform .4s .1s}
+.svc-card.in .svc-accent{transform:scaleX(1)}
+.svc-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;color:var(--bone);margin-bottom:.5rem;line-height:1}
+.svc-desc{font-size:.84rem;font-weight:300;color:rgba(242,238,230,.75);line-height:1.7}
+
+/* ─── BEFORE / AFTER SLIDER ─── */
+.ba-section{background:var(--c4);padding:5rem 1.5rem}
+.ba-wrap{margin-top:2.5rem;position:relative}
+.ba-slider{
+  position:relative;overflow:hidden;border-radius:var(--r2);
+  height:320px;cursor:ew-resize;user-select:none;
+  border:1px solid rgba(255,255,255,.06);
+}
+.ba-after,.ba-before{
+  position:absolute;inset:0;
+  background:var(--gd);
+}
+.ba-before img,.ba-after img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transition:opacity .9s;
+}
+.ba-before img.on,.ba-after img.on{opacity:1}
+.ba-before{
+  clip-path:inset(0 50% 0 0);
+  transition:clip-path 0s;
+}
+.ba-divider{
+  position:absolute;top:0;bottom:0;left:50%;z-index:10;
+  width:2px;background:var(--gl);transform:translateX(-50%);
+  box-shadow:0 0 12px rgba(92,184,112,.5);
+  pointer-events:none;
+}
+.ba-handle{
+  position:absolute;top:50%;left:50%;z-index:11;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--gl);border:3px solid var(--c4);
+  transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,.5);
+  cursor:ew-resize;pointer-events:none;
+}
+.ba-handle svg{width:18px;height:18px;fill:var(--c)}
+.ba-label{
+  position:absolute;bottom:1rem;z-index:5;
+  font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:.35rem .75rem;border-radius:20px;
+}
+.ba-label.before{left:1rem;background:rgba(13,18,16,.8);color:var(--dim)}
+.ba-label.after{right:1rem;background:rgba(61,140,79,.25);color:var(--gl);border:1px solid rgba(92,184,112,.3)}
+
+/* ─── PRICING ─── */
+#pricing{background:var(--c2);padding:5rem 1.5rem}
+.price-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:2.5rem}
+.price-card{
+  background:var(--c3);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r2);padding:2rem 1.6rem;position:relative;overflow:hidden;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s cubic-bezier(.16,1,.3,1), border-color .35s;
+}
+.price-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(61,140,79,.2)}
+.price-card.featured{border-color:rgba(92,184,112,.35);box-shadow:0 0 0 1px rgba(92,184,112,.15)}
+.price-card.featured::before{
+  content:'Most Popular';
+  position:absolute;top:0;right:0;
+  background:var(--g);color:var(--c);
+  font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  padding:.3rem .85rem;border-radius:0 var(--r2) 0 4px;
+}
+.price-corner{
+  position:absolute;top:0;left:0;width:60px;height:60px;
+  background:var(--gl);opacity:.05;border-radius:0 0 60px 0;
+}
+.price-tier{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gl);margin-bottom:.6rem}
+.price-amount{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;color:var(--bone);margin-bottom:.25rem}
+.price-amount sup{font-size:1.5rem;vertical-align:super;margin-right:.1rem;font-family:'DM Sans',sans-serif;font-weight:300}
+.price-per{font-size:.75rem;color:var(--dim);margin-bottom:1.4rem}
+.price-divider{height:1px;background:rgba(255,255,255,.06);margin-bottom:1.4rem}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.8rem}
+.price-features li{display:flex;align-items:center;gap:.65rem;font-size:.84rem;color:rgba(242,238,230,.75)}
+.price-features li svg{width:14px;height:14px;color:var(--gl);flex-shrink:0}
+.price-features li.disabled{color:var(--dim);opacity:.45}
+.price-features li.disabled svg{color:var(--dim)}
+.price-cta{
+  display:block;text-align:center;
+  font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.9rem;border-radius:var(--r);text-decoration:none;
+  transition:background .2s,color .2s;
+}
+.price-cta.primary{background:var(--g);color:var(--c)}
+.price-cta.primary:hover{background:var(--gl)}
+.price-cta.ghost{border:1px solid rgba(255,255,255,.15);color:var(--bone)}
+.price-cta.ghost:hover{border-color:var(--gl);color:var(--gl)}
+.price-note{font-size:.72rem;color:var(--dim);text-align:center;margin-top:1.5rem}
+
+/* ─── SEASONAL ─── */
+#seasonal{background:var(--c2);padding:5rem 1.5rem}
+.seas-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-top:2.5rem}
+.seas-card{
+  border-radius:4px;overflow:hidden;position:relative;
+  background:var(--c3);border:1px solid rgba(255,255,255,.06);
+  transition:transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s cubic-bezier(.16,1,.3,1);
+}
+.seas-photo{height:240px;position:relative;overflow:hidden}
+.seas-photo img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .9s,transform 6s ease;transform:scale(1.06)}
+.seas-photo img.on{opacity:1;transform:scale(1)}
+.seas-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--c3) 0%,transparent 60%)}
+.seas-badge{
+  position:absolute;top:1rem;left:1rem;z-index:2;
+  font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:.35rem .8rem;border-radius:20px;
+}
+.spring-badge{background:rgba(92,184,112,.18);color:#7ADB8A;border:1px solid rgba(92,184,112,.3)}
+.fall-badge{background:rgba(196,154,40,.18);color:#DDB84E;border:1px solid rgba(196,154,40,.3)}
+.seas-body{padding:1.6rem}
+.seas-body h3{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.03em;color:var(--bone);margin-bottom:.6rem}
+.seas-body p{font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.75;margin-bottom:1.2rem}
+.seas-list{display:flex;flex-direction:column;gap:.5rem}
+.seas-list li{list-style:none;display:flex;align-items:center;gap:.65rem;font-size:.82rem;color:rgba(242,238,230,.65)}
+.check{width:16px;height:16px;flex-shrink:0;stroke:var(--gl);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── ABOUT STRIP ─── */
+.about-strip{
+  position:relative;overflow:hidden;min-height:440px;
+  display:flex;align-items:flex-end;padding:3rem 1.5rem;
+}
+.about-strip-bg{position:absolute;inset:0;background:var(--gd)}
+.about-strip-bg img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 1.2s}
+.about-strip-bg img.on{opacity:1}
+.about-strip-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,8,.97) 0%,rgba(8,15,8,.45) 100%)}
+.about-strip-content{position:relative;z-index:2;max-width:560px}
+.about-strip-content p{font-size:.95rem;font-weight:300;color:rgba(242,238,230,.8);line-height:1.85;margin-bottom:1.4rem}
+.about-strip blockquote{
+  font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.03em;
+  color:var(--gl);line-height:1.1;border-left:2px solid var(--gl);padding-left:1rem;margin-bottom:1.4rem;
+}
+
+/* ─── GARDEN ─── */
+#garden{background:var(--c);padding:5rem 1.5rem}
+.garden-grid{display:grid;grid-template-columns:1fr;gap:3px;background:#000;margin-top:2.5rem}
+.g-item{
+  position:relative;overflow:hidden;min-height:240px;background:var(--gd);
+}
+.g-item img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  position:absolute;inset:0;opacity:0;transition:opacity .9s,transform 6s ease;
+  transform:scale(1.06);
+}
+.g-item img.on{opacity:1;transform:scale(1)}
+.g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,9,.95) 0%,rgba(8,14,9,.45) 60%,rgba(8,14,9,.05) 100%)}
+.g-body{position:relative;z-index:2;padding:1.4rem;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-height:inherit}
+.g-name{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;color:var(--bone);margin-bottom:.35rem}
+.g-desc{font-size:.8rem;font-weight:300;color:rgba(242,238,230,.68);line-height:1.65}
+
+/* ─── WHY ─── */
+#why{background:var(--c2);padding:5rem 1.5rem}
+.why-grid{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(255,255,255,.05);margin-top:2.5rem}
+.why-item{background:var(--c2);padding:2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.why-icon{width:40px;height:40px;border-radius:var(--r);background:rgba(61,140,79,.12);border:1px solid rgba(61,140,79,.2);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.why-icon svg{width:18px;height:18px;stroke:var(--gl);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.why-title{font-size:.95rem;font-weight:600;color:var(--bone);margin-bottom:.5rem}
+.why-desc{font-size:.82rem;font-weight:300;color:var(--dim);line-height:1.75}
+
+/* ─── TESTIMONIALS ─── */
+.testi{background:var(--gd);padding:5rem 1.5rem;overflow:hidden}
+.testi-header{margin-bottom:2.5rem}
+.testi-slider{position:relative}
+.testi-slide{display:none;animation:fadeSlide .5s ease forwards}
+.testi-slide.active{display:block}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.testi-stars{color:var(--gold);font-size:1rem;letter-spacing:.12em;margin-bottom:.8rem}
+.testi-quote{font-size:1.05rem;font-weight:300;color:rgba(242,238,230,.9);line-height:1.8;margin-bottom:1.4rem;font-style:italic}
+.testi-meta{display:flex;align-items:center;gap:1rem}
+.testi-avatar{width:40px;height:40px;border-radius:50%;background:rgba(61,140,79,.2);border:2px solid rgba(92,184,112,.3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gl);flex-shrink:0}
+.testi-name{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gl)}
+.testi-loc{font-size:.7rem;color:var(--dim);margin-top:.1rem}
+.testi-dots{display:flex;gap:.5rem;margin-top:2rem}
+.t-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:background .3s,transform .3s,width .3s}
+.t-dot.on{background:var(--gl);transform:scale(1.3);width:18px;border-radius:3px}
+
+/* ─── MEET THE OWNER ─── */
+#owner{}
+.owner-wrap{display:grid;grid-template-columns:1fr;gap:3rem;align-items:center}
+.owner-card-visual{
+  border-radius:var(--r2);background:var(--c3);
+  border:1px solid rgba(92,184,112,.2);
+  padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;
+  gap:.75rem;text-align:center;max-width:380px;
+  box-shadow:0 0 0 1px rgba(92,184,112,.06),0 24px 64px rgba(0,0,0,.3);
+}
+.owner-initials{
+  width:88px;height:88px;border-radius:50%;
+  background:rgba(61,140,79,.15);border:2px solid rgba(92,184,112,.35);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.08em;color:var(--gl);
+  margin-bottom:.25rem;
+}
+.owner-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--bone);line-height:1}
+.owner-card-role{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.owner-stat-row{
+  display:flex;gap:0;margin-top:1rem;
+  background:var(--c3);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r2);overflow:hidden;max-width:380px;
+}
+.owner-stat{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:.9rem .5rem;border-right:1px solid rgba(255,255,255,.06);
+}
+.owner-stat:last-child{border-right:none}
+.owner-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gl);line-height:1}
+.owner-stat-lbl{font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.15rem;text-align:center}
+.owner-text .ttl{margin-bottom:1.2rem}
+.owner-p{font-size:.9rem;font-weight:300;color:var(--dim);line-height:1.85;margin-bottom:1rem}
+.owner-p em{color:var(--bone);font-style:normal;font-weight:500}
+.owner-sig{display:flex;flex-direction:column;gap:.4rem;margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.06)}
+.owner-sig-svg{width:120px;height:38px;opacity:.8}
+.owner-sig-name{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+@media(min-width:768px){
+  .owner-wrap{grid-template-columns:1fr 1.4fr;gap:4rem}
+  .owner-card-visual{max-width:none}
+}
+
+/* ─── SERVICE AREAS ─── */
+#areas{background:var(--c4);padding:5rem 1.5rem}
+.areas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-top:2.5rem}
+.area-tag{
+  background:var(--c3);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r);padding:.85rem 1rem;
+  display:flex;align-items:center;gap:.6rem;
+  font-size:.82rem;font-weight:500;color:var(--dim2);
+  transition:border-color .3s cubic-bezier(.16,1,.3,1), color .3s cubic-bezier(.16,1,.3,1), background .3s;
+}
+.area-tag:hover{border-color:rgba(92,184,112,.4);color:var(--gl);background:rgba(92,184,112,.06)}
+.area-tag svg{width:12px;height:12px;fill:var(--g);flex-shrink:0}
+
+/* ─── FAQ ─── */
+#faq{background:var(--c2);padding:5rem 1.5rem}
+.faq-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:.5rem}
+.faq-item{background:var(--c3);border:1px solid rgba(255,255,255,.06);border-radius:var(--r2);overflow:hidden}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 1.4rem;cursor:pointer;
+  font-size:.9rem;font-weight:500;color:var(--bone);
+  transition:color .2s;gap:1rem;
+}
+.faq-q:hover{color:var(--gl)}
+.faq-icon{
+  width:24px;height:24px;border-radius:50%;background:rgba(61,140,79,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .2s,transform .3s;
+}
+.faq-icon svg{width:12px;height:12px;stroke:var(--gl);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.faq-item.open .faq-icon{background:var(--g);transform:rotate(45deg)}
+.faq-item.open .faq-icon svg{stroke:var(--c)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  font-size:.85rem;font-weight:300;color:var(--dim);line-height:1.8;
+  transition:max-height .4s ease,padding .3s;
+  padding:0 1.4rem;
+}
+.faq-item.open .faq-a{max-height:300px;padding:0 1.4rem 1.2rem}
+
+/* ─── CONTACT ─── */
+#contact{background:var(--c3);padding:5rem 1.5rem}
+.contact-wrap{margin-top:2.5rem}
+.contact-info{margin-bottom:2rem}
+.contact-info p{font-size:.9rem;font-weight:300;color:var(--dim);line-height:1.8;margin-bottom:1.5rem}
+.cinfo-row{display:flex;align-items:center;gap:.9rem;font-size:.85rem;color:var(--dim2);margin-bottom:.85rem}
+.cicon{
+  width:38px;height:38px;border-radius:var(--r);background:rgba(61,140,79,.1);border:1px solid rgba(61,140,79,.2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.cicon svg{width:16px;height:16px;stroke:var(--gl);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.form{display:flex;flex-direction:column;gap:.9rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.field label{display:block;font-size:.65rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:.4rem}
+.field input,.field select,.field textarea{
+  width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r);color:var(--bone);font-family:'DM Sans',sans-serif;
+  font-size:.9rem;font-weight:300;padding:.85rem 1rem;outline:none;
+  transition:border-color .2s,background .2s;appearance:none;-webkit-appearance:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gl);background:rgba(61,140,79,.06)}
+.field textarea{min-height:110px;resize:vertical}
+.field select option{background:var(--c3);color:var(--bone)}
+.form-btn{
+  font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;cursor:pointer;border:none;border-radius:var(--r);
+  background:var(--g);color:var(--c);padding:1.1rem 2rem;
+  box-shadow:var(--shadow-g);
+  transition:background .2s,transform .15s,box-shadow .2s;
+  width:100%;
+}
+.form-btn:hover{background:var(--gl)}
+.form-btn:active{transform:scale(.98)}
+
+/* ─── FOOTER ─── */
+footer{
+  background:#060a06;border-top:1px solid rgba(255,255,255,.05);
+  padding:3rem 1.5rem 5rem;
+}
+.footer-top{display:grid;grid-template-columns:1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-brand p{font-size:.82rem;font-weight:300;color:var(--dim);line-height:1.75;max-width:280px;margin-top:.75rem}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.08em;color:var(--dim);display:flex;align-items:center;gap:.5rem}
+.f-logo b{color:var(--gl)}
+.footer-col h4{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gl);margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.footer-col ul li a{font-size:.82rem;color:var(--dim);text-decoration:none;transition:color .2s}
+.footer-col ul li a:hover{color:var(--bone)}
+.footer-socials{display:flex;gap:.75rem;margin-top:1.2rem}
+.social-btn{
+  width:36px;height:36px;border-radius:var(--r);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  transition:background .2s,border-color .2s;
+}
+.social-btn:hover{background:rgba(92,184,112,.12);border-color:rgba(92,184,112,.3)}
+.social-btn svg{width:15px;height:15px;stroke:var(--dim);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
+.social-btn:hover svg{stroke:var(--gl)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.05);
+  padding-top:1.5rem;
+  display:flex;flex-direction:column;gap:.5rem;
+  align-items:center;text-align:center;
+}
+.footer-bottom p{font-size:.7rem;color:var(--dim);opacity:.4}
+.footer-links{display:flex;gap:1.2rem}
+.footer-links a{font-size:.68rem;color:var(--dim);opacity:.4;text-decoration:none}
+.footer-links a:hover{opacity:.8}
+.footer-rating{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--dim);opacity:.6}
+.footer-rating span{color:var(--gold)}
+
+/* ─── ANIMATIONS & MISC ─── */
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 6px 24px rgba(61,140,79,.35)}50%{box-shadow:0 8px 36px rgba(61,140,79,.6)}}
+.count-up{display:inline-block}
+
+/* ─── DESKTOP ─── */
+@media(min-width:768px){
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .svc-card{min-height:420px}
+  .seas-grid{grid-template-columns:1fr 1fr}
+  .garden-grid{grid-template-columns:repeat(3,1fr)}
+  .g-item{min-height:300px}
+  .why-grid{grid-template-columns:repeat(3,1fr)}
+  .form-row{grid-template-columns:1fr 1fr}
+  nav{padding:1.2rem 3rem}
+  nav.s{padding:.9rem 3rem}
+  .nav-phone{display:block}
+  .hero{padding:0 3rem 5rem}
+  section{padding:6rem 3rem}
+  #services{padding-top:6rem}
+  .about-strip{padding:4rem 3rem;min-height:520px}
+  .ba-section{padding:6rem 3rem}
+  .ba-slider{height:420px}
+  .burger{display:none}
+  .nav-desk{display:flex;gap:2rem;list-style:none}
+  .nav-desk a{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
+  .nav-desk a:hover{color:var(--gl)}
+  .form-btn{width:auto;align-self:flex-start}
+  footer{padding:4rem 3rem 3rem}
+  .footer-top{grid-template-columns:1.4fr 1fr 1fr 1fr}
+  .footer-bottom{flex-direction:row;justify-content:space-between;text-align:left}
+  .areas-grid{grid-template-columns:repeat(3,1fr)}
+  .price-grid{grid-template-columns:repeat(3,1fr)}
+  .contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem}
+  .contact-info{margin-bottom:0}
+  #services,#seasonal,#garden,#why,#contact,#areas,#faq,#pricing{padding:6rem 3rem}
+  #services{padding-top:6rem}
+}
+@media(min-width:1100px){
+  .svc-card{min-height:480px}
+  .hero h1{font-size:clamp(5rem,9vw,9rem)}
+  nav{padding:1.2rem 5rem}
+  .hero{padding:0 5rem 6rem}
+  #services,#seasonal,#garden,#why,#contact,#areas,#faq,#pricing{padding:7rem 5rem}
+  #services{padding-top:7rem}
+  .ba-section{padding:7rem 5rem}
+  .ba-slider{height:500px}
+  .areas-grid{grid-template-columns:repeat(4,1fr)}
+  footer{padding:5rem 5rem 3rem}
+}
+@media(max-width:767px){
+  .nav-desk{display:none}
+  .trust-bar{justify-content:flex-start}
+  .price-grid{gap:.75rem}
+  .form-row{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ STICKY CALL BAR (mobile) ═══ -->
+<div class="call-bar" id="callBar">
+  <a href="tel:5551234567">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.08 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.1 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-.42a2 2 0 012.11.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call Now — Free Quote
+  </a>
+  <button class="call-bar-close" id="callBarClose" aria-label="Dismiss">✕</button>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </div>
+    GREEN<b>EDGE</b>
+  </a>
+  <ul class="nav-desk">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#seasonal">Seasonal</a></li>
+    <li><a href="#garden">Garden</a></li>
+    <li><a href="#owner">About</a></li>
+    <li><a href="#areas">Service Areas</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="tel:5551234567" class="nav-phone">(555) 123-4567</a>
+    <a href="#contact" class="nav-quote">Free Quote</a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="#services" class="mm-link">Services</a>
+  <a href="#pricing" class="mm-link">Pricing</a>
+  <a href="#seasonal" class="mm-link">Seasonal</a>
+  <a href="#garden" class="mm-link">Garden</a>
+  <a href="#owner" class="mm-link">About</a>
+  <a href="#areas" class="mm-link">Service Areas</a>
+  <a href="#faq" class="mm-link">FAQ</a>
+  <a href="#contact" class="mm-link">Get a Quote</a>
+  <a href="tel:5551234567" class="mm-link mob-menu-phone">📞 (555) 123-4567</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <img id="heroBg"
+      src="https://images.unsplash.com/photo-1566908829550-e6551b00979b?w=1600&q=85&fm=jpg&fit=crop&crop=center"
+      alt="Pristine green lawn in North Carolina"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="grass">
+    <svg viewBox="0 0 400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#1E4D2B" opacity=".7">
+        <path class="blade-anim" d="M10 80 Q8 50 14 20 Q16 50 18 80Z"/>
+        <path class="blade-anim" d="M30 80 Q28 45 35 12 Q38 45 40 80Z"/>
+        <path class="blade-anim" d="M55 80 Q52 55 58 25 Q61 55 62 80Z"/>
+        <path class="blade-anim" d="M78 80 Q76 48 82 18 Q84 48 86 80Z"/>
+        <path class="blade-anim" d="M100 80 Q97 52 104 22 Q107 52 108 80Z"/>
+        <path class="blade-anim" d="M122 80 Q120 46 126 16 Q128 46 130 80Z"/>
+        <path class="blade-anim" d="M144 80 Q142 50 149 20 Q151 50 153 80Z"/>
+        <path class="blade-anim" d="M168 80 Q165 54 172 24 Q175 54 177 80Z"/>
+        <path class="blade-anim" d="M192 80 Q189 47 196 17 Q199 47 200 80Z"/>
+        <path class="blade-anim" d="M216 80 Q214 51 220 21 Q222 51 224 80Z"/>
+        <path class="blade-anim" d="M240 80 Q237 53 244 23 Q247 53 249 80Z"/>
+        <path class="blade-anim" d="M264 80 Q261 48 268 18 Q271 48 273 80Z"/>
+        <path class="blade-anim" d="M288 80 Q285 50 292 20 Q295 50 297 80Z"/>
+        <path class="blade-anim" d="M312 80 Q309 46 316 16 Q319 46 321 80Z"/>
+        <path class="blade-anim" d="M336 80 Q333 52 340 22 Q343 52 345 80Z"/>
+        <path class="blade-anim" d="M360 80 Q357 49 364 19 Q367 49 369 80Z"/>
+        <path class="blade-anim" d="M384 80 Q381 51 388 21 Q391 51 393 80Z"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">North Carolina's Premier Lawn Care</div>
+    <h1>SHARP<span class="line2">EVERY TIME.</span></h1>
+    <p class="hero-sub">GreenEdge is the crew your yard deserves. Precision cuts, clean edges, and a finished lawn that speaks for itself — in every neighborhood we touch.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-p">Get Your Free Quote</a>
+      <a href="#services" class="btn-g">See Our Services</a>
+    </div>
+    <div class="hero-nums">
+      <div>
+        <div class="hero-num-val"><span class="count-up" data-target="500">0</span>+</div>
+        <div class="hero-num-lbl">Lawns Served</div>
+      </div>
+      <div>
+        <div class="hero-num-val">5<span style="font-size:1.4rem">★</span></div>
+        <div class="hero-num-lbl">Avg. Rating</div>
+      </div>
+      <div>
+        <div class="hero-num-val"><span class="count-up" data-target="8">0</span>+</div>
+        <div class="hero-num-lbl">Years in Business</div>
+      </div>
+      <div>
+        <div class="hero-num-val">24<span style="font-size:1.4rem">hr</span></div>
+        <div class="hero-num-lbl">Quote Reply</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-track"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ═══ TRUST BADGES ═══ -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Fully Licensed &amp; Insured
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    No Contracts Required
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Satisfaction Guarantee
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    Transparent Flat Pricing
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <span class="highlight">5★</span> Google Rated
+  </div>
+</div>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>Lawn Mowing</span><span class="dot">●</span>
+    <span>String Trimming</span><span class="dot">●</span>
+    <span>Edging</span><span class="dot">●</span>
+    <span>Bush Trimming</span><span class="dot">●</span>
+    <span>Spring Cleanup</span><span class="dot">●</span>
+    <span>Fall Cleanup</span><span class="dot">●</span>
+    <span>Garden Repair</span><span class="dot">●</span>
+    <span>Mulching</span><span class="dot">●</span>
+    <span>Leaf Removal</span><span class="dot">●</span>
+    <span>Bed Cleanup</span><span class="dot">●</span>
+    <span>Replanting</span><span class="dot">●</span>
+    <span>Blowdown Service</span><span class="dot">●</span>
+    <span>Lawn Mowing</span><span class="dot">●</span>
+    <span>String Trimming</span><span class="dot">●</span>
+    <span>Edging</span><span class="dot">●</span>
+    <span>Bush Trimming</span><span class="dot">●</span>
+    <span>Spring Cleanup</span><span class="dot">●</span>
+    <span>Fall Cleanup</span><span class="dot">●</span>
+    <span>Garden Repair</span><span class="dot">●</span>
+    <span>Mulching</span><span class="dot">●</span>
+    <span>Leaf Removal</span><span class="dot">●</span>
+    <span>Bed Cleanup</span><span class="dot">●</span>
+    <span>Replanting</span><span class="dot">●</span>
+    <span>Blowdown Service</span><span class="dot">●</span>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services" style="padding-left:0;padding-right:0;padding-bottom:0">
+  <div class="sec-hd reveal">
+    <span class="lbl">Core Services</span>
+    <h2 class="ttl">Every Job, Done Right</h2>
+    <p class="dsc">Four services. One standard: exceptional. We don't cut corners — we cut grass.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card reveal">
+      <div class="svc-photo"><img data-src="https://images.unsplash.com/photo-1625844450660-2444f2a20ab3?w=900&q=85&fm=jpg&fit=crop&crop=center" alt="Person pushing lawn mower cutting grass"/></div>
+      <div class="svc-mask"></div>
+      <div class="svc-body">
+        <div class="svc-accent"></div>
+        <div class="svc-name">Lawn Mowing</div>
+        <p class="svc-desc">Clean, even cuts at the right height for healthy turf every visit — no scalping, no missed rows, no mess left behind.</p>
+      </div>
+    </div>
+    <div class="svc-card reveal d1">
+      <div class="svc-photo"><img data-src="https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?w=900&q=85&fm=jpg&fit=crop&crop=center" alt="String trimmer cutting lawn edges"/></div>
+      <div class="svc-mask"></div>
+      <div class="svc-body">
+        <div class="svc-accent"></div>
+        <div class="svc-name">String Trimming</div>
+        <p class="svc-desc">Every edge the mower misses — around posts, trees, fences, and beds. Trimmed tight and clean so nothing looks forgotten.</p>
+      </div>
+    </div>
+    <div class="svc-card reveal d2">
+      <div class="svc-photo"><img data-src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=900&q=85&fm=jpg&fit=crop&crop=center" alt="Crisp edged lawn border along driveway"/></div>
+      <div class="svc-mask"></div>
+      <div class="svc-body">
+        <div class="svc-accent"></div>
+        <div class="svc-name">Edging</div>
+        <p class="svc-desc">Razor-sharp borders along driveways, sidewalks, and curbs. The detail that separates a good yard from a great one.</p>
+      </div>
+    </div>
+    <div class="svc-card reveal d3">
+      <div class="svc-photo"><img data-src="https://images.unsplash.com/photo-1528323273322-d81458248d40?w=900&q=85&fm=jpg&fit=crop&crop=center" alt="Hedge trimmer shaping green bush"/></div>
+      <div class="svc-mask"></div>
+      <div class="svc-body">
+        <div class="svc-accent"></div>
+        <div class="svc-name">Bush Trimming</div>
+        <p class="svc-desc">Shaped shrubs and clean hedges that frame your home the way they were meant to. All debris hauled away — no pile left behind.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BEFORE / AFTER ═══ -->
+<div class="ba-section">
+  <div class="reveal">
+    <span class="lbl">Results Speak</span>
+    <h2 class="ttl">See the Difference</h2>
+    <p class="dsc">Drag the handle to compare before and after a GreenEdge visit.</p>
+  </div>
+  <div class="ba-wrap reveal d1">
+    <div class="ba-slider" id="baSlider">
+      <div class="ba-after">
+        <img data-src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85&fm=jpg&fit=crop&crop=center" alt="After: freshly mowed and edged lawn" class="ba-img-after"/>
+      </div>
+      <div class="ba-before" id="baBefore">
+        <img data-src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200&q=85&fm=jpg&fit=crop&crop=center" alt="Before: overgrown neglected lawn" class="ba-img-before"/>
+      </div>
+      <div class="ba-divider" id="baDivider"></div>
+      <div class="ba-handle" id="baHandle">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+      </div>
+      <div class="ba-label before">BEFORE</div>
+      <div class="ba-label after">AFTER</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRICING ═══ -->
+<section id="pricing">
+  <div class="reveal">
+    <span class="lbl">Transparent Pricing</span>
+    <h2 class="ttl">Pick Your Plan</h2>
+    <p class="dsc">No hidden fees, no surprise bills. Every price is flat and agreed on before we start. Just great work at a fair rate.</p>
+  </div>
+  <div class="price-grid">
+
+    <div class="price-card reveal d1">
+      <div class="price-corner"></div>
+      <div class="price-tier">Basic</div>
+      <div class="price-amount"><sup>$</sup>60</div>
+      <div class="price-per">per visit · small yard (up to ¼ acre)</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Lawn mowing</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>String trimming</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Blowdown &amp; cleanup</li>
+        <li class="disabled"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Edging</li>
+        <li class="disabled"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Bush trimming</li>
+      </ul>
+      <a href="#contact" class="price-cta ghost">Get Started</a>
+    </div>
+
+    <div class="price-card featured reveal d2">
+      <div class="price-corner"></div>
+      <div class="price-tier">Full Service</div>
+      <div class="price-amount"><sup>$</sup>100</div>
+      <div class="price-per">per visit · up to ½ acre · most popular</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Lawn mowing</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>String trimming</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Edging (driveways &amp; walkways)</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bush trimming</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Blowdown &amp; full cleanup</li>
+      </ul>
+      <a href="#contact" class="price-cta primary">Get Started</a>
+    </div>
+
+    <div class="price-card reveal d3">
+      <div class="price-corner"></div>
+      <div class="price-tier">Estate</div>
+      <div class="price-amount"><sup>$</sup>160</div>
+      <div class="price-per">per visit · up to 1 acre · full-service</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Full Service</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Large property mowing</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority scheduling</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated crew lead</li>
+        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Post-service photo report</li>
+      </ul>
+      <a href="#contact" class="price-cta ghost">Get Started</a>
+    </div>
+
+  </div>
+  <p class="price-note reveal">Seasonal cleanups, garden services &amp; custom properties quoted separately. All prices include tax. No contracts — cancel anytime.</p>
+</section>
+
+<!-- ═══ SEASONAL ═══ -->
+<section id="seasonal">
+  <div class="reveal">
+    <span class="lbl">Seasonal Programs</span>
+    <h2 class="ttl">We Show Up When It Matters</h2>
+    <p class="dsc">Your yard has two critical moments every year. We handle both so you don't have to think about either one.</p>
+  </div>
+  <div class="seas-grid">
+    <div class="seas-card reveal d1">
+      <div class="seas-photo">
+        <img data-src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=85&fm=jpg&fit=crop&crop=top" alt="Spring yard cleanup fresh green lawn"/>
+        <div class="seas-badge spring-badge">Spring Cleanup</div>
+      </div>
+      <div class="seas-body">
+        <h3>Fresh Start</h3>
+        <p>Winter left a mess. We clear it all — sticks, dead leaves, thatch — so your lawn can breathe and grow strong right out of the gate.</p>
+        <ul class="seas-list">
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Stick &amp; debris removal</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Leftover leaf clearing</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Thatch &amp; dead growth removal</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full property tidy-up</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>First mow of the season</li>
+        </ul>
+      </div>
+    </div>
+    <div class="seas-card reveal d2">
+      <div class="seas-photo">
+        <img data-src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&q=85&fm=jpg&fit=crop&crop=center" alt="Fall leaves covering lawn before cleanup"/>
+        <div class="seas-badge fall-badge">Fall Cleanup</div>
+      </div>
+      <div class="seas-body">
+        <h3>Clean Close</h3>
+        <p>The last cut counts. We give your lawn the send-off it needs so it comes back thick and healthy when spring hits.</p>
+        <ul class="seas-list">
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Final mow of the year</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Complete leaf removal</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Debris &amp; branch clearing</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Edge &amp; border cleanup</li>
+          <li><svg class="check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Property walk-through</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT STRIP ═══ -->
+<div class="about-strip reveal">
+  <div class="about-strip-bg">
+    <img data-src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=85&fm=jpg&fit=crop&crop=center" alt="Professional lawn care crew working"/>
+  </div>
+  <div class="about-strip-content">
+    <blockquote>"Your lawn is the first thing people see. Make it count."</blockquote>
+    <p>We're a local crew that takes pride in every property we touch. No shortcuts, no rushing. Just clean, consistent work that keeps our customers calling us back every single season — year after year.</p>
+    <a href="#contact" class="btn-p">Work With Us</a>
+  </div>
+</div>
+
+<!-- ═══ GARDEN ═══ -->
+<section id="garden">
+  <div class="reveal">
+    <span class="lbl">Garden Repair</span>
+    <h2 class="ttl">Bring the Beds Back</h2>
+    <p class="dsc">Overgrown, tired, or just needs a refresh — we restore your garden beds to the way they should look.</p>
+  </div>
+  <div class="garden-grid">
+    <div class="g-item reveal d1">
+      <img data-src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?w=700&q=85&fm=jpg&fit=crop&crop=center" alt="Hands planting flowers in garden bed"/>
+      <div class="g-body">
+        <div class="g-name">Replanting</div>
+        <p class="g-desc">Plants moved or replaced with care for spacing, sunlight, and season.</p>
+      </div>
+    </div>
+    <div class="g-item reveal d2">
+      <img data-src="https://images.unsplash.com/photo-1416431917570-f56e7dbce9ab?w=700&q=85&fm=jpg&fit=crop&crop=center" alt="Cleaning and weeding garden bed"/>
+      <div class="g-body">
+        <div class="g-name">Bed Cleanup</div>
+        <p class="g-desc">Weeding, pruning, clearing — your beds restored to order and looking sharp.</p>
+      </div>
+    </div>
+    <div class="g-item reveal d3">
+      <img data-src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&q=85&fm=jpg&fit=crop&crop=bottom" alt="Fresh mulch laid in garden bed"/>
+      <div class="g-body">
+        <div class="g-name">Mulching</div>
+        <p class="g-desc">Fresh mulch laid clean and even. Retains moisture, blocks weeds, sharpens the look.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY ═══ -->
+<section id="why">
+  <div class="reveal">
+    <span class="lbl">Why GreenEdge</span>
+    <h2 class="ttl">The Crew You Can Count On</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-item reveal d1">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="why-title">We Show Up, Every Time</div>
+      <p class="why-desc">No no-shows. No last-minute cancellations. If we're on your schedule, we're there — rain or shine, week after week.</p>
+    </div>
+    <div class="why-item reveal d2">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="why-title">We Finish the Job</div>
+      <p class="why-desc">Every visit ends with a full blowdown, a walkthrough, and a yard you're genuinely proud to show. Nothing left half-done.</p>
+    </div>
+    <div class="why-item reveal d3">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+      <div class="why-title">No Surprise Bills</div>
+      <p class="why-desc">Flat, honest quotes before we start. The price we give is the price you pay. No add-ons slipped in after the fact. Period.</p>
+    </div>
+    <div class="why-item reveal d4">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg></div>
+      <div class="why-title">Guaranteed Satisfaction</div>
+      <p class="why-desc">Not happy with the result? We'll come back and fix it, free of charge. That's our promise on every single visit.</p>
+    </div>
+    <div class="why-item reveal d5">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="why-title">Punctual &amp; Professional</div>
+      <p class="why-desc">We give you an arrival window and stick to it. Our crews are uniformed, courteous, and treat your property with respect.</p>
+    </div>
+    <div class="why-item reveal d1">
+      <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="why-title">Locally Owned &amp; Operated</div>
+      <p class="why-desc">We live in North Carolina too. This is our community — and we take care of it the same way we'd take care of our own yard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<div class="testi">
+  <div class="testi-header reveal">
+    <span class="lbl">What Neighbors Say</span>
+    <h2 class="ttl">200+ Five-Star Reviews</h2>
+  </div>
+  <div class="testi-slider reveal d1">
+    <div class="testi-slide active">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"GreenEdge transformed our yard completely. The edging alone made the whole neighborhood notice. Best lawn care we've ever hired — and we've tried four different companies."</p>
+      <div class="testi-meta">
+        <div class="testi-avatar">SM</div>
+        <div>
+          <div class="testi-name">Sarah M.</div>
+          <div class="testi-loc">Raleigh, NC</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"They show up every single time, on schedule, and leave the yard looking like a magazine photo. No excuses, no drama. That's rare in this industry and I've never taken it for granted."</p>
+      <div class="testi-meta">
+        <div class="testi-avatar">JT</div>
+        <div>
+          <div class="testi-name">James T.</div>
+          <div class="testi-loc">Charlotte, NC</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Spring cleanup was unbelievable. They cleared three years of neglect in one visit. My garden beds look better than when we first moved in. Absolute pros."</p>
+      <div class="testi-meta">
+        <div class="testi-avatar">NR</div>
+        <div>
+          <div class="testi-name">Nicole R.</div>
+          <div class="testi-loc">Durham, NC</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"I've been using GreenEdge for two years now. The price is fair, the work is consistent, and they always leave a quick text when they're done. Couldn't ask for more."</p>
+      <div class="testi-meta">
+        <div class="testi-avatar">DK</div>
+        <div>
+          <div class="testi-name">David K.</div>
+          <div class="testi-loc">Cary, NC</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Our HOA actually complimented our lawn for the first time ever. GreenEdge has that extra-detail eye that most crews just don't have. Worth every penny."</p>
+      <div class="testi-meta">
+        <div class="testi-avatar">TW</div>
+        <div>
+          <div class="testi-name">Tracy W.</div>
+          <div class="testi-loc">Wake Forest, NC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="testi-dots">
+    <div class="t-dot on" data-i="0"></div>
+    <div class="t-dot" data-i="1"></div>
+    <div class="t-dot" data-i="2"></div>
+    <div class="t-dot" data-i="3"></div>
+    <div class="t-dot" data-i="4"></div>
+  </div>
+</div>
+
+<!-- ═══ MEET THE OWNER ═══ -->
+<section id="owner" style="background:var(--c);padding:5rem 1.5rem">
+  <div class="owner-wrap">
+    <div class="owner-photo-col reveal">
+      <div class="owner-card-visual">
+        <div class="owner-initials">NZG</div>
+        <div class="owner-card-name">Nathan Zachary Guin</div>
+        <div class="owner-card-role">Founder &amp; Owner · GreenEdge Lawn Co.</div>
+      </div>
+      <div class="owner-stat-row">
+        <div class="owner-stat"><span class="owner-stat-val">8+</span><span class="owner-stat-lbl">Years Running</span></div>
+        <div class="owner-stat"><span class="owner-stat-val">500+</span><span class="owner-stat-lbl">Lawns Served</span></div>
+        <div class="owner-stat"><span class="owner-stat-val">NC</span><span class="owner-stat-lbl">Born &amp; Raised</span></div>
+      </div>
+    </div>
+    <div class="owner-text reveal d2">
+      <span class="lbl">Meet the Owner</span>
+      <h2 class="ttl">Hi, I'm Nathan.</h2>
+      <p class="owner-p">I started GreenEdge out of a truck and a push mower. No crew, no logo — just me showing up on time and doing the job right. That simple idea, <em>show up and do the work</em>, is still the whole company.</p>
+      <p class="owner-p">I grew up in North Carolina. These are my neighbors. I've always believed a clean yard does something for a person — it changes how you feel when you pull into your driveway. That's what I'm actually selling.</p>
+      <p class="owner-p">Today we run a full crew across the Triangle and beyond, but I still personally review every new customer quote and check in on jobs throughout the week. When you hire GreenEdge, you're hiring a company that still acts like it has something to prove — because we do.</p>
+      <div class="owner-sig">
+        <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg" class="owner-sig-svg">
+          <path d="M10 35 C20 10,35 8,45 22 C52 32,48 42,38 38 C28 34,30 20,42 18" stroke="#5CB870" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M55 20 C60 15,68 14,72 22 C76 30,70 38,62 35 C70 33,78 28,85 18" stroke="#5CB870" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M90 18 C95 35,100 38,108 30 C114 24,112 16,105 16 C98 16,95 24,100 32" stroke="#5CB870" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M118 16 C122 28,126 38,132 34 C138 30,140 20,150 16" stroke="#5CB870" stroke-width="2" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="owner-sig-name">Nathan Zachary Guin — Founder &amp; Owner</div>
+      </div>
+      <a href="#contact" class="btn-p" style="display:inline-block;margin-top:1.6rem">Get a Quote From My Team</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICE AREAS ═══ -->
+<section id="areas">
+  <div class="reveal">
+    <span class="lbl">Service Areas</span>
+    <h2 class="ttl">We Come to You</h2>
+    <p class="dsc">GreenEdge serves communities across North Carolina. Don't see your city? Give us a call — we may be closer than you think.</p>
+  </div>
+  <div class="areas-grid">
+    <div class="area-tag reveal d1"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Raleigh</div>
+    <div class="area-tag reveal d2"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Durham</div>
+    <div class="area-tag reveal d3"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Chapel Hill</div>
+    <div class="area-tag reveal d4"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Cary</div>
+    <div class="area-tag reveal d1"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Charlotte</div>
+    <div class="area-tag reveal d2"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Wake Forest</div>
+    <div class="area-tag reveal d3"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Apex</div>
+    <div class="area-tag reveal d4"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Morrisville</div>
+    <div class="area-tag reveal d1"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Holly Springs</div>
+    <div class="area-tag reveal d2"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Fuquay-Varina</div>
+    <div class="area-tag reveal d3"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>Garner</div>
+    <div class="area-tag reveal d4"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 6.9 8 11.7z"/></svg>+ More Areas</div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq">
+  <div class="reveal">
+    <span class="lbl">FAQ</span>
+    <h2 class="ttl">Common Questions</h2>
+    <p class="dsc">Everything you need to know before booking.</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q">How do I get a quote?
+        <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">Fill out the contact form below with your yard details and we'll reply within 24 hours with a flat-rate quote. No obligation, no pressure — just a number you can say yes or no to.</div>
+    </div>
+    <div class="faq-item reveal d1">
+      <div class="faq-q">Do I need to be home when you come?
+        <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">No — most of our customers aren't home. As long as we can access your yard, we'll handle everything and send you a message or photo once we're done.</div>
+    </div>
+    <div class="faq-item reveal d2">
+      <div class="faq-q">What if it rains on my scheduled day?
+        <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">We reschedule for the next available slot and let you know in advance. We don't mow wet lawns — it tears up turf and leaves a mess. Your lawn always comes first.</div>
+    </div>
+    <div class="faq-item reveal d3">
+      <div class="faq-q">Is there a contract or commitment?
+        <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">None. You can cancel or pause service anytime with no penalties. We earn your business every visit — not by locking you in.</div>
+    </div>
+    <div class="faq-item reveal d4">
+      <div class="faq-q">What areas do you serve?
+        <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">We serve Raleigh, Durham, Cary, Chapel Hill, Wake Forest, Apex, Charlotte, and surrounding areas across North Carolina. If you're not sure, just ask — we're expanding all the time.</div>
+    </div>
+    <div class="faq-item reveal d5">
+      <div class="faq-q">Do you offer recurring service?
+        <div class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      </div>
+      <div class="faq-a">Absolutely. Weekly and bi-weekly plans are available and tend to produce the best-looking lawns. Recurring customers get priority scheduling and consistent crews.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="reveal">
+    <span class="lbl">Get in Touch</span>
+    <h2 class="ttl">Let's Talk About Your Lawn</h2>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info reveal">
+      <p>Fill out the form and we'll get back to you within 24 hours with a free, no-pressure quote. You can also call or email us directly.</p>
+      <div class="cinfo-row"><div class="cicon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.08 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.1 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-.42a2 2 0 012.11.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div><a href="tel:5551234567" style="color:inherit;text-decoration:none">(555) 123-4567</a></div>
+      <div class="cinfo-row"><div class="cicon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><a href="mailto:hello@greenedgelawn.com" style="color:inherit;text-decoration:none">hello@greenedgelawn.com</a></div>
+      <div class="cinfo-row"><div class="cicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>Mon – Sat, 10am – 6pm</div>
+      <div class="cinfo-row"><div class="cicon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Serving all of North Carolina</div>
+    </div>
+    <div class="form reveal d2">
+      <div class="form-row">
+        <div class="field"><label>First Name</label><input type="text" placeholder="John" autocomplete="given-name"/></div>
+        <div class="field"><label>Last Name</label><input type="text" placeholder="Smith" autocomplete="family-name"/></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Phone</label><input type="tel" placeholder="(555) 000-0000" autocomplete="tel"/></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="john@email.com" autocomplete="email"/></div>
+      </div>
+      <div class="field"><label>City / Area</label><input type="text" placeholder="Raleigh, Cary, Durham..."/></div>
+      <div class="field"><label>Service Needed</label>
+        <select>
+          <option value="">Select a service...</option>
+          <optgroup label="Regular Services">
+            <option>Lawn Mowing — Basic ($60)</option>
+            <option>Full Service Visit ($100)</option>
+            <option>Estate Service ($160)</option>
+          </optgroup>
+          <optgroup label="Seasonal">
+            <option>Spring Cleanup</option>
+            <option>Fall Cleanup</option>
+          </optgroup>
+          <optgroup label="Garden Repair">
+            <option>Replanting</option>
+            <option>Garden Bed Cleanup</option>
+            <option>Mulching</option>
+            <option>Full Garden Refresh</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option>Not Sure — Need a Recommendation</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="field"><label>Tell Us About Your Yard</label><textarea placeholder="Approximate yard size, how often you need service, any specific concerns or problem areas..."></textarea></div>
+      <button class="form-btn" id="formBtn">Get My Free Quote →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="f-logo">GREEN<b>EDGE</b> LAWN CO.</div>
+      <p>North Carolina's most trusted lawn care and landscaping crew. Showing up, doing the work, making it right — since 2017.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Nextdoor">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Lawn Mowing</a></li>
+        <li><a href="#services">String Trimming</a></li>
+        <li><a href="#services">Edging</a></li>
+        <li><a href="#services">Bush Trimming</a></li>
+        <li><a href="#garden">Garden Repair</a></li>
+        <li><a href="#seasonal">Seasonal Cleanup</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#why">Why GreenEdge</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#areas">Service Areas</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:5551234567">(555) 123-4567</a></li>
+        <li><a href="mailto:hello@greenedgelawn.com">hello@greenedgelawn.com</a></li>
+        <li><a href="#">Mon – Sat, 10am – 6pm</a></li>
+        <li><a href="#contact">Free Quote →</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 GreenEdge Lawn Co. · North Carolina · All rights reserved.</p>
+    <div class="footer-rating">
+      <span>★★★★★</span> 5.0 on Google (200+ reviews)
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Hero image ── */
+(function(){
+  const img = document.getElementById('heroBg');
+  const tryLoad = () => { if(img.complete && img.naturalWidth) img.classList.add('on'); };
+  img.addEventListener('load', () => img.classList.add('on'));
+  img.addEventListener('error', () => {
+    img.src = 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1400&q=75&fm=jpg&fit=crop';
+    img.addEventListener('load', () => img.classList.add('on'));
+  });
+  tryLoad();
+})();
+
+/* ── Lazy images ── */
+const lz = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const img = e.target;
+    const src = img.dataset.src;
+    if (!src) return;
+    img.src = src;
+    img.addEventListener('load', () => img.classList.add('on'));
+    img.addEventListener('error', () => {
+      const fallbacks = {
+        'lawn mower': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80',
+        'string trimmer': 'https://images.unsplash.com/photo-1589923188651-268a9765e432?w=900&q=80',
+        'edged lawn': 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80',
+        'hedge': 'https://images.unsplash.com/photo-1599598425947-5202edd56bdb?w=900&q=80',
+        'spring': 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80',
+        'fall leaves': 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&q=80',
+        'crew': 'https://images.unsplash.com/photo-1566908829550-e6551b00979b?w=1200&q=80',
+        'planting': 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=700&q=80',
+      };
+      const alt = (img.alt || '').toLowerCase();
+      const fallback = Object.entries(fallbacks).find(([k]) => alt.includes(k));
+      if (fallback && img.src !== fallback[1]) img.src = fallback[1];
+      else img.classList.add('on');
+    });
+    lz.unobserve(img);
+  });
+}, { rootMargin: '400px 0px' });
+document.querySelectorAll('img[data-src]').forEach(img => lz.observe(img));
+
+/* ── Scroll reveal ── */
+const rv = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); }
+  });
+}, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.reveal').forEach(el => rv.observe(el));
+
+const svcObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); svcObs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.svc-card').forEach(el => svcObs.observe(el));
+
+/* ── Nav scroll ── */
+const navEl = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('s', window.scrollY > 40);
+}, { passive: true });
+
+/* ── Burger menu ── */
+const burger = document.getElementById('burger');
+const mobMenu = document.getElementById('mobMenu');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobMenu.classList.toggle('open');
+  document.body.style.overflow = mobMenu.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('.mm-link').forEach(a => {
+  a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+/* ── Counter animation ── */
+function animateCount(el, target, duration) {
+  let start = null;
+  const step = (ts) => {
+    if (!start) start = ts;
+    const p = Math.min((ts - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(eased * target);
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCount(e.target, parseInt(e.target.dataset.target), 2000);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.count-up').forEach(el => counterObs.observe(el));
+
+/* ── Testimonial slider ── */
+let curSlide = 0;
+const slides = document.querySelectorAll('.testi-slide');
+const dots = document.querySelectorAll('.t-dot');
+function goSlide(n) {
+  slides[curSlide].classList.remove('active');
+  dots[curSlide].classList.remove('on');
+  curSlide = (n + slides.length) % slides.length;
+  slides[curSlide].classList.add('active');
+  dots[curSlide].classList.add('on');
+}
+dots.forEach(d => d.addEventListener('click', () => goSlide(+d.dataset.i)));
+let autoSlide = setInterval(() => goSlide(curSlide + 1), 5500);
+
+/* ── Before / After slider ── */
+(function() {
+  const slider = document.getElementById('baSlider');
+  const before = document.getElementById('baBefore');
+  const divider = document.getElementById('baDivider');
+  const handle = document.getElementById('baHandle');
+  if (!slider) return;
+  let pct = 50;
+  function setPosition(p) {
+    pct = Math.min(Math.max(p, 2), 98);
+    before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left = pct + '%';
+    handle.style.left = pct + '%';
+  }
+  setPosition(50);
+  let dragging = false;
+  function startDrag(e) { dragging = true; e.preventDefault(); }
+  function endDrag() { dragging = false; }
+  function onMove(e) {
+    if (!dragging) return;
+    const rect = slider.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    setPosition((x / rect.width) * 100);
+  }
+  slider.addEventListener('mousedown', startDrag);
+  slider.addEventListener('touchstart', startDrag, { passive: false });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: true });
+  window.addEventListener('mouseup', endDrag);
+  window.addEventListener('touchend', endDrag);
+})();
+
+/* ── FAQ accordion ── */
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+/* ── Sticky call bar ── */
+const callBar = document.getElementById('callBar');
+const callBarClose = document.getElementById('callBarClose');
+let callBarDismissed = false;
+window.addEventListener('scroll', () => {
+  if (callBarDismissed) return;
+  callBar.classList.toggle('visible', window.scrollY > 300);
+}, { passive: true });
+callBarClose.addEventListener('click', () => {
+  callBarDismissed = true;
+  callBar.classList.remove('visible');
+});
+
+/* ── Form submission ── */
+document.getElementById('formBtn').addEventListener('click', function() {
+  const fields = document.querySelectorAll('.form input, .form select');
+  const filled = [...fields].filter(f => f.required !== false);
+  const ok = [...document.querySelectorAll('.form input[type=text], .form input[type=tel], .form input[type=email], .form select')].every(f => f.value.trim());
+  if (ok) {
+    this.textContent = '✓ Quote Request Sent!';
+    this.style.background = '#2a6e3a';
+    this.style.pointerEvents = 'none';
+    setTimeout(() => {
+      this.textContent = 'Get My Free Quote →';
+      this.style.background = '';
+      this.style.pointerEvents = '';
+    }, 4000);
+  } else {
+    this.textContent = 'Please fill in all fields';
+    this.style.background = '#6e2d2d';
+    setTimeout(() => { this.textContent = 'Get My Free Quote →'; this.style.background = ''; }, 2500);
+  }
+});
+</script>
+</body>
+</html>
