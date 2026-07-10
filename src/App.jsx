@@ -9,7 +9,6 @@ import Nav from './components/Nav';
 import Hero from './components/hero/Hero';
 import Problem from './components/Problem';
 import Solution from './components/Solution';
-import Exclusivity from './components/Exclusivity';
 import Portfolio from './components/Portfolio';
 import Pricing from './components/Pricing';
 import CTA from './components/CTA';
@@ -41,7 +40,6 @@ function Page() {
           <Problem />
         </Hero>
         <Solution />
-        <Exclusivity />
         <Portfolio />
         <Pricing />
         <CTA />

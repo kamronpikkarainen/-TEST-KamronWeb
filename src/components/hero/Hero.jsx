@@ -51,8 +51,8 @@ export default function Hero({ children }) {
         // matrix) would make this a containing block for the ipad's
         // pin later on, breaking its position:fixed while pinned.
         clearProps: 'transform',
-        // The Problem/Exclusivity pins measure their trigger positions
-        // on mount, while this block still sits in its tucked-down tease
+        // The Problem section's pin measures its trigger position on
+        // mount, while this block still sits in its tucked-down tease
         // position — window's own 'load' refresh (see App.jsx) fires
         // before this tween ever finishes, so it just re-measures the
         // same wrong, mid-tease layout. Refreshing again here, once the
