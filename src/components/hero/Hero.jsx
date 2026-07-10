@@ -2,10 +2,11 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '../../lib/gsap';
 import { usePerf } from '../../lib/perf';
 import { scrollToId } from '../../lib/scroll';
+import { HOLD_MS as LOADER_HOLD_MS } from '../IntroLoader';
 import LaptopFrame from './LaptopFrame';
 
 // 1 CSS reference inch == 96px. The tease should leave less than this
-// much of the block poking into view before any scroll happens.
+// much of the block poking into view before it rises.
 const MAX_TEASE_VISIBLE_PX = 2.5 * 96;
 
 /**
@@ -20,10 +21,11 @@ const MAX_TEASE_VISIBLE_PX = 2.5 * 96;
  * `.hero-reveal` block that moves as a single unit. At rest (and
  * always, for reduced-motion) that block sits at its normal in-flow
  * position — nothing is ever permanently hidden. For motion users it
- * *starts* pushed down far enough that under 2.5in of it pokes up from
- * the bottom of the viewport, then the moment they scroll even a
- * little, the whole thing springs up into view — reversible if they
- * scroll back to the very top.
+ * *starts* pushed down far enough that under 2.5in of it (just the
+ * headline and the top of the laptop) pokes up from the bottom of the
+ * viewport, then it automatically springs the rest of the way into
+ * view on its own, timed to start right as the IntroLoader splash
+ * begins clearing — no scrolling required.
  */
 export default function Hero({ children }) {
   const root = useRef(null);
@@ -37,20 +39,14 @@ export default function Hero({ children }) {
       const offset = Math.max(0, window.innerHeight - MAX_TEASE_VISIBLE_PX - rect.top);
 
       // The tease: push the whole headline+laptop block down near the
-      // bottom of the viewport on load, then spring it fully into view
-      // the moment the visitor scrolls at all. start is offset 1px past
-      // the very top so the "from" (hidden) state is unambiguously what
-      // renders before any scrolling happens.
+      // bottom of the viewport on load, then automatically spring it
+      // fully into view a beat later — timed to line up with the
+      // IntroLoader fading out, not gated behind any user scroll.
       gsap.from(revealRef.current, {
         y: offset,
         ease: 'back.out(1.6)',
         duration: 1,
-        scrollTrigger: {
-          trigger: root.current,
-          start: 'top top-=1',
-          end: '+=140',
-          toggleActions: 'play none none reverse',
-        },
+        delay: LOADER_HOLD_MS / 1000,
       });
     }, root);
     return () => ctx.revert();
@@ -69,8 +65,8 @@ export default function Hero({ children }) {
       />
 
       {/* Headline, pitch, CTA buttons, and the laptop — all one block
-          that sits mostly below the fold pre-scroll (motion users
-          only) and jumps fully into view on scroll. */}
+          that sits mostly below the fold at first (motion users only)
+          and automatically jumps fully into view a beat later. */}
       <div ref={revealRef} className="hero-reveal relative z-10">
         <div className="mx-auto mt-8 max-w-5xl text-center sm:mt-10">
           <h1 className="font-extrabold leading-[1.05] tracking-tightest text-ink">

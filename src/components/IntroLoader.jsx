@@ -14,7 +14,10 @@ import { usePerf } from '../lib/perf';
  * but without shortening the hold too we'd still force everyone to wait
  * out a ~2s brand beat they can't see animate.
  */
-const HOLD_MS = 2650;
+// Exported so Hero.jsx can time its automatic reveal to start right as
+// this splash begins clearing, instead of the two running on unrelated
+// clocks.
+export const HOLD_MS = 2650;
 const HOLD_MS_REDUCED = 450;
 const EXIT_MS = 600;
 const EXIT_MS_REDUCED = 200;
