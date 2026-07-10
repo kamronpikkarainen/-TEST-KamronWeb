@@ -47,6 +47,10 @@ export default function Hero({ children }) {
         ease: 'back.out(1.6)',
         duration: 1,
         delay: LOADER_HOLD_MS / 1000,
+        // Otherwise the leftover inline transform (even an identity
+        // matrix) would make this a containing block for the laptop's
+        // pin later on, breaking its position:fixed while pinned.
+        clearProps: 'transform',
       });
     }, root);
     return () => ctx.revert();

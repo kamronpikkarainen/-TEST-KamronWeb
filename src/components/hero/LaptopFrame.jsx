@@ -15,7 +15,7 @@
  */
 export default function LaptopFrame({ children, className = '' }) {
   return (
-    <div className={`relative mx-auto w-[94%] max-w-[1360px] sm:w-[90%] ${className}`}>
+    <div className={`laptop-pin-target relative mx-auto w-[94%] max-w-[1360px] sm:w-[90%] ${className}`}>
       {/* Webcam notch, sitting on the bezel above the screen's top edge */}
       <div
         aria-hidden="true"

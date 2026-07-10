@@ -1,11 +1,17 @@
-import { useRef } from 'react';
-import useReveal from '../lib/useReveal';
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from '../lib/gsap';
+import { usePerf } from '../lib/perf';
 
 /**
- * Chapter 2 — the cost of an invisible website. Calm and centered now:
- * the beats hold as a still block (escalating in weight to the two
- * anchor lines), the payoff glows. Everything simply fades up on enter —
- * no pin, no scrub.
+ * Chapter 2 — the cost of an invisible website. The beats escalate in
+ * weight to the two anchor lines, the payoff glows.
+ *
+ * The laptop is pinned in place for the length of this section (see
+ * the scrollTrigger below — it targets the nearest `.laptop-pin-target`
+ * ancestor, which is LaptopFrame's outer wrapper) so the screen holds
+ * still while each line scrubs into view, staying centered the whole
+ * time instead of scrolling past. Reduced-motion gets no pin and no
+ * scrub — everything is simply visible, in normal document flow.
  */
 const LINES = [
   { text: 'Someone nearby needs exactly what you do. Right now.', cls: 'text-lg text-mute sm:text-2xl' },
@@ -17,7 +23,31 @@ const LINES = [
 
 export default function Problem() {
   const root = useRef(null);
-  useReveal(root);
+  const { reducedMotion } = usePerf();
+
+  useLayoutEffect(() => {
+    if (reducedMotion || !root.current) return undefined;
+    const ctx = gsap.context(() => {
+      const pinTarget = root.current.closest('.laptop-pin-target') || root.current;
+      const items = gsap.utils.toArray('.reveal', root.current);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: root.current,
+          start: 'top top',
+          end: `+=${window.innerHeight * 1.6}`,
+          scrub: 0.6,
+          pin: pinTarget,
+          pinSpacing: true,
+        },
+      });
+
+      items.forEach((el, i) => {
+        tl.from(el, { y: 32, opacity: 0, duration: 0.9, ease: 'power3.out' }, i * 0.55);
+      });
+    }, root);
+    return () => ctx.revert();
+  }, [reducedMotion]);
 
   return (
     <section
