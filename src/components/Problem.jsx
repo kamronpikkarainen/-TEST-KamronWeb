@@ -6,9 +6,9 @@ import { usePerf } from '../lib/perf';
  * Chapter 2 — the cost of an invisible website. The beats escalate in
  * weight to the two anchor lines, the payoff glows.
  *
- * The laptop is pinned in place for the length of this section (see
- * the scrollTrigger below — it targets the nearest `.laptop-pin-target`
- * ancestor, which is LaptopFrame's outer wrapper) so the screen holds
+ * The iPad is pinned in place for the length of this section (see the
+ * scrollTrigger below — it targets the nearest `.device-pin-target`
+ * ancestor, which is IpadFrame's outer wrapper) so the screen holds
  * still while each line scrubs into view, staying centered the whole
  * time instead of scrolling past. Reduced-motion gets no pin and no
  * scrub — everything is simply visible, in normal document flow.
@@ -28,7 +28,7 @@ export default function Problem() {
   useLayoutEffect(() => {
     if (reducedMotion || !root.current) return undefined;
     const ctx = gsap.context(() => {
-      const pinTarget = root.current.closest('.laptop-pin-target') || root.current;
+      const pinTarget = root.current.closest('.device-pin-target') || root.current;
       const items = gsap.utils.toArray('.reveal', root.current);
 
       const tl = gsap.timeline({

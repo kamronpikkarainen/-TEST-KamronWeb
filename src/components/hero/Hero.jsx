@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
-import { gsap } from '../../lib/gsap';
+import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePerf } from '../../lib/perf';
 import { scrollToId } from '../../lib/scroll';
 import { HOLD_MS as LOADER_HOLD_MS } from '../IntroLoader';
-import LaptopFrame from './LaptopFrame';
+import IpadFrame from './IpadFrame';
 
 // 1 CSS reference inch == 96px. The tease should leave less than this
 // much of the block poking into view before it rises.
@@ -11,18 +11,18 @@ const MAX_TEASE_VISIBLE_PX = 2.5 * 96;
 
 /**
  * Hero — top to bottom: the giant headline; the pitch line and CTA
- * buttons underneath it; then the laptop, which the Problem section
- * renders inside of (LaptopFrame takes it as children). The "Kamron
+ * buttons underneath it; then the iPad, which the Problem section
+ * renders inside of (IpadFrame takes it as children). The "Kamron
  * Web" brand moment now lives in the IntroLoader splash that plays
  * once on page load (see components/IntroLoader.jsx) — Nav carries
  * the wordmark for the rest of the visit.
  *
- * Headline, pitch, CTA buttons, and the laptop all render inside one
+ * Headline, pitch, CTA buttons, and the iPad all render inside one
  * `.hero-reveal` block that moves as a single unit. At rest (and
  * always, for reduced-motion) that block sits at its normal in-flow
  * position — nothing is ever permanently hidden. For motion users it
  * *starts* pushed down far enough that under 2.5in of it (just the
- * headline and the top of the laptop) pokes up from the bottom of the
+ * headline and the top of the iPad) pokes up from the bottom of the
  * viewport, then it automatically springs the rest of the way into
  * view on its own, timed to start right as the IntroLoader splash
  * begins clearing — no scrolling required.
@@ -38,7 +38,7 @@ export default function Hero({ children }) {
       const rect = revealRef.current.getBoundingClientRect();
       const offset = Math.max(0, window.innerHeight - MAX_TEASE_VISIBLE_PX - rect.top);
 
-      // The tease: push the whole headline+laptop block down near the
+      // The tease: push the whole headline+iPad block down near the
       // bottom of the viewport on load, then automatically spring it
       // fully into view a beat later — timed to line up with the
       // IntroLoader fading out, not gated behind any user scroll.
@@ -48,9 +48,17 @@ export default function Hero({ children }) {
         duration: 1,
         delay: LOADER_HOLD_MS / 1000,
         // Otherwise the leftover inline transform (even an identity
-        // matrix) would make this a containing block for the laptop's
+        // matrix) would make this a containing block for the ipad's
         // pin later on, breaking its position:fixed while pinned.
         clearProps: 'transform',
+        // The Problem/Exclusivity pins measure their trigger positions
+        // on mount, while this block still sits in its tucked-down tease
+        // position — window's own 'load' refresh (see App.jsx) fires
+        // before this tween ever finishes, so it just re-measures the
+        // same wrong, mid-tease layout. Refreshing again here, once the
+        // page is truly at its final settled layout, is what actually
+        // fixes those pins' start/end positions.
+        onComplete: () => ScrollTrigger.refresh(),
       });
     }, root);
     return () => ctx.revert();
@@ -68,7 +76,7 @@ export default function Hero({ children }) {
         }}
       />
 
-      {/* Headline, pitch, CTA buttons, and the laptop — all one block
+      {/* Headline, pitch, CTA buttons, and the iPad — all one block
           that sits mostly below the fold at first (motion users only)
           and automatically jumps fully into view a beat later. */}
       <div ref={revealRef} className="hero-reveal relative z-10">
@@ -105,7 +113,7 @@ export default function Hero({ children }) {
 
         <div className="h-10 sm:h-14" />
 
-        <LaptopFrame>{children}</LaptopFrame>
+        <IpadFrame>{children}</IpadFrame>
       </div>
     </section>
   );
