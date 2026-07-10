@@ -6,12 +6,18 @@ import { usePerf } from '../lib/perf';
  * Chapter 2 — the cost of an invisible website. The beats escalate in
  * weight to the two anchor lines, the payoff glows.
  *
- * The iPad is pinned in place for the length of this section (see the
- * scrollTrigger below — it targets the nearest `.device-pin-target`
- * ancestor, which is IpadFrame's outer wrapper) so the screen holds
- * still while each line scrubs into view, staying centered the whole
- * time instead of scrolling past. Reduced-motion gets no pin and no
- * scrub — everything is simply visible, in normal document flow.
+ * The iPad is pinned in place for the length of this section so the
+ * screen holds still while each line scrubs into view, staying
+ * centered the whole time instead of scrolling past. Reduced-motion
+ * gets no pin and no scrub — everything is simply visible, in normal
+ * document flow.
+ *
+ * The scrollTrigger below triggers off — and pins — the nearest
+ * `.device-pin-target` ancestor (IpadFrame's outer wrapper) rather than
+ * this section's own root: that wrapper's top sits higher up the page
+ * (above the camera notch + address pill), so triggering off this
+ * inner section instead would let the pin engage only after the
+ * device's own top edge had already scrolled past, cutting it off.
  */
 const LINES = [
   { text: 'Someone nearby needs exactly what you do. Right now.', cls: 'text-lg text-mute sm:text-2xl' },
@@ -33,8 +39,11 @@ export default function Problem() {
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: root.current,
-          start: 'top top',
+          trigger: pinTarget,
+          // +=88 so the pinned device's top (camera + address pill)
+          // clears the site's own fixed nav bar (70px tall) instead of
+          // locking flush with it and getting covered.
+          start: 'top top+=88',
           end: `+=${window.innerHeight * 1.6}`,
           scrub: 0.6,
           pin: pinTarget,
