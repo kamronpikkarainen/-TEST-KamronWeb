@@ -1,11 +1,21 @@
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from '../lib/gsap';
+import { usePerf } from '../lib/perf';
 import useReveal from '../lib/useReveal';
+import Bird from './exclusivity/Bird';
+import PowerLineScene from './exclusivity/PowerLineScene';
 
 /**
  * Chapter 4 — one client per niche, per city. The market is a board of
- * frosted capsules, shown in its resting state: your slot (HVAC ×
- * Raleigh) locked, GreenEdge's Lawn-care × Raleigh slot already taken,
- * the rest open. Calm fade-in, no pinned sequence.
+ * frosted capsules: your slot (HVAC × Raleigh) locked, GreenEdge's
+ * Lawn-care × Raleigh slot already taken, the rest open.
+ *
+ * The grid is pinned in place for a scroll stretch while a narrative
+ * beat plays out behind and on it: a small power-line scene parallaxes
+ * past, and the HVAC × Raleigh cell — shown open at rest — flips to
+ * "Locked · 12 mo" partway through, the instant a bird perched on the
+ * wire above it flies off. Reduced motion skips all of it: that cell
+ * simply renders already locked, no bird, no pin.
  *
  * [PLACEHOLDER — confirm GreenEdge's locked city]: shown under Raleigh.
  */
@@ -16,9 +26,67 @@ const CITIES = ['Raleigh', 'Durham', 'Cary', 'Apex', 'Wake Forest'];
 const locked = { niche: 'HVAC', city: 'Raleigh' };
 const taken = { niche: 'Lawn care', city: 'Raleigh', client: 'GreenEdge Lawn Co.' };
 
+// Fraction of the pin's scroll range at which the slot flips and the
+// bird takes off.
+const FLIP_AT = 0.55;
+
 export default function Exclusivity() {
   const root = useRef(null);
+  const pinRef = useRef(null);
+  const sceneRef = useRef(null);
+  const openRef = useRef(null);
+  const lockedRef = useRef(null);
+  const birdRef = useRef(null);
+  const { reducedMotion } = usePerf();
+
   useReveal(root);
+
+  useLayoutEffect(() => {
+    if (reducedMotion || !pinRef.current) return undefined;
+    const ctx = gsap.context(() => {
+      const scene = sceneRef.current;
+
+      // Continuous idle sway on the pole layers, independent of scroll,
+      // so the scene doesn't read as static art while at rest.
+      scene?.layers.forEach((layer, i) => {
+        gsap.to(layer, {
+          skewX: 0.5,
+          duration: 4 + i * 0.6,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+        });
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinRef.current,
+          start: 'top top',
+          end: `+=${window.innerHeight * 1.15}`,
+          scrub: 0.6,
+          pin: pinRef.current,
+          pinSpacing: true,
+        },
+      });
+
+      // Parallax: nearer layers drift further per unit of scroll. Given
+      // an explicit duration of 1 here (GSAP timeline position params
+      // are absolute seconds, not fractions) so FLIP_AT below can mean
+      // "55% of the way through" as intended.
+      scene?.layers.forEach((layer, i) => {
+        tl.to(layer, { xPercent: -(i + 1) * 5, duration: 1, ease: 'none' }, 0);
+      });
+      if (scene?.sky) {
+        tl.to(scene.sky, { opacity: 1, duration: 1, ease: 'none' }, 0);
+      }
+
+      // The flip + fly-off, keyed to the same timeline.
+      tl.to(openRef.current, { opacity: 0, scale: 0.85, duration: 0.12, ease: 'power1.in' }, FLIP_AT)
+        .to(lockedRef.current, { opacity: 1, scale: 1, duration: 0.14, ease: 'back.out(2)' }, FLIP_AT + 0.02)
+        .to(birdRef.current, { x: 26, y: -20, opacity: 0, duration: 0.16, ease: 'power2.in' }, FLIP_AT);
+    }, root);
+    return () => ctx.revert();
+  }, [reducedMotion]);
 
   return (
     <section ref={root} className="relative overflow-hidden px-6 py-28 sm:py-36">
@@ -36,22 +104,33 @@ export default function Exclusivity() {
           </p>
         </div>
 
-        <div className="reveal mt-12 overflow-x-auto pb-2">
-          <div className="min-w-[640px]">
-            <div className="grid grid-cols-[110px_repeat(5,1fr)] gap-2.5 sm:grid-cols-[140px_repeat(5,1fr)]">
-              <div />
-              {CITIES.map((city) => (
-                <div
-                  key={city}
-                  className="pb-2 text-center text-[10px] font-bold uppercase tracking-wider text-mute sm:text-xs"
-                >
-                  {city}
-                </div>
-              ))}
+        <div ref={pinRef} className="relative mt-12 flex min-h-screen items-center justify-center">
+          <PowerLineScene ref={sceneRef} reducedMotion={reducedMotion} />
 
-              {NICHES.map((niche) => (
-                <Row key={niche} niche={niche} />
-              ))}
+          <div className="w-full overflow-x-auto pb-2">
+            <div className="min-w-[640px]">
+              <div className="grid grid-cols-[110px_repeat(5,1fr)] gap-2.5 sm:grid-cols-[140px_repeat(5,1fr)]">
+                <div />
+                {CITIES.map((city) => (
+                  <div
+                    key={city}
+                    className="pb-2 text-center text-[10px] font-bold uppercase tracking-wider text-mute sm:text-xs"
+                  >
+                    {city}
+                  </div>
+                ))}
+
+                {NICHES.map((niche) => (
+                  <Row
+                    key={niche}
+                    niche={niche}
+                    reducedMotion={reducedMotion}
+                    openRef={openRef}
+                    lockedRef={lockedRef}
+                    birdRef={birdRef}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -70,31 +149,79 @@ export default function Exclusivity() {
   );
 }
 
-function Row({ niche }) {
+function Row({ niche, reducedMotion, openRef, lockedRef, birdRef }) {
+  // The HVAC row gets extra headroom above it (applied uniformly across
+  // the label + every city cell, so the row still lines up in the CSS
+  // grid) — that's where the wire + perched bird live, above Raleigh.
+  const isHvacRow = niche === locked.niche && !reducedMotion;
+  const rowSpace = isHvacRow ? 'mt-7 sm:mt-9' : '';
+
   return (
     <>
-      <div className="flex items-center pr-3 text-xs font-bold text-ink sm:text-sm">{niche}</div>
+      <div className={`flex items-center pr-3 text-xs font-bold text-ink sm:text-sm ${rowSpace}`}>
+        {niche}
+      </div>
       {CITIES.map((city) => {
         const isLocked = niche === locked.niche && city === locked.city;
         const isTaken = niche === taken.niche && city === taken.city;
+
         if (isLocked) {
+          // Reduced motion: skip the narrative entirely, render already
+          // locked — the resolved state, no "before" to show.
+          if (reducedMotion) {
+            return (
+              <div
+                key={city}
+                className="btn-liquid relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20"
+              >
+                <LockIcon />
+                <span className="mt-1 text-[9px] font-black uppercase tracking-widest">
+                  Locked · 12 mo
+                </span>
+              </div>
+            );
+          }
           return (
-            <div
-              key={city}
-              className="btn-liquid relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20"
-            >
-              <LockIcon />
-              <span className="mt-1 text-[9px] font-black uppercase tracking-widest">
-                Locked · 12 mo
-              </span>
+            <div key={city} className={`relative h-16 sm:h-20 ${rowSpace}`}>
+              {/* Wire stub + perched bird, sitting directly above this
+                  cell — flies off the instant the cell flips. */}
+              <div className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 sm:-top-8">
+                <svg width="42" height="6" viewBox="0 0 42 6" aria-hidden="true" className="block">
+                  <path d="M0 1 Q21 5 42 1" stroke="#1B2230" strokeWidth="1.25" fill="none" opacity="0.4" />
+                </svg>
+                <Bird ref={birdRef} className="absolute left-1/2 top-[-7px] -translate-x-1/2" />
+              </div>
+
+              {/* Open — visible at rest, fades out at the flip. */}
+              <div
+                ref={openRef}
+                className="glass-lite absolute inset-0 flex flex-col items-center justify-center rounded-full text-center"
+              >
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-mute">
+                  Open
+                </span>
+              </div>
+
+              {/* Locked — hidden at rest, pops in at the flip (see the
+                  gsap.to(lockedRef, ...) tween in the effect above). */}
+              <div
+                ref={lockedRef}
+                className="btn-liquid absolute inset-0 flex scale-90 flex-col items-center justify-center rounded-full text-center opacity-0"
+              >
+                <LockIcon />
+                <span className="mt-1 text-[9px] font-black uppercase tracking-widest">
+                  Locked · 12 mo
+                </span>
+              </div>
             </div>
           );
         }
+
         if (isTaken) {
           return (
             <div
               key={city}
-              className="glass-lite relative flex h-16 flex-col items-center justify-center rounded-full bg-ink/[0.04] text-center sm:h-20"
+              className={`glass-lite relative flex h-16 flex-col items-center justify-center rounded-full bg-ink/[0.04] text-center sm:h-20 ${rowSpace}`}
             >
               <span className="text-[9px] font-bold uppercase tracking-wider text-mute">Taken</span>
               <span className="mt-0.5 px-1 text-[9px] leading-tight text-mute/80 sm:text-[10px]">
@@ -103,10 +230,11 @@ function Row({ niche }) {
             </div>
           );
         }
+
         return (
           <div
             key={city}
-            className="glass-lite relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20"
+            className={`glass-lite relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20 ${rowSpace}`}
           >
             <span className="text-[10px] font-semibold uppercase tracking-wider text-mute">Open</span>
           </div>
