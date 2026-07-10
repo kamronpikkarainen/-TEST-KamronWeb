@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import useReveal from '../lib/useReveal';
-// [PLACEHOLDER — import the real GreenEdge screenshot once it's added,
-// e.g.: import greenedgeShot from '../assets/portfolio/greenedge.png';]
+import greenedgeShot from '../assets/portfolio/greenedge.webp';
 
 /**
  * Chapter 5 — the work. GreenEdge is the one real, live build, so it's
@@ -35,10 +34,12 @@ export default function Portfolio() {
           className="reveal glass glass-iridescent relative mt-14 block overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_40px_80px_-30px_rgba(50,70,110,0.35)]"
         >
           <div className="grid gap-0 md:grid-cols-2">
-            {/* [PLACEHOLDER — swap in the real GreenEdge screenshot import
-                above and replace this div with an <img>.] */}
-            <div className="relative flex min-h-[260px] items-center justify-center overflow-hidden bg-gradient-to-b from-[#F2F6EE] to-[#E4EDE0] p-6 text-center text-xs text-[#4E8F5C]/70">
-              [PLACEHOLDER — GreenEdge landing page screenshot]
+            <div className="relative min-h-[260px] overflow-hidden bg-[#0F1A12]">
+              <img
+                src={greenedgeShot}
+                alt="GreenEdge Lawn Co. landing page"
+                className="absolute inset-0 h-full w-full object-cover object-top"
+              />
             </div>
 
             <div className="flex flex-col justify-between p-7 sm:p-9">
