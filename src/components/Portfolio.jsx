@@ -37,7 +37,9 @@ const CASES = [
     badgeClass: 'glass text-mute',
     shot: carolinaShot,
     shotAlt: 'Carolina Climate HVAC landing page',
-    href: null,
+    // [PLACEHOLDER — swap for a custom domain if/when Carolina Climate
+    // becomes a real client; this is the GitHub Pages demo mirror.]
+    href: 'https://kamronpikkarainen.github.io/-TEST-KamronWeb/demos/carolina-climate/',
     description:
       'Design and build, end to end. Made to turn "24/7 emergency HVAC" searches into an answered call, not a voicemail.',
     built: [
