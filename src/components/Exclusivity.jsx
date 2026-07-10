@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '../lib/gsap';
 import { usePerf } from '../lib/perf';
 import useReveal from '../lib/useReveal';
-import Bird from './exclusivity/Bird';
 import PowerLineScene from './exclusivity/PowerLineScene';
 
 /**
@@ -13,9 +12,8 @@ import PowerLineScene from './exclusivity/PowerLineScene';
  * The grid is pinned in place for a scroll stretch while a narrative
  * beat plays out behind and on it: a small power-line scene parallaxes
  * past, and the HVAC × Raleigh cell — shown open at rest — flips to
- * "Locked · 12 mo" partway through, the instant a bird perched on the
- * wire above it flies off. Reduced motion skips all of it: that cell
- * simply renders already locked, no bird, no pin.
+ * "Locked · 12 mo" partway through. Reduced motion skips all of it:
+ * that cell simply renders already locked, no pin.
  *
  * [PLACEHOLDER — confirm GreenEdge's locked city]: shown under Raleigh.
  */
@@ -26,8 +24,7 @@ const CITIES = ['Raleigh', 'Durham', 'Cary', 'Apex', 'Wake Forest'];
 const locked = { niche: 'HVAC', city: 'Raleigh' };
 const taken = { niche: 'Lawn care', city: 'Raleigh', client: 'GreenEdge Lawn Co.' };
 
-// Fraction of the pin's scroll range at which the slot flips and the
-// bird takes off.
+// Fraction of the pin's scroll range at which the slot flips.
 const FLIP_AT = 0.55;
 
 export default function Exclusivity() {
@@ -36,7 +33,6 @@ export default function Exclusivity() {
   const sceneRef = useRef(null);
   const openRef = useRef(null);
   const lockedRef = useRef(null);
-  const birdRef = useRef(null);
   const { reducedMotion } = usePerf();
 
   useReveal(root);
@@ -80,31 +76,33 @@ export default function Exclusivity() {
         tl.to(scene.sky, { opacity: 1, duration: 1, ease: 'none' }, 0);
       }
 
-      // The flip + fly-off, keyed to the same timeline.
+      // The flip, keyed to the same timeline.
       tl.to(openRef.current, { opacity: 0, scale: 0.85, duration: 0.12, ease: 'power1.in' }, FLIP_AT)
-        .to(lockedRef.current, { opacity: 1, scale: 1, duration: 0.14, ease: 'back.out(2)' }, FLIP_AT + 0.02)
-        .to(birdRef.current, { x: 26, y: -20, opacity: 0, duration: 0.16, ease: 'power2.in' }, FLIP_AT);
+        .to(lockedRef.current, { opacity: 1, scale: 1, duration: 0.14, ease: 'back.out(2)' }, FLIP_AT + 0.02);
     }, root);
     return () => ctx.revert();
   }, [reducedMotion]);
 
   return (
-    <section ref={root} className="relative overflow-hidden px-6 py-28 sm:py-36">
+    <section ref={root} className="relative overflow-hidden px-6 py-20 sm:py-28">
       <div className="relative mx-auto w-full max-w-5xl">
         <div className="text-center">
-          <p className="reveal mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
+          <p className="reveal mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
             The rule
           </p>
-          <h2 className="reveal text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
+          <h2 className="reveal text-3xl font-extrabold tracking-tightest text-ink sm:text-4xl">
             One client. Per niche. <span className="text-liquid">Per city.</span>
           </h2>
-          <p className="reveal mx-auto mt-5 max-w-md text-mute">
+          <p className="reveal mx-auto mt-3 max-w-md text-sm text-mute">
             When you sign, your slot locks for 12 months. Every competitor who calls after you
             hears no.
           </p>
         </div>
 
-        <div ref={pinRef} className="relative mt-12 flex min-h-screen items-center justify-center">
+        <div
+          ref={pinRef}
+          className="relative mt-6 flex min-h-screen items-start justify-center pb-6 pt-24 sm:mt-8 sm:pt-28"
+        >
           <PowerLineScene ref={sceneRef} reducedMotion={reducedMotion} />
 
           <div className="w-full overflow-x-auto pb-2">
@@ -127,7 +125,6 @@ export default function Exclusivity() {
                     reducedMotion={reducedMotion}
                     openRef={openRef}
                     lockedRef={lockedRef}
-                    birdRef={birdRef}
                   />
                 ))}
               </div>
@@ -149,18 +146,10 @@ export default function Exclusivity() {
   );
 }
 
-function Row({ niche, reducedMotion, openRef, lockedRef, birdRef }) {
-  // The HVAC row gets extra headroom above it (applied uniformly across
-  // the label + every city cell, so the row still lines up in the CSS
-  // grid) — that's where the wire + perched bird live, above Raleigh.
-  const isHvacRow = niche === locked.niche && !reducedMotion;
-  const rowSpace = isHvacRow ? 'mt-7 sm:mt-9' : '';
-
+function Row({ niche, reducedMotion, openRef, lockedRef }) {
   return (
     <>
-      <div className={`flex items-center pr-3 text-xs font-bold text-ink sm:text-sm ${rowSpace}`}>
-        {niche}
-      </div>
+      <div className="flex items-center pr-3 text-xs font-bold text-ink sm:text-sm">{niche}</div>
       {CITIES.map((city) => {
         const isLocked = niche === locked.niche && city === locked.city;
         const isTaken = niche === taken.niche && city === taken.city;
@@ -172,7 +161,7 @@ function Row({ niche, reducedMotion, openRef, lockedRef, birdRef }) {
             return (
               <div
                 key={city}
-                className="btn-liquid relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20"
+                className="btn-liquid relative flex h-14 flex-col items-center justify-center rounded-full text-center sm:h-16"
               >
                 <LockIcon />
                 <span className="mt-1 text-[9px] font-black uppercase tracking-widest">
@@ -182,16 +171,7 @@ function Row({ niche, reducedMotion, openRef, lockedRef, birdRef }) {
             );
           }
           return (
-            <div key={city} className={`relative h-16 sm:h-20 ${rowSpace}`}>
-              {/* Wire stub + perched bird, sitting directly above this
-                  cell — flies off the instant the cell flips. */}
-              <div className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 sm:-top-8">
-                <svg width="42" height="6" viewBox="0 0 42 6" aria-hidden="true" className="block">
-                  <path d="M0 1 Q21 5 42 1" stroke="#1B2230" strokeWidth="1.25" fill="none" opacity="0.4" />
-                </svg>
-                <Bird ref={birdRef} className="absolute left-1/2 top-[-7px] -translate-x-1/2" />
-              </div>
-
+            <div key={city} className="relative h-14 sm:h-16">
               {/* Open — visible at rest, fades out at the flip. */}
               <div
                 ref={openRef}
@@ -221,7 +201,7 @@ function Row({ niche, reducedMotion, openRef, lockedRef, birdRef }) {
           return (
             <div
               key={city}
-              className={`glass-lite relative flex h-16 flex-col items-center justify-center rounded-full bg-ink/[0.04] text-center sm:h-20 ${rowSpace}`}
+              className="glass-lite relative flex h-14 flex-col items-center justify-center rounded-full bg-ink/[0.04] text-center sm:h-16"
             >
               <span className="text-[9px] font-bold uppercase tracking-wider text-mute">Taken</span>
               <span className="mt-0.5 px-1 text-[9px] leading-tight text-mute/80 sm:text-[10px]">
@@ -234,7 +214,7 @@ function Row({ niche, reducedMotion, openRef, lockedRef, birdRef }) {
         return (
           <div
             key={city}
-            className={`glass-lite relative flex h-16 flex-col items-center justify-center rounded-full text-center sm:h-20 ${rowSpace}`}
+            className="glass-lite relative flex h-14 flex-col items-center justify-center rounded-full text-center sm:h-16"
           >
             <span className="text-[10px] font-semibold uppercase tracking-wider text-mute">Open</span>
           </div>
