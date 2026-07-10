@@ -78,7 +78,10 @@ export default function Portfolio() {
 
 function WorkCard({ title, tag, badge, badgeClass, shot, shotAlt, href, description, built }) {
   const Tag = href ? 'a' : 'div';
-  const linkProps = href ? { href, target: '_blank', rel: 'noopener noreferrer' } : {};
+  // No target="_blank": from a file:// context (like the downloaded
+  // single-file build) browsers silently block target="_blank" popups
+  // to remote https:// origins — a same-tab navigation always works.
+  const linkProps = href ? { href } : {};
 
   return (
     <Tag
