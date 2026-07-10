@@ -20,8 +20,9 @@ const CASES = [
     badgeClass: 'btn-liquid text-white',
     shot: greenedgeShot,
     shotAlt: 'GreenEdge Lawn Co. landing page',
-    // [PLACEHOLDER — point this at the real, live GreenEdge site.]
-    href: 'https://greenedgelawnco.com',
+    // [PLACEHOLDER — swap for the real GreenEdge domain once confirmed;
+    // this is the GitHub Pages demo mirror in the meantime.]
+    href: 'https://kamronpikkarainen.github.io/-TEST-KamronWeb/demos/greenedge/',
     description:
       'Design and build, end to end. Made to turn "lawn care near me" into scheduled quotes.',
     built: [
