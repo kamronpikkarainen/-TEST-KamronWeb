@@ -4,6 +4,10 @@ import { usePerf } from '../../lib/perf';
 import { scrollToId } from '../../lib/scroll';
 import LaptopFrame from './LaptopFrame';
 
+// 1 CSS reference inch == 96px. The tease should leave less than this
+// much of the block poking into view before any scroll happens.
+const MAX_TEASE_VISIBLE_PX = 2.5 * 96;
+
 /**
  * Hero — top to bottom: the giant headline; the pitch line and CTA
  * buttons underneath it; then the laptop, which the Problem section
@@ -12,30 +16,35 @@ import LaptopFrame from './LaptopFrame';
  * once on page load (see components/IntroLoader.jsx) — Nav carries
  * the wordmark for the rest of the visit.
  *
- * The headline/pitch/buttons render as one `.hero-reveal` block. At
- * rest (and always, for reduced-motion) that block sits fully clear of
- * the laptop — nothing is ever permanently hidden. For motion users it
- * *starts* nudged down so its lower edge tucks behind the laptop's
- * chrome bar (a tease), then the moment they scroll even a little, it
- * springs up clear of the laptop — reversible if they scroll back to
- * the very top.
+ * Headline, pitch, CTA buttons, and the laptop all render inside one
+ * `.hero-reveal` block that moves as a single unit. At rest (and
+ * always, for reduced-motion) that block sits at its normal in-flow
+ * position — nothing is ever permanently hidden. For motion users it
+ * *starts* pushed down far enough that under 2.5in of it pokes up from
+ * the bottom of the viewport, then the moment they scroll even a
+ * little, the whole thing springs up into view — reversible if they
+ * scroll back to the very top.
  */
 export default function Hero({ children }) {
   const root = useRef(null);
+  const revealRef = useRef(null);
   const { reducedMotion } = usePerf();
 
   useLayoutEffect(() => {
     if (reducedMotion) return undefined;
     const ctx = gsap.context(() => {
-      // The tease: nudge the whole text block down into the laptop's
-      // chrome bar on load, then spring it clear the moment the visitor
-      // scrolls at all. start is offset 1px past the very top so the
-      // "from" (hidden) state is unambiguously what renders before any
-      // scrolling happens.
-      gsap.from('.hero-reveal', {
-        y: 120,
+      const rect = revealRef.current.getBoundingClientRect();
+      const offset = Math.max(0, window.innerHeight - MAX_TEASE_VISIBLE_PX - rect.top);
+
+      // The tease: push the whole headline+laptop block down near the
+      // bottom of the viewport on load, then spring it fully into view
+      // the moment the visitor scrolls at all. start is offset 1px past
+      // the very top so the "from" (hidden) state is unambiguously what
+      // renders before any scrolling happens.
+      gsap.from(revealRef.current, {
+        y: offset,
         ease: 'back.out(1.6)',
-        duration: 0.9,
+        duration: 1,
         scrollTrigger: {
           trigger: root.current,
           start: 'top top-=1',
@@ -59,45 +68,45 @@ export default function Hero({ children }) {
         }}
       />
 
-      {/* Headline, pitch, CTA buttons — one block that tucks behind the
-          laptop pre-scroll (motion users only) and springs clear on scroll. */}
-      <div className="hero-reveal relative z-10 mx-auto mt-8 max-w-5xl text-center sm:mt-10">
-        <h1 className="font-extrabold leading-[1.05] tracking-tightest text-ink">
-          <span className="block text-[clamp(2rem,6vw,4.25rem)]">The site that wins the job</span>
-          <span className="block text-[clamp(2rem,6vw,4.25rem)]">
-            before you <span className="text-liquid">pick up the phone.</span>
-          </span>
-        </h1>
-        <div className="mx-auto mt-7 flex max-w-xl flex-col items-center">
-          <p className="text-sm text-mute sm:text-base">
-            Premium websites for HVAC, lawn care, plumbing, and contractors in the Triangle. One
-            client per niche, per city.
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => scrollToId('cta')}
-              className="btn-liquid btn-sheen rounded-full px-8 py-3.5 text-sm font-extrabold transition-transform hover:scale-[1.04] active:scale-[0.98]"
-            >
-              Book a call
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToId('work')}
-              className="glass rounded-full px-7 py-3.5 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
-            >
-              See the work
-            </button>
+      {/* Headline, pitch, CTA buttons, and the laptop — all one block
+          that sits mostly below the fold pre-scroll (motion users
+          only) and jumps fully into view on scroll. */}
+      <div ref={revealRef} className="hero-reveal relative z-10">
+        <div className="mx-auto mt-8 max-w-5xl text-center sm:mt-10">
+          <h1 className="font-extrabold leading-[1.05] tracking-tightest text-ink">
+            <span className="block text-[clamp(2rem,6vw,4.25rem)]">The site that wins the job</span>
+            <span className="block text-[clamp(2rem,6vw,4.25rem)]">
+              before you <span className="text-liquid">pick up the phone.</span>
+            </span>
+          </h1>
+          <div className="mx-auto mt-7 flex max-w-xl flex-col items-center">
+            <p className="text-sm text-mute sm:text-base">
+              Premium websites for HVAC, lawn care, plumbing, and contractors in the Triangle. One
+              client per niche, per city.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => scrollToId('cta')}
+                className="btn-liquid btn-sheen rounded-full px-8 py-3.5 text-sm font-extrabold transition-transform hover:scale-[1.04] active:scale-[0.98]"
+              >
+                Book a call
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToId('work')}
+                className="glass rounded-full px-7 py-3.5 text-sm font-semibold text-ink transition-transform hover:scale-[1.03]"
+              >
+                See the work
+              </button>
+            </div>
           </div>
         </div>
+
+        <div className="h-10 sm:h-14" />
+
+        <LaptopFrame>{children}</LaptopFrame>
       </div>
-
-      <div className="h-10 sm:h-14" />
-
-      {/* Laptop — sits above the reveal block in stacking order (so the
-          pre-scroll tease reads as "behind the laptop"), and contains
-          the Problem section on its screen. */}
-      <LaptopFrame className="relative z-20">{children}</LaptopFrame>
     </section>
   );
 }
