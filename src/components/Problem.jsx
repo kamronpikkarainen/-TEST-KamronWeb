@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '../lib/gsap';
 import { usePerf } from '../lib/perf';
+import SectionEyebrow from './SectionEyebrow';
 
 /**
  * Chapter 2 — the cost of an invisible website. The beats escalate in
@@ -77,9 +78,9 @@ export default function Problem() {
         }}
       />
       <div className="relative mx-auto max-w-3xl">
-        <p className="mb-10 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
+        <SectionEyebrow reveal={false} className="!mb-10">
           The problem
-        </p>
+        </SectionEyebrow>
         <div className="space-y-5">
           {LINES.map((line) => (
             <p key={line.text} className={`reveal leading-snug tracking-tight ${line.cls}`}>

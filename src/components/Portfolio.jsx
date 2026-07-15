@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import useReveal from '../lib/useReveal';
+import SectionEyebrow from './SectionEyebrow';
 import carolinaShot from '../assets/portfolio/carolina-climate.webp';
 import greenedgeShot from '../assets/portfolio/greenedge.webp';
 
@@ -59,9 +60,7 @@ export default function Portfolio() {
     <section ref={root} id="work" className="relative scroll-mt-24 px-6 py-28 sm:py-36">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
-          <p className="reveal mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
-            The work
-          </p>
+          <SectionEyebrow>The work</SectionEyebrow>
           <h2 className="reveal text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
             Built to win work. <span className="text-mute">Not design awards.</span>
           </h2>
@@ -90,8 +89,19 @@ function WorkCard({ title, tag, badge, badgeClass, shot, shotAlt, href, descript
       className="reveal glass glass-iridescent relative block overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_40px_80px_-30px_rgba(50,70,110,0.35)]"
     >
       <div className="grid gap-0 md:grid-cols-2">
-        <div className="relative min-h-[260px] overflow-hidden bg-ink/5">
-          <img src={shot} alt={shotAlt} className="absolute inset-0 h-full w-full object-cover object-top" />
+        <div className="relative flex min-h-[260px] flex-col overflow-hidden bg-ink/5">
+          {/* Slim browser-chrome bar, so the screenshot reads as a live
+              device view rather than a flat marketing image — the same
+              "framed device" language as the hero iPad. */}
+          <div className="relative z-10 flex shrink-0 items-center gap-1.5 border-b border-ink/10 bg-white/70 px-3.5 py-2 backdrop-blur-sm">
+            <span className="h-2 w-2 rounded-full bg-[#F0A8C8]/70" />
+            <span className="h-2 w-2 rounded-full bg-[#E8B06A]/70" />
+            <span className="h-2 w-2 rounded-full bg-[#8FD6A8]/70" />
+            <span className="ml-2 truncate text-[10px] font-semibold text-mute">{badge}</span>
+          </div>
+          <div className="relative min-h-0 flex-1 overflow-hidden">
+            <img src={shot} alt={shotAlt} className="absolute inset-0 h-full w-full object-cover object-top" />
+          </div>
         </div>
 
         <div className="flex flex-col justify-between p-7 sm:p-9">

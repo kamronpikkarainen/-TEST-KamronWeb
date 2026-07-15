@@ -10,6 +10,7 @@ import Hero from './components/hero/Hero';
 import Problem from './components/Problem';
 import Solution from './components/Solution';
 import Portfolio from './components/Portfolio';
+import Operator from './components/Operator';
 import Pricing from './components/Pricing';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
@@ -41,6 +42,7 @@ function Page() {
         </Hero>
         <Solution />
         <Portfolio />
+        <Operator />
         <Pricing />
         <CTA />
       </main>

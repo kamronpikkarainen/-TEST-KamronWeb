@@ -32,8 +32,6 @@ export default function Footer() {
             <a href="tel:+19194533252" className="font-semibold transition-colors hover:text-ink">
               (919) 453-3252
             </a>
-            {/* [PLACEHOLDER — real Instagram handle] */}
-            <span className="text-mute/70">[PLACEHOLDER — Instagram]</span>
           </div>
           <span>© {new Date().getFullYear()} Kamron Web</span>
         </div>

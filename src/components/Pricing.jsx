@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '../lib/gsap';
 import { usePerf } from '../lib/perf';
 import { scrollToId } from '../lib/scroll';
+import SectionEyebrow from './SectionEyebrow';
 
 /**
  * Chapter 6 — pricing on frosted glass. Three packages, matching the
@@ -94,6 +95,19 @@ export default function Pricing() {
         }
       );
       gsap.fromTo(
+        '.pr-recommended-badge',
+        { scale: 0.5, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.55,
+          delay: 0.5,
+          ease: 'back.out(3)',
+          clearProps: 'transform',
+          scrollTrigger: { trigger: '.pr-grid', start: 'top 80%' },
+        }
+      );
+      gsap.fromTo(
         '.pr-callout',
         { y: 30, opacity: 0 },
         {
@@ -112,9 +126,7 @@ export default function Pricing() {
     <section ref={root} id="pricing" className="relative scroll-mt-24 px-6 py-28 sm:py-40">
       <div className="relative mx-auto max-w-5xl">
         <div className="pr-head text-center">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
-            Pricing
-          </p>
+          <SectionEyebrow reveal={false}>Pricing</SectionEyebrow>
           <h2 className="text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
             What's included. <span className="text-mute">At each price.</span>
           </h2>
@@ -134,7 +146,7 @@ export default function Pricing() {
               }`}
             >
               {tier.recommended && (
-                <span className="btn-liquid absolute -top-3 left-8 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider">
+                <span className="pr-recommended-badge btn-liquid absolute -top-3 left-8 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider">
                   Recommended
                 </span>
               )}

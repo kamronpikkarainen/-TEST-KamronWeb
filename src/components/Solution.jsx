@@ -1,11 +1,20 @@
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from '../lib/gsap';
+import { usePerf } from '../lib/perf';
 import useReveal from '../lib/useReveal';
+import SectionEyebrow from './SectionEyebrow';
 
 /**
  * Chapter 3 — the flat-rate build model. The two delivery tracks are
  * drawn in their finished state (Pro's fill visibly stops four days
- * short of Starter's), on a calm glass panel that fades in. No scroll
- * scrubbing — the comparison reads at a glance.
+ * short of Starter's) on a calm glass panel that fades in via
+ * useReveal. Layered on top of that, once each track scrolls into
+ * view, its progress bar draws itself left-to-right and its milestone
+ * markers pop in in sequence — the panel arrives calmly, then the
+ * timeline itself plays out like a build actually happening. Reduced-
+ * motion skips this second layer entirely; the bars simply sit at
+ * their finished width and the markers are already visible (their
+ * natural, unanimated state).
  */
 
 const TOTAL_DAYS = 14;
@@ -43,13 +52,46 @@ const TRACKS = [
 export default function Solution() {
   const root = useRef(null);
   useReveal(root);
+  const { reducedMotion } = usePerf();
+
+  useLayoutEffect(() => {
+    if (reducedMotion || !root.current) return undefined;
+    const ctx = gsap.context(() => {
+      const tracks = gsap.utils.toArray('.solution-track', root.current);
+      tracks.forEach((trackEl) => {
+        const fill = trackEl.querySelector('.solution-fill');
+        const flag = trackEl.querySelector('.solution-flag');
+        const milestones = gsap.utils.toArray('.solution-milestone', trackEl);
+
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: trackEl, start: 'top 78%' },
+        });
+        tl.fromTo(
+          fill,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 1.1, ease: 'power3.out', transformOrigin: 'left center', clearProps: 'transform' }
+        );
+        tl.fromTo(
+          flag,
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(3)', clearProps: 'transform' },
+          '-=0.15'
+        );
+        tl.fromTo(
+          milestones,
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out', clearProps: 'transform' },
+          '-=0.75'
+        );
+      });
+    }, root);
+    return () => ctx.revert();
+  }, [reducedMotion]);
 
   return (
     <section ref={root} className="relative px-6 py-28 sm:py-36">
       <div className="mx-auto max-w-5xl text-center">
-        <p className="reveal mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
-          The build
-        </p>
+        <SectionEyebrow>The build</SectionEyebrow>
         <h2 className="reveal mx-auto max-w-2xl text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
           Flat rate. Fixed deadline. <span className="text-liquid">No surprises.</span>
         </h2>
@@ -59,7 +101,7 @@ export default function Solution() {
 
         <div className="reveal glass mt-14 space-y-14 rounded-3xl p-8 text-left sm:mt-16 sm:p-12">
           {TRACKS.map((track) => (
-            <div key={track.name}>
+            <div key={track.name} className="solution-track">
               <div className="mb-8 flex items-baseline gap-3">
                 <span className="text-lg font-extrabold text-ink">{track.name}</span>
                 <span className="text-sm text-mute">
@@ -84,11 +126,11 @@ export default function Solution() {
                 ))}
                 {/* Final fill width — Pro stops four days short of Starter */}
                 <div
-                  className="absolute left-0 top-0 h-1.5 rounded-full"
+                  className="solution-fill absolute left-0 top-0 h-1.5 rounded-full"
                   style={{ width: `${(track.days / TOTAL_DAYS) * 100}%`, background: track.fill }}
                 />
                 <div
-                  className="absolute -top-2 z-10 flex -translate-x-1/2 flex-col items-center"
+                  className="solution-flag absolute -top-2 z-10 flex -translate-x-1/2 flex-col items-center"
                   style={{ left: `${(track.days / TOTAL_DAYS) * 100}%` }}
                 >
                   <span
@@ -101,7 +143,7 @@ export default function Solution() {
                 {track.milestones.map((m) => (
                   <div
                     key={m.day}
-                    className="absolute top-4 flex -translate-x-1/2 flex-col items-center text-center"
+                    className="solution-milestone absolute top-4 flex -translate-x-1/2 flex-col items-center text-center"
                     style={{ left: `${(m.day / TOTAL_DAYS) * 100}%` }}
                   >
                     <span className="mb-1.5 h-2.5 w-px bg-ink/25" />
