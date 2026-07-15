@@ -233,14 +233,16 @@ html.lenis body {
 }
 
 /* ---------------------------------------------------------------------
-   IntroLoader — a one-time "Kamron Web" boot sequence built from the
-   site's own liquid-glass language (frosted panel, iridescent ring,
-   prismatic glow, the same text-liquid shimmer used in body copy)
-   instead of a separate visual system, so the loader reads as the
-   first frame of the site rather than a splash bolted on front of it
-   (see components/IntroLoader.jsx). Entrance timing is driven by
-   inline animation-delay below; the blanket reduced-motion rule above
-   already collapses every animation/transition here to ~instant.
+   IntroLoader — the site literally loading a site. A mini browser
+   window types out "kamronweb.com," the page paints in as skeleton
+   blocks assembling, then it all resolves into the shimmering
+   wordmark — a small joke that a web studio's own loading screen is a
+   web page loading, built entirely from the site's own liquid-glass
+   language (frosted panel, iridescent ring, text-liquid) instead of a
+   separate visual system (see components/IntroLoader.jsx). Entrance
+   timing is driven by inline animation-delay below; the blanket
+   reduced-motion rule above already collapses every animation/
+   transition here to ~instant.
    -------------------------------------------------------------------- */
 .loader-sheet {
   position: fixed;
@@ -266,32 +268,31 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* The glass card itself settles in with a firm little rise-and-land,
+/* The browser card itself settles in with a firm little rise-and-land,
    matching the rest of the site's `back.out`-flavored entrances. */
-.loader-card {
+.loader-browser {
   opacity: 0;
   transform: translateY(14px) scale(0.97);
-  animation: loader-card-in 0.7s cubic-bezier(0.2, 0.9, 0.25, 1) 0.15s forwards;
+  animation: loader-card-in 0.6s cubic-bezier(0.2, 0.9, 0.25, 1) 0.1s forwards;
 }
 
 /* Slow ambient spin behind the card — a quiet nod to the CTA section's
-   conic-gradient glass ring, here reading as "working" rather than
-   decoration. Sits behind the card (negative z-index via stacking
-   order in the JSX) so it never competes with the wordmark. */
+   conic-gradient glass ring, reading as "working" rather than pure
+   decoration. */
 .loader-ring {
   position: absolute;
-  width: 22rem;
-  height: 22rem;
+  width: 24rem;
+  height: 24rem;
   border-radius: 9999px;
   opacity: 0;
   background: conic-gradient(
     from 210deg,
-    rgba(232, 176, 106, 0.55),
-    rgba(53, 200, 232, 0.55),
-    rgba(62, 111, 240, 0.55),
-    rgba(139, 124, 247, 0.55),
-    rgba(240, 168, 200, 0.55),
-    rgba(232, 176, 106, 0.55)
+    rgba(232, 176, 106, 0.5),
+    rgba(53, 200, 232, 0.5),
+    rgba(62, 111, 240, 0.5),
+    rgba(139, 124, 247, 0.5),
+    rgba(240, 168, 200, 0.5),
+    rgba(232, 176, 106, 0.5)
   );
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 22px), #000 calc(100% - 21px));
   mask: radial-gradient(farthest-side, transparent calc(100% - 22px), #000 calc(100% - 21px));
@@ -299,26 +300,65 @@ html.lenis body {
   animation: loader-ring-in 1s ease-out 0.05s forwards, loader-ring-spin 12s linear infinite;
 }
 
-.loader-tag {
-  opacity: 0;
-  animation: loader-fade-in 0.5s ease-out 0.6s forwards;
+/* The address bar "typing" — a classic steps() typewriter reveal.
+   "kamronweb.com" is exactly 13 characters; ch units line up cleanly
+   because the text is set in a monospace face. */
+.loader-url-text {
+  display: inline-block;
+  overflow: hidden;
+  width: 0;
+  vertical-align: bottom;
+  white-space: nowrap;
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  animation: loader-type 0.9s steps(13, end) 0.45s forwards;
+}
+.loader-caret {
+  display: inline-block;
+  width: 1px;
+  height: 0.95em;
+  margin-left: 1px;
+  background: currentColor;
+  vertical-align: -0.12em;
+  animation: loader-caret-blink 0.9s steps(1, end) infinite;
 }
 
-/* The progress line — drawn in the exact text-liquid gradient, so the
-   one moving element on screen is made of the same "liquid" the rest
-   of the site's headline accents are. */
-.loader-fill {
+/* The page "painting in" — four skeleton blocks pop in staggered, hold
+   a beat, then fade back out as the wordmark takes over the same
+   space. Each block shares one keyframe (in → hold → out) offset by
+   animation-delay, so the whole stack reads as one continuous build. */
+.loader-block {
+  opacity: 0;
+  animation: loader-block-cycle 1.3s cubic-bezier(0.22, 0.8, 0.3, 1) forwards;
+}
+.loader-block-1 {
+  animation-delay: 1.4s;
+}
+.loader-block-2 {
+  animation-delay: 1.51s;
+}
+.loader-block-3 {
+  animation-delay: 1.62s;
+}
+.loader-block-4 {
+  animation-delay: 1.73s;
+}
+
+/* The reveal — skeleton dissolves into the real wordmark, in the same
+   spot, like the page finished rendering. */
+.loader-wordmark {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  transform-origin: left center;
-  transform: scaleX(0);
-  background-image: linear-gradient(100deg, #2e5fe8 5%, #29b8e8 30%, #7c6bf0 55%, #2e5fe8 80%);
-  animation: loader-fill-draw 1.75s cubic-bezier(0.65, 0, 0.35, 1) 0.55s forwards;
-}
-.loader-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  animation: loader-fade-in 0.4s ease-out 0.5s forwards;
+  transform: translateY(6px) scale(0.96);
+  animation: loader-wordmark-in 0.5s cubic-bezier(0.2, 0.9, 0.25, 1) 2.45s forwards;
+}
+.loader-tag {
+  opacity: 0;
+  animation: loader-fade-in 0.4s ease-out 2.6s forwards;
 }
 
 @keyframes loader-fade-in {
@@ -342,29 +382,67 @@ html.lenis body {
     transform: rotate(360deg);
   }
 }
-@keyframes loader-fill-draw {
+@keyframes loader-type {
   to {
-    transform: scaleX(1);
+    width: 13ch;
+  }
+}
+@keyframes loader-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes loader-block-cycle {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  26% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  74% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+}
+@keyframes loader-wordmark-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 /* The blanket reduced-motion rule above only clamps animation-DURATION —
-   animation-DELAY still applies, so without this every delayed element
-   (tagline, progress line...) would sit invisible until its delay
-   elapsed, and IntroLoader's much shorter reduced-motion hold would
-   unmount the whole thing before that ever happened. Force every piece
-   straight to its finished state instead. */
+   animation-DELAY still applies, so without this the wordmark, tag,
+   and typed URL (all deliberately delayed to land after the skeleton
+   "build") would sit invisible the whole time, since IntroLoader's
+   much shorter reduced-motion hold unmounts the whole thing before
+   those delays would ever elapse. Force every piece straight to its
+   finished state instead. The skeleton blocks are deliberately NOT
+   listed here: their whole purpose is the motion-only "page painting
+   in" beat, so under reduced motion they're left to sit at their
+   default (hidden) state for the brief time the loader is mounted —
+   which is exactly what we want, not an oversight. */
 @media (prefers-reduced-motion: reduce) {
-  .loader-card,
+  .loader-browser,
   .loader-ring,
-  .loader-tag,
-  .loader-track,
-  .loader-fill {
+  .loader-url-text,
+  .loader-wordmark,
+  .loader-tag {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
-  .loader-fill {
-    transform: scaleX(1) !important;
+  .loader-url-text {
+    width: 13ch !important;
+  }
+  .loader-caret {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
