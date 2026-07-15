@@ -49,10 +49,18 @@ export default function IpadFrame({ children, className = '' }) {
           <span className="absolute left-[22%] top-[22%] h-[2px] w-[2px] rounded-full bg-white/70" />
         </div>
 
-        {/* Screen */}
+        {/* Screen — a soft coral/mint/lavender mesh glow, calm enough
+            that the dark ink text sitting on it stays fully legible. */}
         <div
-          className="relative overflow-hidden rounded-[1.7rem] bg-gradient-to-b from-[#F5F6F8] to-[#E3E5E9] sm:rounded-[2.1rem]"
-          style={{ boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.14), inset 0 2px 6px rgba(0,0,0,0.12)' }}
+          className="relative overflow-hidden rounded-[1.7rem] sm:rounded-[2.1rem]"
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 50% at 12% 15%, rgba(255,158,128,0.42), transparent 62%),' +
+              'radial-gradient(ellipse 55% 50% at 55% 60%, rgba(150,222,178,0.4), transparent 65%),' +
+              'radial-gradient(ellipse 60% 55% at 90% 85%, rgba(186,168,232,0.42), transparent 65%),' +
+              '#F7F6F3',
+            boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.14), inset 0 2px 6px rgba(0,0,0,0.12)',
+          }}
         >
           {/* Glass sheen — a soft diagonal highlight sweeping the screen,
               like a studio softbox reflection. Sits above the content but

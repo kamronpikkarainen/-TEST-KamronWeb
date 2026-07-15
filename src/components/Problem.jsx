@@ -18,6 +18,11 @@ import { usePerf } from '../lib/perf';
  * (above the camera notch + address pill), so triggering off this
  * inner section instead would let the pin engage only after the
  * device's own top edge had already scrolled past, cutting it off.
+ *
+ * The "The problem" eyebrow label is deliberately NOT part of the
+ * scrubbed `.reveal` set below — it's plain, permanently-visible
+ * content, so it's already sitting on the iPad's screen the moment the
+ * page loads, before any scrolling.
  */
 const LINES = [
   { text: 'Someone nearby needs exactly what you do. Right now.', cls: 'text-lg text-mute sm:text-2xl' },
@@ -72,7 +77,7 @@ export default function Problem() {
         }}
       />
       <div className="relative mx-auto max-w-3xl">
-        <p className="reveal mb-10 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
+        <p className="mb-10 text-xs font-semibold uppercase tracking-[0.3em] text-mute">
           The problem
         </p>
         <div className="space-y-5">
