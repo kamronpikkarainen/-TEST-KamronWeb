@@ -36,6 +36,7 @@ const TIERS = [
     delivery: '10-day delivery',
     blurb: 'A full conversion-optimized site — 10+ pages and sections.',
     recommended: true,
+    featuresNote: 'Everything in Starter, plus:',
     features: [
       'Interactive diagnostic / lead tool',
       'Working quote request form',
@@ -126,9 +127,9 @@ export default function Pricing() {
           {TIERS.map((tier) => (
             <div
               key={tier.name}
-              className={`pr-card glass noise relative rounded-3xl p-8 sm:p-10 ${
+              className={`pr-card glass noise relative flex h-full flex-col rounded-3xl p-8 sm:p-10 ${
                 tier.recommended
-                  ? 'glass-iridescent shadow-[0_36px_90px_-30px_rgba(62,111,240,0.5)] md:-translate-y-3'
+                  ? 'glass-iridescent shadow-[0_36px_90px_-30px_rgba(62,111,240,0.5)]'
                   : ''
               }`}
             >
@@ -148,7 +149,12 @@ export default function Pricing() {
                 </span>
               </div>
               <p className="mt-2 text-sm text-mute">{tier.blurb}</p>
-              <ul className="mt-7 space-y-3">
+              {tier.featuresNote && (
+                <p className="mt-7 text-xs font-bold uppercase tracking-wider text-mute">
+                  {tier.featuresNote}
+                </p>
+              )}
+              <ul className={`mb-2 space-y-3 ${tier.featuresNote ? 'mt-3' : 'mt-7'}`}>
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm font-medium text-ink/90">
                     <span
@@ -168,7 +174,7 @@ export default function Pricing() {
               <button
                 type="button"
                 onClick={() => scrollToId('cta')}
-                className={`mt-9 w-full rounded-full py-3.5 text-sm font-extrabold transition-transform hover:scale-[1.02] active:scale-[0.98] ${
+                className={`mt-auto w-full rounded-full py-3.5 text-sm font-extrabold transition-transform hover:scale-[1.02] active:scale-[0.98] ${
                   tier.recommended
                     ? 'btn-liquid btn-sheen'
                     : 'border-2 border-ink/25 text-ink hover:border-ink/50'
