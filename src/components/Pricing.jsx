@@ -4,41 +4,58 @@ import { usePerf } from '../lib/perf';
 import { scrollToId } from '../lib/scroll';
 
 /**
- * Chapter 6 — pricing on frosted glass. Two tiers (Pro carries the
- * iridescent edge and the liquid gradient), add-ons as a supporting
- * strip rather than a competing box, and the exclusivity reminder
- * where it stings: right next to the money.
+ * Chapter 6 — pricing on frosted glass. Three packages, matching the
+ * contract's exact deliverables per tier (not generic marketing bullet
+ * points) — this section's job is to inform, not persuade. Pro still
+ * carries the iridescent edge as the recommended tier; Custom has no
+ * fixed price or feature checklist since its scope is quoted per
+ * project. Add-ons stay a supporting strip, and the exclusivity
+ * reminder sits where it stings: right next to the money.
  */
 
 const TIERS = [
   {
     name: 'Starter',
     price: '$3,000',
+    priceNote: 'flat rate',
     delivery: '14-day delivery',
-    blurb: 'The core marketing site, done right.',
+    blurb: 'A single high-conversion landing page, built for emergency/urgent-need service calls.',
     features: [
-      'Conversion-focused layout',
-      'Mobile-optimized, fast',
-      'Copy that sounds like you',
-      'Launch on day 14, guaranteed',
+      'Mobile-first design',
+      'Sticky click-to-call bar',
+      'Contact form',
+      'Google Maps integration',
+      'Basic local search setup',
     ],
     cta: 'Start with Starter',
   },
   {
     name: 'Pro',
     price: '$5,500',
+    priceNote: 'flat rate',
     delivery: '10-day delivery',
-    blurb: 'More site, less waiting.',
+    blurb: 'A full conversion-optimized site — 10+ pages and sections.',
     recommended: true,
     features: [
-      'Everything in Starter',
-      'More custom sections',
-      'Priority build queue',
-      'Launch on day 10, guaranteed',
+      'Interactive diagnostic / lead tool',
+      'Working quote request form',
+      'Service area section',
+      'Review section',
+      'Dispatch-style trust statistics',
+      'Full local SEO setup',
+      'Google Analytics',
     ],
     cta: 'Go Pro',
   },
 ];
+
+const CUSTOM = {
+  name: 'Custom',
+  price: 'Quoted in writing',
+  delivery: 'Timeline scoped per project',
+  blurb: 'For multi-location sites, e-commerce, or custom integrations.',
+  cta: 'Request a custom quote',
+};
 
 const ADDONS = [
   { name: 'Care Plan', price: '$250/mo', blurb: 'Hosting, updates, monitoring. Your site stays fast and never breaks quietly.' },
@@ -98,10 +115,10 @@ export default function Pricing() {
             Pricing
           </p>
           <h2 className="text-4xl font-extrabold tracking-tightest text-ink sm:text-5xl">
-            Two ways in. <span className="text-mute">Both flat.</span>
+            What's included. <span className="text-mute">At each price.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-mute">
-            No hourly billing, no scope creep, no invoice surprises. The price is the price.
+            Flat rate, scope spelled out up front. No hourly billing, no invoice surprises.
           </p>
         </div>
 
@@ -124,8 +141,11 @@ export default function Pricing() {
                 <h3 className="text-lg font-extrabold text-ink">{tier.name}</h3>
                 <span className="text-xs font-semibold text-mute">{tier.delivery}</span>
               </div>
-              <div className="mt-4 text-5xl font-extrabold tracking-tightest text-ink">
-                {tier.price}
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="text-5xl font-extrabold tracking-tightest text-ink">{tier.price}</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-mute">
+                  {tier.priceNote}
+                </span>
               </div>
               <p className="mt-2 text-sm text-mute">{tier.blurb}</p>
               <ul className="mt-7 space-y-3">
@@ -158,6 +178,26 @@ export default function Pricing() {
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Custom — no fixed price or checklist, since scope varies by
+            project. A slim informative row, not a third pricing box. */}
+        <div className="pr-card glass noise relative mt-6 flex flex-col items-start justify-between gap-4 rounded-2xl p-6 sm:flex-row sm:items-center sm:p-7">
+          <div>
+            <div className="flex items-baseline gap-3">
+              <h3 className="text-lg font-extrabold text-ink">{CUSTOM.name}</h3>
+              <span className="text-xs font-semibold text-mute">{CUSTOM.delivery}</span>
+            </div>
+            <p className="mt-1 text-sm font-semibold text-ink/80">{CUSTOM.price}</p>
+            <p className="mt-1 text-sm text-mute">{CUSTOM.blurb}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => scrollToId('cta')}
+            className="w-full shrink-0 rounded-full border-2 border-ink/25 px-6 py-3 text-sm font-extrabold text-ink transition-transform hover:scale-[1.02] hover:border-ink/50 active:scale-[0.98] sm:w-auto"
+          >
+            {CUSTOM.cta}
+          </button>
         </div>
 
         {/* Add-ons — supporting strip, deliberately not a third box */}
