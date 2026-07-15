@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import { usePerf } from '../lib/perf';
 
 /**
- * The one-time "Kamron Web" brand moment: a blueprint/technical-drawing
- * take on the wordmark, shown as a full-screen splash the instant the
- * page loads, then dismissed on its own. This replaces the old inline
- * ink-splash + wordmark that used to sit in the Hero — that brand
- * introduction now happens here, once, before the site itself appears.
+ * The one-time "Kamron Web" brand moment: a full-screen boot sequence
+ * shown the instant the page loads, then dismissed on its own. Built
+ * from the same liquid-glass vocabulary as the rest of the site
+ * (`.glass`, `.glass-iridescent`, `.text-liquid`) instead of a
+ * separate visual system, so it reads as the site's own first frame
+ * rather than a splash bolted on front of it.
  *
- * Timings are held in JS (not just CSS) so reduced-motion visitors get a
- * much shorter dwell — the global reduced-motion rule in index.css
- * already collapses the entrance/exit animations themselves to instant,
- * but without shortening the hold too we'd still force everyone to wait
- * out a ~2s brand beat they can't see animate.
+ * Timings are held in JS (not just CSS) so reduced-motion visitors get
+ * a much shorter dwell — the global reduced-motion rule in index.css
+ * already collapses the entrance animations themselves to instant, but
+ * without shortening the hold too we'd still force everyone to wait
+ * out a ~2.6s brand beat they can't see animate.
  */
 // Exported so Hero.jsx can time its automatic reveal to start right as
 // this splash begins clearing, instead of the two running on unrelated
@@ -50,45 +51,20 @@ export default function IntroLoader() {
 
   return (
     <div className={`loader-sheet${exiting ? ' loader-sheet--out' : ''}`} aria-hidden="true">
-      <div className="loader-grid" />
+      <div aria-hidden="true" className="loader-ring pointer-events-none absolute" />
 
-      <span className="loader-reg loader-reg-tl" />
-      <span className="loader-reg loader-reg-tr" />
-      <span className="loader-reg loader-reg-bl" />
-      <span className="loader-reg loader-reg-br" />
-
-      <div className="loader-anno loader-anno-tl">
-        SHEET&nbsp;01&nbsp;/&nbsp;WORDMARK
-        <br />
-        SCALE&nbsp;1&nbsp;:&nbsp;1
-      </div>
-      <div className="loader-anno loader-anno-tr">
-        RALEIGH,&nbsp;NC
-        <br />
-        35.7796°&nbsp;N, 78.6382°&nbsp;W
-      </div>
-      <div className="loader-anno loader-anno-br">
-        DRAWN&nbsp;FLAT&nbsp;RATE
-        <br />
-        FIXED&nbsp;DEADLINE
-      </div>
-
-      <div className="loader-dim">
-        <div className="loader-dim-line" />
-        <div className="loader-dim-label">14-DAY BUILD</div>
-      </div>
-
-      <div className="loader-mark-wrap">
-        <h1 className="loader-mark">Kamron Web</h1>
-        <p className="loader-tagline">
-          Premium sites for <b>Triangle</b> service businesses
+      <div className="loader-card glass glass-iridescent noise relative flex flex-col items-center rounded-[2rem] px-12 py-11 sm:px-16 sm:py-14">
+        <h1 className="text-liquid m-0 text-[clamp(2rem,6.5vw,3.4rem)] font-extrabold tracking-tightest">
+          Kamron Web
+          <span aria-hidden="true" className="ml-2 inline-block h-2 w-2 rounded-full bg-accent align-middle" />
+        </h1>
+        <p className="loader-tag mt-3 text-center text-[11px] font-semibold uppercase tracking-[0.25em] text-mute sm:text-xs">
+          Premium sites for <span className="text-ink/80">Triangle</span> service businesses
         </p>
-      </div>
 
-      <div className="loader-stamp">
-        <span>
-          <b>1 / CITY</b>PER&nbsp;NICHE
-        </span>
+        <div className="loader-track relative mt-8 h-[3px] w-40 overflow-hidden rounded-full bg-ink/10 sm:w-52">
+          <div className="loader-fill absolute inset-0 rounded-full" />
+        </div>
       </div>
     </div>
   );

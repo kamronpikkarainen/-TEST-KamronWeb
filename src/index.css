@@ -233,11 +233,12 @@ html.lenis body {
 }
 
 /* ---------------------------------------------------------------------
-   IntroLoader — a one-time blueprint/technical-drawing splash of the
-   "Kamron Web" wordmark, shown full-screen on load then dismissed
-   (see components/IntroLoader.jsx). Deliberately its own dark,
-   drafting-table look — a distinct brand beat, not a themed variant of
-   the light glass site underneath. Entrance/exit timing is driven by
+   IntroLoader — a one-time "Kamron Web" boot sequence built from the
+   site's own liquid-glass language (frosted panel, iridescent ring,
+   prismatic glow, the same text-liquid shimmer used in body copy)
+   instead of a separate visual system, so the loader reads as the
+   first frame of the site rather than a splash bolted on front of it
+   (see components/IntroLoader.jsx). Entrance timing is driven by
    inline animation-delay below; the blanket reduced-motion rule above
    already collapses every animation/transition here to ~instant.
    -------------------------------------------------------------------- */
@@ -250,9 +251,11 @@ html.lenis body {
   justify-content: center;
   isolation: isolate;
   overflow: hidden;
-  background: #0b2a4a;
-  color: rgb(207, 227, 245);
-  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  background:
+    radial-gradient(ellipse 55% 40% at 50% 18%, rgba(53, 200, 232, 0.16), transparent 62%),
+    radial-gradient(ellipse 46% 34% at 30% 45%, rgba(139, 124, 247, 0.13), transparent 60%),
+    radial-gradient(ellipse 42% 30% at 70% 40%, rgba(240, 168, 200, 0.12), transparent 60%),
+    #dfe1e5;
   opacity: 1;
   transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s ease;
 }
@@ -263,212 +266,59 @@ html.lenis body {
   pointer-events: none;
 }
 
-.loader-grid {
+/* The glass card itself settles in with a firm little rise-and-land,
+   matching the rest of the site's `back.out`-flavored entrances. */
+.loader-card {
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+  animation: loader-card-in 0.7s cubic-bezier(0.2, 0.9, 0.25, 1) 0.15s forwards;
+}
+
+/* Slow ambient spin behind the card — a quiet nod to the CTA section's
+   conic-gradient glass ring, here reading as "working" rather than
+   decoration. Sits behind the card (negative z-index via stacking
+   order in the JSX) so it never competes with the wordmark. */
+.loader-ring {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 9999px;
+  opacity: 0;
+  background: conic-gradient(
+    from 210deg,
+    rgba(232, 176, 106, 0.55),
+    rgba(53, 200, 232, 0.55),
+    rgba(62, 111, 240, 0.55),
+    rgba(139, 124, 247, 0.55),
+    rgba(240, 168, 200, 0.55),
+    rgba(232, 176, 106, 0.55)
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 22px), #000 calc(100% - 21px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 22px), #000 calc(100% - 21px));
+  filter: blur(2px);
+  animation: loader-ring-in 1s ease-out 0.05s forwards, loader-ring-spin 12s linear infinite;
+}
+
+.loader-tag {
+  opacity: 0;
+  animation: loader-fade-in 0.5s ease-out 0.6s forwards;
+}
+
+/* The progress line — drawn in the exact text-liquid gradient, so the
+   one moving element on screen is made of the same "liquid" the rest
+   of the site's headline accents are. */
+.loader-fill {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(234, 244, 255, 0.4) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(234, 244, 255, 0.4) 1px, transparent 1px),
-    linear-gradient(rgba(234, 244, 255, 0.65) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(234, 244, 255, 0.65) 1px, transparent 1px);
-  background-size: 28px 28px, 28px 28px, 140px 140px, 140px 140px;
-  opacity: 0;
-  animation: loader-fade-in 1s ease-out 0.1s forwards;
-}
-
-.loader-reg {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  opacity: 0;
-  animation: loader-fade-in 0.6s ease-out 0.5s forwards;
-}
-.loader-reg::before,
-.loader-reg::after {
-  content: '';
-  position: absolute;
-  background: rgba(207, 227, 245, 0.9);
-}
-.loader-reg::before {
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  transform: translateX(-50%);
-}
-.loader-reg::after {
-  top: 50%;
-  left: 0;
-  height: 1px;
-  width: 100%;
-  transform: translateY(-50%);
-}
-.loader-reg-tl {
-  top: 28px;
-  left: 28px;
-}
-.loader-reg-tr {
-  top: 28px;
-  right: 28px;
-}
-.loader-reg-bl {
-  bottom: 28px;
-  left: 28px;
-}
-.loader-reg-br {
-  bottom: 28px;
-  right: 28px;
-}
-
-.loader-dim {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 50%;
-  height: 1px;
-  transform: translateY(96px);
-}
-.loader-dim-line {
-  position: absolute;
-  inset: -0.5px 0;
-  background: rgba(207, 227, 245, 0.9);
+  border-radius: inherit;
   transform-origin: left center;
   transform: scaleX(0);
-  animation: loader-draw-line 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.75s forwards;
+  background-image: linear-gradient(100deg, #2e5fe8 5%, #29b8e8 30%, #7c6bf0 55%, #2e5fe8 80%);
+  animation: loader-fill-draw 1.75s cubic-bezier(0.65, 0, 0.35, 1) 0.55s forwards;
 }
-.loader-dim::before,
-.loader-dim::after {
-  content: '';
-  position: absolute;
-  top: -5px;
-  width: 1px;
-  height: 11px;
-  background: rgba(207, 227, 245, 0.9);
+.loader-track {
   opacity: 0;
-  animation: loader-fade-in 0.3s ease-out 1.75s forwards;
-}
-.loader-dim::before {
-  left: 0;
-}
-.loader-dim::after {
-  right: 0;
-}
-.loader-dim-label {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: rgba(207, 227, 245, 0.92);
-  font-weight: 600;
-  white-space: nowrap;
-  opacity: 0;
-  animation: loader-fade-in 0.5s ease-out 1.9s forwards;
-}
-
-.loader-mark-wrap {
-  position: relative;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(10px) scale(0.985);
-  animation: loader-settle 0.7s cubic-bezier(0.2, 0.9, 0.25, 1) 1.05s forwards;
-}
-.loader-mark {
-  position: relative;
-  margin: 0;
-  font-family: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
-  font-weight: 400;
-  font-size: clamp(3.2rem, 12vw, 8.5rem);
-  line-height: 0.94;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: #f5faff;
-  -webkit-text-stroke: 1.5px rgba(207, 227, 245, 0.7);
-}
-/* Drafted double-stroke echo, offset like a redrawn blueprint line */
-.loader-mark::after {
-  content: 'KAMRON WEB';
-  position: absolute;
-  inset: 0;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(207, 227, 245, 0.4);
-  transform: translate(4px, 3px);
-  z-index: -1;
-}
-.loader-tagline {
-  margin-top: 18px;
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: rgba(207, 227, 245, 0.88);
-  opacity: 0;
-  animation: loader-fade-in 0.6s ease-out 1.55s forwards;
-}
-.loader-tagline b {
-  color: #f5faff;
-  font-weight: 600;
-}
-
-.loader-stamp {
-  position: absolute;
-  right: 9%;
-  bottom: 13%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 108px;
-  height: 108px;
-  border-radius: 50%;
-  border: 2px solid #e8b06a;
-  color: #e8b06a;
-  transform: rotate(-11deg) scale(0);
-  opacity: 0;
-  animation: loader-stamp-down 0.5s cubic-bezier(0.3, 1.6, 0.4, 1) 2.05s forwards;
-}
-.loader-stamp::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid #e8b06a;
-  border-radius: 50%;
-  opacity: 0.6;
-}
-.loader-stamp span {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  line-height: 1.5;
-  text-align: center;
-  padding: 0 10px;
-}
-.loader-stamp b {
-  display: block;
-  font-size: 13px;
-  letter-spacing: 0.05em;
-}
-
-.loader-anno {
-  position: absolute;
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  color: rgba(207, 227, 245, 0.85);
-  font-weight: 600;
-  opacity: 0;
-  animation: loader-fade-in 0.5s ease-out 1.5s forwards;
-}
-.loader-anno-tl {
-  top: 44px;
-  left: 44px;
-}
-.loader-anno-br {
-  bottom: 44px;
-  right: 44px;
-  text-align: right;
-}
-.loader-anno-tr {
-  top: 44px;
-  right: 44px;
-  text-align: right;
+  animation: loader-fade-in 0.4s ease-out 0.5s forwards;
 }
 
 @keyframes loader-fade-in {
@@ -476,50 +326,45 @@ html.lenis body {
     opacity: 1;
   }
 }
-@keyframes loader-settle {
+@keyframes loader-card-in {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
-@keyframes loader-draw-line {
-  to {
-    transform: scaleX(1);
-  }
-}
-@keyframes loader-stamp-down {
+@keyframes loader-ring-in {
   to {
     opacity: 1;
-    transform: rotate(-11deg) scale(1);
+  }
+}
+@keyframes loader-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-fill-draw {
+  to {
+    transform: scaleX(1);
   }
 }
 
 /* The blanket reduced-motion rule above only clamps animation-DURATION —
    animation-DELAY still applies, so without this every delayed element
-   (annotations, stamp, tagline...) would sit invisible until its delay
+   (tagline, progress line...) would sit invisible until its delay
    elapsed, and IntroLoader's much shorter reduced-motion hold would
    unmount the whole thing before that ever happened. Force every piece
    straight to its finished state instead. */
 @media (prefers-reduced-motion: reduce) {
-  .loader-grid,
-  .loader-reg,
-  .loader-dim-line,
-  .loader-dim::before,
-  .loader-dim::after,
-  .loader-dim-label,
-  .loader-mark-wrap,
-  .loader-tagline,
-  .loader-anno {
+  .loader-card,
+  .loader-ring,
+  .loader-tag,
+  .loader-track,
+  .loader-fill {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
-  .loader-dim-line {
+  .loader-fill {
     transform: scaleX(1) !important;
-  }
-  .loader-stamp {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: rotate(-11deg) !important;
   }
 }
