@@ -1,8 +1,7 @@
 /**
  * Shared section label — flanking tick marks around the uppercase
- * eyebrow text, a quiet callback to IntroLoader's blueprint/dimension-
- * line drafting motif so the calm glass sections don't read as a
- * totally separate design language from the brand splash.
+ * eyebrow text, used across sections so they read as one consistent
+ * design language.
  */
 export default function SectionEyebrow({ children, reveal = true, className = '' }) {
   return (
