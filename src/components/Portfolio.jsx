@@ -15,24 +15,6 @@ import greenedgeShot from '../assets/portfolio/greenedge.webp';
 
 const CASES = [
   {
-    title: 'GreenEdge Lawn Co.',
-    tag: 'Lawn care · Triangle, NC',
-    badge: 'Live client',
-    badgeClass: 'btn-liquid text-white',
-    shot: greenedgeShot,
-    shotAlt: 'GreenEdge Lawn Co. landing page',
-    // [PLACEHOLDER — swap for the real GreenEdge domain once confirmed;
-    // this is the GitHub Pages demo mirror in the meantime.]
-    href: 'https://kamronpikkarainen.github.io/-TEST-KamronWeb/demos/greenedge/',
-    description:
-      'Design and build, end to end. Made to turn "lawn care near me" into scheduled quotes.',
-    built: [
-      'One quote form, not a dead-end contact page',
-      'Live on a fixed 14-day timeline',
-      'Loads clean on mobile, where these searches happen',
-    ],
-  },
-  {
     title: 'Carolina Climate',
     tag: 'HVAC · Raleigh, NC',
     badge: 'Concept build',
@@ -48,6 +30,24 @@ const CASES = [
       'Click-to-call front and center, above the fold',
       'Financing and warranty terms up where buyers look first',
       'Built to the same 14-day, flat-rate timeline',
+    ],
+  },
+  {
+    title: 'GreenEdge Lawn Co.',
+    tag: 'Lawn care · Triangle, NC',
+    badge: 'Live client',
+    badgeClass: 'btn-liquid text-white',
+    shot: greenedgeShot,
+    shotAlt: 'GreenEdge Lawn Co. landing page',
+    // [PLACEHOLDER — swap for the real GreenEdge domain once confirmed;
+    // this is the GitHub Pages demo mirror in the meantime.]
+    href: 'https://kamronpikkarainen.github.io/-TEST-KamronWeb/demos/greenedge/',
+    description:
+      'Design and build, end to end. Made to turn "lawn care near me" into scheduled quotes.',
+    built: [
+      'One quote form, not a dead-end contact page',
+      'Live on a fixed 14-day timeline',
+      'Loads clean on mobile, where these searches happen',
     ],
   },
 ];
