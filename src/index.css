@@ -231,3 +231,32 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------------------------------------------------------------------
+   Mobile/touch performance guard. Live backdrop-filter blur is one of
+   the most reliable ways to crash or badly jank mobile Safari — every
+   .glass panel forces the compositor to resample and reblur whatever's
+   behind it on every scroll frame, and the fixed Nav bar (always on
+   screen, always moving relative to the content behind it) pays that
+   cost continuously for the entire visit. Backdrop's four large
+   filter: blur() blobs compound it further. On touch devices we drop
+   backdrop-filter entirely (falling back to a more opaque gradient so
+   panels still read as "glass," just without the live blur) and cut
+   Backdrop's blur radius substantially. Targets (hover: none) rather
+   than a screen-width breakpoint so it's keyed to "no precise pointer,
+   likely a phone/tablet GPU," not window size. */
+.backdrop-blob {
+  filter: blur(var(--blob-blur, 100px));
+}
+
+@media (hover: none), (pointer: coarse) {
+  .glass {
+    background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.55) 44%, transparent 51%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.62));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .backdrop-blob {
+    filter: blur(var(--blob-blur-mobile, 46px));
+  }
+}
