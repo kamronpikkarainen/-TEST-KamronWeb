@@ -2,15 +2,16 @@ import { useRef } from 'react';
 import useReveal from '../lib/useReveal';
 import SectionEyebrow from './SectionEyebrow';
 import carolinaShot from '../assets/portfolio/carolina-climate.webp';
+import tridentShot from '../assets/portfolio/trident.webp';
 import greenedgeShot from '../assets/portfolio/greenedge.webp';
 
 /**
- * Chapter 5 — the work. Two stacked case-study cards. No invented
- * metrics or testimonials here (matching the rest of the site's
- * content rule) — each card's supporting copy describes what was
- * actually built (the standing Kamron Web promises: fixed timeline,
- * one clear call to action, direct contact routing), not unverified
- * outcome numbers for that specific client.
+ * Chapter 5 — the work. Stacked case-study cards. No invented metrics
+ * or testimonials here (matching the rest of the site's content rule)
+ * — each card's supporting copy describes what was actually built
+ * (the standing Kamron Web promises: fixed timeline, one clear call
+ * to action, direct contact routing), not unverified outcome numbers
+ * for that specific client.
  */
 
 const CASES = [
@@ -29,6 +30,22 @@ const CASES = [
     built: [
       'Click-to-call front and center, above the fold',
       'Financing and warranty terms up where buyers look first',
+      'Built to the same 14-day, flat-rate timeline',
+    ],
+  },
+  {
+    title: 'Trident Technology Solutions',
+    tag: 'Managed IT · Wake Forest, NC',
+    badge: 'Concept build',
+    badgeClass: 'glass text-mute',
+    shot: tridentShot,
+    shotAlt: 'Trident Technology Solutions landing page',
+    href: 'https://kamronpikkarainen.github.io/tridentts/',
+    description:
+      'Design and build, end to end. Made to turn "need IT support now" into a call, not a ticket lost in a queue.',
+    built: [
+      'Click-to-call and a free-consult CTA front and center',
+      'A dark, technical look built to read like an actual security/IT operator',
       'Built to the same 14-day, flat-rate timeline',
     ],
   },
