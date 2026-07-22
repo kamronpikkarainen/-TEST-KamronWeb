@@ -7,11 +7,14 @@ import SectionEyebrow from './SectionEyebrow';
 /**
  * Chapter 6 — pricing on frosted glass. Three packages, matching the
  * contract's exact deliverables per tier (not generic marketing bullet
- * points) — this section's job is to inform, not persuade. Pro still
- * carries the iridescent edge as the recommended tier; Custom has no
- * fixed price or feature checklist since its scope is quoted per
- * project. Add-ons stay a supporting strip, and the exclusivity
- * reminder sits where it stings: right next to the money.
+ * points) — this section's job is to inform, not persuade. Starter and
+ * Pro both list a financing line under the flat price (same total,
+ * split monthly, no added cost) so the flat-rate promise stays intact
+ * while still giving a lower-barrier way to say yes. Pro still carries
+ * the iridescent edge as the recommended tier; Custom has no fixed
+ * price or feature checklist since its scope is quoted per project.
+ * Add-ons stay a supporting strip, and the exclusivity reminder sits
+ * where it stings: right next to the money.
  */
 
 const TIERS = [
@@ -19,6 +22,7 @@ const TIERS = [
     name: 'Starter',
     price: '$3,000',
     priceNote: 'flat rate',
+    financing: '$300/mo for 10 months',
     delivery: '14-day delivery',
     blurb: 'A single high-conversion landing page, built for emergency/urgent-need service calls.',
     features: [
@@ -34,6 +38,7 @@ const TIERS = [
     name: 'Pro',
     price: '$5,500',
     priceNote: 'flat rate',
+    financing: '$500/mo for 11 months',
     delivery: '10-day delivery',
     blurb: 'A full conversion-optimized site — 10+ pages and sections.',
     recommended: true,
@@ -131,7 +136,8 @@ export default function Pricing() {
             What's included. <span className="text-mute">At each price.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-md text-mute">
-            Flat rate, scope spelled out up front. No hourly billing, no invoice surprises.
+            Flat rate, scope spelled out up front. Pay it upfront or spread it out monthly —
+            either way, no added cost and no invoice surprises.
           </p>
         </div>
 
@@ -160,6 +166,11 @@ export default function Pricing() {
                   {tier.priceNote}
                 </span>
               </div>
+              {tier.financing && (
+                <p className="mt-1.5 text-xs text-mute">
+                  or <span className="font-semibold text-ink/80">{tier.financing}</span>, no added cost
+                </p>
+              )}
               <p className="mt-2 text-sm text-mute">{tier.blurb}</p>
               {tier.featuresNote && (
                 <p className="mt-7 text-xs font-bold uppercase tracking-wider text-mute">
